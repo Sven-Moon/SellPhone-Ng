@@ -36,22 +36,13 @@
     <div class="picker-box rounded-lg p-3">
 
 
-      <select class="form-control" name="selectPhone" [(ngModel)]="selectedPhoneModelId">
-        <option *ngFor="let phoneModel of phoneModels" [value]="phoneModel.id">{{ phoneModel.name }}</option>
+      <select class="form-control" name="selectPhone" (onSelectedPhoneModelIdChange)="($event.target.value)">
+        <option *ngFor="let phoneModel of phoneModels">{{ phoneModel.name }}</option>
       </select>
 
 
-      <select class="form-control" name="selectModel" id="selectModel">
-        <option value="-1">--Select Phone Type--</option>
-        <option value="1">iPhone 7</option>
-        <option value="1">iPhone 8</option>
-        <option value="1">iPhone 9</option>
-        <option value="1">iPhone X</option>
-        <option value="2">Pixel 1</option>
-        <option value="2">Pixel 2</option>
-        <option value="2">Pixel 3</option>
-        <option value="3">Windows Phone</option>
-        <option value="3">Nokia Phone</option>
+      <select class="form-control" name="selectType" (onSelectedPhoneModelIdSelect)="($event.target.value)">
+        <option *ngFor="let phoneType of phoneTypes">{{ phoneType.name }}</option>
       </select>
 
       <div class="result-box">
