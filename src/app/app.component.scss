@@ -1,0 +1,95 @@
+body {
+  padding-top: 5rem;
+  background-color: #484a52;
+}
+
+.lead {
+  display: inline-block;
+}
+
+.picker-box {
+  background-color: dimgray;
+  display: inline-block;
+  padding: 3rem 1.5rem;
+}
+
+.result-box {
+  background-color: blueviolet;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  text-justify: center;
+  display: inline-block;
+  font-style: italic;
+  font-weight: bold;
+  color: whitesmoke;
+}
+
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+option {
+  margin: 0.5em;
+}
+
+select {
+  margin: .5rem 0 .5rem;
+}
+
+.h1 {
+  color: whitesmoke;
+}
+
+.modal-footer {
+  background-color: rgb(81, 89, 95);
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer-nav {
+  display: flex;
+  flex-basis: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+footer .navbar-nav {
+  padding: .1rem .1rem;
+  flex-direction: row;
+  margin-right: .5rem;
+}
+
+footer .navbar-nav .nav-link {
+  padding: .1rem .5rem;
+  flex-direction: row;
+}
+
+footer .nav-item {
+  margin: 0 .25rem;
+}
+
+footer a {
+  background-color: #484a52;
+  border-radius: 3px;
+}
+
+.button-auth {
+  background-color: rgb(68, 79, 128);
+  border-color: darkgray;
+}
+
+.image-container {
+  position: relative;
+}
+
+.catchphrase {
+  text-align: center;
+  font-size: 30px;
+  position: absolute;
+  color: #f1f1f1;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.3);
+  margin-top: 155px;
+  letter-spacing: 1px;
+}
