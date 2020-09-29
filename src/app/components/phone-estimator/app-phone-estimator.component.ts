@@ -1,12 +1,11 @@
 import { Component } from '@angular/core';
-import { NGB_DATEPICKER_18N_FACTORY } from '@ng-bootstrap/ng-bootstrap/datepicker/datepicker-i18n';
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  selector: 'app-phone-estimator',
+  templateUrl: './app-phone-estimator.component.html',
+  styleUrls: ['./app-phone-estimator.component.scss']
 })
-export class AppComponent {
+export class AppPhoneEstimatorComponent {
   title = 'sellphone-ng';
   phoneModels = [
     {"id":-1,"name": "--Select Phone Model--"},

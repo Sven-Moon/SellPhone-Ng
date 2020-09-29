@@ -1,0 +1,25 @@
+<div role="main" class="container">
+
+  <div class="starter-template">
+    <h1>Select the phone you want to sell:</h1>
+    <div class="picker-box rounded-lg p-3">
+
+
+      <select class="form-control" name="selectPhone" (onSelectedPhoneModelIdChange)="($event.target.value)">
+        <option *ngFor="let phoneModel of phoneModels">{{ phoneModel.name }}</option>
+      </select>
+
+
+      <select class="form-control" name="selectType" (onSelectedPhoneModelIdSelect)="($event.target.value)">
+        <option *ngFor="let phoneType of phoneTypes">{{ phoneType.name }}</option>
+      </select>
+
+      <div class="result-box">
+        Your phone could be worth<br> $$
+        <span>phoneValue</span>
+      </div>
+    </div>
+    <!-- /.container -->
+  </div>
+
+</div>
