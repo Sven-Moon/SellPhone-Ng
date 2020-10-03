@@ -1,31 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-phone-estimator',
   templateUrl: './app-phone-estimator.component.html',
   styleUrls: ['./app-phone-estimator.component.scss']
 })
-export class AppPhoneEstimatorComponent {
-  title = 'sellphone-ng';
-  phoneModels = [
-    {"id":-1,"name": "--Select Phone Model--"},
-    {"id":1,"name": "iPhone"},
-    {"id":2,"name": "Android"},
-    {"id":3,"name": "Other"}
+export class AppPhoneEstimatorComponent implements OnInit {
+
+  constructor(private title: Title) {}
+
+  ngOnInit() {
+    this.title.setTitle('selphone-ng');
+  }
+
+  selectedType: String = "--Choose Phone Type--";
+
+  phones = [
+    {type: "--Select Phone Type--"},
+    {type: "iPhone", models: [ "iPhone 7", "iPhone 8", "iPhone 9", "iPhone X"]},
+    {type: "Android", models: [ "Pixel 2", "Pixel 3", "Pixel 3a", "Pixel 4"]},
+    {type: "Other", models: [ "Windows", "UPort", "Nokia"]}
    ];
 
-  phoneTypes = [
-    {"id":-1,"name": "Select Phone Model--"},
-    {"id":1,"name": "iPhone 7"},
-    {"id":2,"name": "iPhone 8"},
-    {"id":3,"name": "iPhone 9"},
-    {"id":4,"name": "iPhone X"},
-    {"id":5,"name": "Pixel 1"},
-    {"id":6,"name": "Pixel 2"},
-  ]
+   models: Array<any>;
 
-  public  onSelectedPhoneModelIdChange(id) {
-    console.log(id)
+  public  changeType(type) {
+    this.models = this.phones.find(model => model.type = type).models
   }
   public onSelectedPhoneModelIdSelect(id) {
     console.log(id)

@@ -5,13 +5,15 @@
     <div class="picker-box rounded-lg p-3">
 
 
-      <select class="form-control" name="selectPhone" (onSelectedPhoneModelIdChange)="($event.target.value)">
-        <option *ngFor="let phoneModel of phoneModels">{{ phoneModel.name }}</option>
+      <select class="form-control" placeholder="Phone Type" [(ngModel)]="selectedType" (change)="($event.target.value)">
+        <option>--Choose Phone Type--</option>
+        <option *ngFor="let phone of phones">{{ phone.type }}</option>
       </select>
 
 
-      <select class="form-control" name="selectType" (onSelectedPhoneModelIdSelect)="($event.target.value)">
-        <option *ngFor="let phoneType of phoneTypes">{{ phoneType.name }}</option>
+      <select class="form-control" placeholder="Phone Model" (change)="($event.target.value)">
+        <option>--Choose Phone Model--</option>
+        <option *ngFor="let model of models">{{ model }}</option>
       </select>
 
       <div class="result-box">
