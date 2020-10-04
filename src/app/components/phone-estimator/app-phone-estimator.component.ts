@@ -10,11 +10,11 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
   constructor(private title: Title) {}
 
-  ngOnInit() {
+  ngOnInit() {    
     this.title.setTitle('selphone-ng');
   }
 
-  selectedType: String = "--Choose Phone Type--";
+  selectedType: String = "--Choose Type--";
   selectedModel: String = "--Choose Model--";
 
   phones = [
@@ -25,9 +25,9 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
    models: Array<any>;
 
-  public  changeType(type) {
-    
+  public  changeType(type) {    
     this.models = this.phones.find(list => list.type == type).models
+    this.selectedModel = "--Choose Model--"
   }
   public onSelectedPhoneModelIdSelect(id) {
     console.log(id)
