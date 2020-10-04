@@ -6,9 +6,10 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponents } from './app-components';
+import { FilterPipe } from './pipes/filter.pipe';
 
 @NgModule({
-  declarations: [...AppComponents], //spreader operator
+  declarations: [...AppComponents, FilterPipe], //spreader operator
   imports: [
     BrowserModule,
     AppRoutingModule,

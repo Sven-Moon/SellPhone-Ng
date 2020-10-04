@@ -1,6 +1,16 @@
 <div>
   <form class="form-inline my-2 my-lg-0">
-    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
-    <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+    <div class="form-group">
+      <input class="form-control mr-sm-2" id="searchText" type="text" aria-describedby="search-text" placeholder="Search" aria-label="Search" [(ngModel)]="searchText" autofocus>
+      <div class="dropdown-menu">
+        <ul>
+          <!-- results of ngFor is passed to appFilter with argument searchText -->
+          <li *ngFor="let c of characters | appFilter: searchText">
+            {{c}}
+          </li>
+        </ul>
+        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </div>
+    </div>
   </form>
 </div>

@@ -29,7 +29,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
     this.models = this.phones.find(list => list.type == type).models
     this.selectedModel = "--Choose Model--"
   }
-  public onSelectedPhoneModelIdSelect(id) {
+  public selectModel(id) {
     console.log(id)
   }
 }
