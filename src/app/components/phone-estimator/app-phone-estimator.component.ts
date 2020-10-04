@@ -15,9 +15,9 @@ export class AppPhoneEstimatorComponent implements OnInit {
   }
 
   selectedType: String = "--Choose Phone Type--";
+  selectedModel: String = "--Choose Model--";
 
   phones = [
-    {type: "--Select Phone Type--"},
     {type: "iPhone", models: [ "iPhone 7", "iPhone 8", "iPhone 9", "iPhone X"]},
     {type: "Android", models: [ "Pixel 2", "Pixel 3", "Pixel 3a", "Pixel 4"]},
     {type: "Other", models: [ "Windows", "UPort", "Nokia"]}
@@ -26,7 +26,8 @@ export class AppPhoneEstimatorComponent implements OnInit {
    models: Array<any>;
 
   public  changeType(type) {
-    this.models = this.phones.find(model => model.type = type).models
+    
+    this.models = this.phones.find(list => list.type == type).models
   }
   public onSelectedPhoneModelIdSelect(id) {
     console.log(id)
