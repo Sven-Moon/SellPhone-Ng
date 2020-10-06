@@ -6,15 +6,13 @@
 
 
       <option>--Select Phone Type & Model--</option>
-      <select class="form-control" [(ngModel)]="selectedType" (change)="changeType($event.target.value)">
-        <option [value]="selectedType" selected="selected">{{ selectedType }}</option>
-        <option *ngFor="let phone of phones">{{ phone.type }}</option>
+      <select class="form-control" (change)="onSelectedPhoneTypeChange($event)">
+        <option *ngFor="let phoneType of phoneTypes" id="{{phoneType.id}}">{{ phoneType.name }}</option>
       </select>
 
 
-      <select class="form-control" [(ngModel)]="selectedModel">
-        <option [value]="selectedModel" selected="selected">{{ selectedModel }}</option>
-        <option *ngFor="let model of models">{{ model }}</option>
+      <select class="form-control" (change)="getPhoneModelsCange($event)">
+        <option *ngFor="let phoneModel of phoneModels" id="{{phoneModel.id}}">{{ phoneModel.name }}</option>
       </select>
 
       <div class="result-box">
