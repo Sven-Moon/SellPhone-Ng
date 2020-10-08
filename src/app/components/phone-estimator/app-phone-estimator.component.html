@@ -11,13 +11,13 @@
       </select>
 
 
-      <select class="form-control" (change)="getPhoneModelsCange($event)">
+      <select class="form-control" (change)="onSelectedPhoneModelChange($event)">
         <option *ngFor="let phoneModel of phoneModels" id="{{phoneModel.id}}">{{ phoneModel.name }}</option>
       </select>
 
-      <div class="result-box">
+      <div class="result-box" *ngIf="isValueBoxVisible">
         Your phone could be worth<br> $$
-        <span>phoneValue</span>
+        <span>{{phoneMaxValue}}</span>
       </div>
     </div>
     <!-- /.container -->
