@@ -7,9 +7,10 @@ import { AppComponent } from './components/app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponents } from './app-components';
 import { FilterPipe } from './pipes/filter.pipe';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 
 @NgModule({
-  declarations: [...AppComponents, FilterPipe], //spreader operator
+  declarations: [...AppComponents, FilterPipe, SearchResultsComponent], //spreader operator
   imports: [
     BrowserModule,
     AppRoutingModule,
