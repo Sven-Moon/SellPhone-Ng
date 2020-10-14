@@ -1,0 +1,8 @@
+recreate the lost dynamic dropdown selection behavior
+search, sort of make it work
+api mock response (maybe)
+
+Oct 12 to ... 
+Try Mock api -> Observables
+  (http interceptors) ... implements proper services
+State management (ngrx, redux)

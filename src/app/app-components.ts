@@ -5,6 +5,7 @@ import { AppHeaderComponent } from './components/header/app-header.component';
 import { AppPhoneEstimatorComponent } from './components/phone-estimator/app-phone-estimator.component';
 import { AppSearchComponent } from './components/search/app-search.component';
 import { AppMainPanelComponent } from './components/main-panel/app-main-panel.component';
+import { SearchResultsComponent } from './components/search-results/search-results.component';
 
 
 export const AppComponents = [
@@ -13,5 +14,6 @@ export const AppComponents = [
   AppFooterComponent,
   AppPhoneEstimatorComponent, 
   AppSearchComponent, 
-  AppMainPanelComponent
+  AppMainPanelComponent,
+  SearchResultsComponent
 ];

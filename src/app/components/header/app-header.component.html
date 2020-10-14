@@ -22,6 +22,6 @@
         </div>
       </li>
     </ul>
-    <app-search></app-search>
+    <app-search (onSearchResultsReceived)="onSearchResults($event)"></app-search>
   </div>
 </nav>
