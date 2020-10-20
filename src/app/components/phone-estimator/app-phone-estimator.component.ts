@@ -67,7 +67,9 @@ export class AppPhoneEstimatorComponent implements OnInit {
     }
   }
   private onPhoneModelSelect(id:number):string{
-    this.isValueBoxVisible = true;
+    if (id > 0 ) {
+    this.isValueBoxVisible = true;}
+    else { this.isValueBoxVisible = false;}
     return Math.round(id*50 + 50).toString();
   }
 }
