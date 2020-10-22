@@ -1,4 +1,5 @@
-import { Component, Output, EventEmitter } from '@angular/core';
+import { Component } from '@angular/core';
+import { SearchService } from './search.service';
 
 @Component({
   selector: 'app-search',
@@ -6,10 +7,10 @@ import { Component, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./app-search.component.scss']
 })
 export class AppSearchComponent {
-  
+  constructor(private searchService: SearchService ) { }
+    
   searchText:string = '';
-  searchResults:Array<string>=[];
-  @Output() onSearchResultsReceived: EventEmitter<any> = new EventEmitter();
+  searchResults:any=[];
 
   public onSearchRequested() {
     // debugger;    
@@ -18,17 +19,17 @@ export class AppSearchComponent {
     if (!this.searchText) { // don't call the api unless there is actually a search 
       this.searchResults=[];
     } else {
-      // to do: create search service that calls API 
-      this.searchResults = this.getSearchResults(this.searchText);  
+      this.searchService.getSearchResults(this.searchText).subscribe(
+        data=>{
+          this.searchResults=data;
+          console.log(data); 
+        }
+      );  
     }
-    this.onSearchResultsReceived.emit(this.searchResults);
   }
 
-  private getSearchResults(searchText:string):Array<string> {
-    // mock API call
-    let searchArray = [
-      'android','iphone','windows','iphone 7', 'iphone 8','iphone 9', 'iphone X', 'pixel 1', 'pixel 2', 'pixel 3', 'pixel 4', 'pixel 3a', 'pixel 4a', 'LG curve', 'lg droid'
-    ];
-    return searchArray;
-  }
+  // private getSearchResults(searchText:string):Array<string> {
+  //   // mock API call
+  //   return searchArray;
+  // }
 }

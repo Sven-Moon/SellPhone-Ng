@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-main-panel',
@@ -6,5 +6,4 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./app-main-panel.component.scss']
 })
 export class AppMainPanelComponent {
-  @Input() searchResults:Array<string>=[];
 }
