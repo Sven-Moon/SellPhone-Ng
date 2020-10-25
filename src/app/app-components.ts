@@ -5,15 +5,15 @@ import { AppHeaderComponent } from './components/header/app-header.component';
 import { AppPhoneEstimatorComponent } from './components/phone-estimator/app-phone-estimator.component';
 import { AppSearchComponent } from './components/search/app-search.component';
 import { AppMainPanelComponent } from './components/main-panel/app-main-panel.component';
-import { SearchResultsComponent } from './components/search-results/search-results.component';
+import { SearchResultsComponent } from './components/search-results/app-search-results.component';
 
 
 export const AppComponents = [
   AppComponent,
   AppHeaderComponent,
   AppFooterComponent,
-  AppPhoneEstimatorComponent, 
-  AppSearchComponent, 
+  AppPhoneEstimatorComponent,
+  AppSearchComponent,
   AppMainPanelComponent,
   SearchResultsComponent
 ];

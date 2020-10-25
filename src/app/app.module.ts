@@ -8,7 +8,7 @@ import { AppComponent } from './components/app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponents } from './app-components';
 import { FilterPipe } from './pipes/filter.pipe';
-import { SearchService } from './components/search/search.service';
+import { SearchService } from './shared/services/search.service';
 
 @NgModule({
   declarations: [...AppComponents, FilterPipe ], //spreader operator
@@ -16,7 +16,7 @@ import { SearchService } from './components/search/search.service';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule, 
+    FormsModule,
     HttpClientModule
   ],
   providers: [
