@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
-import { PhoneType } from '../app/models/PhoneType';
-import { PhoneModel } from '../app/models/PhoneModel';
+import { PhoneType } from '../../models/PhoneType';
+import { PhoneModel } from '../../models/PhoneModel';
 
 
 @Component({
@@ -13,7 +13,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
   constructor(private title: Title) {}
 
-  ngOnInit() {    
+  ngOnInit() {
     this.title.setTitle('selphone-ng');
   }
 
@@ -33,7 +33,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   public onSelectedPhoneTypeChange(e:any):void {
     console.log(e);
     let typeId = e.target.selectedOptions[0].id;
-    console.log("newly selected phoneType is: " + typeId);    
+    console.log("newly selected phoneType is: " + typeId);
     this.phoneModels = this.getPhoneModelsByType(typeId);
   }
 

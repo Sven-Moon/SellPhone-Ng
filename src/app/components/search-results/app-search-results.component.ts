@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchService } from 'src/app/shared/services/search.service';
-import { SearchResult } from '../app/models/SearchResult';
+import { SearchService } from 'src/app/services/search.service';
+import { SearchResult } from '../../models/SearchResult';
 
 @Component({
   selector: 'app-search-results',
@@ -15,10 +15,11 @@ export class SearchResultsComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  public getSearchResults():void {
-    this.searchService.getSearchResults().subscribe(data =>
-      {this.searchResults = data;
-      console.log(this.searchResults);}
-    )
-  }
+
+  // public getSearchResults():void {
+  //   this.searchService.getSearchResults().subscribe(data =>
+  //     {this.searchResults = data;
+  //     console.log(this.searchResults);}
+  //   )
+  // }
 }

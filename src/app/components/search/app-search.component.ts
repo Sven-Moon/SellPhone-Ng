@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Observable, observable, fromEvent } from 'rxjs';
-import { SearchService } from '../../shared/services/search.service';
+import { SearchService } from '../../services/search.service';
 
 @Component({
   selector: 'app-search',
@@ -13,22 +13,20 @@ export class AppSearchComponent {
   searchText:string;
   searchTextObs:Observable<string>;
 
+
    public onSearchRequested() {
     // debugger;
-    console.log("value of searchText (may be): "+this.searchText);
+    console.log("value of searchText (may be): "
+      +this.searchText);
 
     if (!this.searchText) {
       // don't call the api unless there is a search
       return;
       // update the searchText value in the search service
-    } else {this.searchService.getSearchText(this.searchText)
-
-      // this.searchService.getSearchResults(this.searchText).subscribe(
-      //   data=>{
-      //     this.searchResults=data;
-      //     console.log(data);
-      //   }
-      // );
+    } else {
+      const searchResults = this.searchService
+        .getSearchResults(this.searchText);
+      console.log(searchResults);
     }
   }
 
