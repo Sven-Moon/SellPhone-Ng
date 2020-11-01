@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { SearchService } from 'src/app/services/search.service';
+import { SearchResults } from 'src/app/models/SearchResults';
 import { SearchResult } from '../../models/SearchResult';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-search-results',
@@ -8,18 +11,15 @@ import { SearchResult } from '../../models/SearchResult';
   styleUrls: ['./app-search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  searchResults:any=[];
+  searchResults$:Observable<SearchResults>;
   searchText:string='';
 
-  constructor(private searchService: SearchService) { }
+  constructor(private store: Store<SearchResults>) { }
 
   ngOnInit(): void {
   }
 
-  // public getSearchResults():void {
-  //   this.searchService.getSearchResults().subscribe(data =>
-  //     {this.searchResults = data;
-  //     console.log(this.searchResults);}
-  //   )
-  // }
+  public getSearchResults():void {
+    this.store.select(store => store.results)
+  }
 }

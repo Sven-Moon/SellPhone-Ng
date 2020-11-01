@@ -43,7 +43,7 @@ export class SearchService {
     }
   ]};
 
-constructor(private http:HttpClient ) {  }
+constructor( ) {  }
 
   // public getSearchResults() {
   //   return this.http.get('data/fakeDB.json')

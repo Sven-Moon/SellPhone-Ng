@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
-import { Observable, observable, fromEvent } from 'rxjs';
-import { SearchService } from '../../services/search.service';
+import { submitSearch } from 'src/app/actions/search.actions';
+import { SearchResults } from 'src/app/models/SearchResults';
+
+export interface SearchText {
+  searchText: string;
+}
 
 @Component({
   selector: 'app-search',
@@ -8,30 +12,21 @@ import { SearchService } from '../../services/search.service';
   styleUrls: ['./app-search.component.scss']
 })
 export class AppSearchComponent {
-  constructor(private searchService: SearchService ) { }
-
   searchText:string;
-  searchTextObs:Observable<string>;
-
+  // should store be called in the constructor to update
+  // searchResults or can the action just go take care of that?
+  constructor() { }
 
    public onSearchRequested() {
-    // debugger;
     console.log("value of searchText (may be): "
       +this.searchText);
 
     if (!this.searchText) {
-      // don't call the api unless there is a search
-      return;
-      // update the searchText value in the search service
+      return;  // don't call the api unless there is a search
     } else {
-      const searchResults = this.searchService
-        .getSearchResults(this.searchText);
-      console.log(searchResults);
+      // Why does it think the passed object is a string?
+      submitSearch({searchText:this.searchText})
+
     }
   }
-
-  // private getSearchResults(searchText:string):Array<string> {
-  //   // mock API call
-  //   return searchArray;
-  // }
 }
