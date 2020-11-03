@@ -1,5 +1,5 @@
-<div *ngIf="searchResults.length>0">
+<div *ngIf="searchResults && searchResults.results.length>0">
   Search results:
-  <div class="dropdown-item" *ngFor="let searchResult of searchResults">{{searchResult.name}}
+  <div class="dropdown-item" *ngFor="let searchResult of searchResults.results">{{searchResult.name}}
   </div>
 </div>

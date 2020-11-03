@@ -9,6 +9,10 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponents } from './app-components';
 import { FilterPipe } from './pipes/filter.pipe';
 import { SearchService } from './services/search.service';
+import { AppServices } from './app-services';
+import { AppStores } from './app-stores';
+import { AppActions } from './app-actions';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [...AppComponents, FilterPipe ], //spreader operator
@@ -17,10 +21,12 @@ import { SearchService } from './services/search.service';
     AppRoutingModule,
     NgbModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot(AppStores)
   ],
   providers: [
-    SearchService
+    ...AppServices,
+    ...AppActions
   ],
   bootstrap: [AppComponent]
 })

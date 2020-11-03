@@ -11,15 +11,22 @@ import { Observable } from 'rxjs';
   styleUrls: ['./app-search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  searchResults$:Observable<SearchResults>;
+  searchResults:SearchResults;
+  private searchResultsSubscription;
   searchText:string='';
 
-  constructor(private store: Store<SearchResults>) { }
+  constructor(private _store: Store<any>) { }
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
+    //search results matches the name of the function in the store
+    this.searchResultsSubscription = this._store.select('searchResults').subscribe((sr: SearchResults) => {
+      debugger
+      this.searchResults = sr;
+    })
   }
 
-  public getSearchResults():void {
-    this.store.select(store => store.results)
+  ngOnDestory() {
+    this.searchResultsSubscription.unsubscribe();
   }
+
 }
