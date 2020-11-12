@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchResults } from 'src/app/models/SearchResults';
-import { SearchResult } from '../../models/SearchResult';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
 
 
 @Component({
@@ -18,9 +16,8 @@ export class SearchResultsComponent implements OnInit {
   constructor(private _store: Store<any>) { }
 
   public ngOnInit(): void {
-    //search results matches the name of the function in the store
+    //.select('searchResults') matches the name of the function in the store
     this.searchResultsSubscription = this._store.select('searchResults').subscribe((sr: SearchResults) => {
-      debugger
       this.searchResults = sr;
     })
   }

@@ -13,6 +13,8 @@ import { AppServices } from './app-services';
 import { AppStores } from './app-stores';
 import { AppActions } from './app-actions';
 import { StoreModule } from '@ngrx/store';
+import { AppMockInterceptors } from './app-mocks';
+import { environment } from 'src/environments/environment';
 
 @NgModule({
   declarations: [...AppComponents, FilterPipe ], //spreader operator
@@ -26,7 +28,8 @@ import { StoreModule } from '@ngrx/store';
   ],
   providers: [
     ...AppServices,
-    ...AppActions
+    ...AppActions,
+    ...(environment.useMocking ? AppMockInterceptors : [])
   ],
   bootstrap: [AppComponent]
 })
