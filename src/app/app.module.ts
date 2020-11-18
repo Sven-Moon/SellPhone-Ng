@@ -8,7 +8,6 @@ import { AppComponent } from './components/app/app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppComponents } from './app-components';
 import { FilterPipe } from './pipes/filter.pipe';
-import { SearchService } from './services/search.service';
 import { AppServices } from './app-services';
 import { AppStores } from './app-stores';
 import { AppActions } from './app-actions';

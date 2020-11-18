@@ -33,7 +33,7 @@ export class EstimatorModelActions {
     this._store.dispatch({ type: CLEAR_PHONE_MODELS })
   }
 
-  private getPhoneModelsByType(typeId:number):Array<PhoneModel> {
+  public getPhoneModelsByType(typeId:number):Array<PhoneModel> {
 
     if (typeId == 1) {
       return [
