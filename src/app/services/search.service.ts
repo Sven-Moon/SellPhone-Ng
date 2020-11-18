@@ -8,8 +8,6 @@ import { SearchResults } from '../models/SearchResults';
   providedIn: 'root'
 })
 export class SearchService {
-  // searchTextObs = new Observable(data =>
-  //   data.next(this.searchText));
 
   private searchResultsMockData:SearchResults = {
     results: [

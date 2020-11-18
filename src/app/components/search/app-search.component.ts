@@ -20,8 +20,6 @@ export class AppSearchComponent {
   ) { }
 
    public onSearchRequested() {
-    console.log("value of searchText (may be): "
-      +this.searchText);
 
     if (!this.searchText) {
       this.searchActions.clearSearch();

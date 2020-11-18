@@ -3,12 +3,12 @@ import { SearchResults } from '../models/SearchResults';
 
 export type State = SearchResults;
 
- const initialState = null;
+const initialState = null;
 
-  // action types
-  export const
-    UPDATE_SEARCH_RESULTS = 'UPDATE_SEARCH_RESULTS',
-    CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
+// action types
+export const
+  UPDATE_SEARCH_RESULTS = 'UPDATE_SEARCH_RESULTS',
+  CLEAR_SEARCH_RESULTS = 'CLEAR_SEARCH_RESULTS';
 
 export class UpdateSearchResultsAction implements Action {
   readonly type = UPDATE_SEARCH_RESULTS;

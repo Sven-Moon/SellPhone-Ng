@@ -17,6 +17,7 @@ export class MockSearchInterceptor implements HttpInterceptor {
     return next.handle(req);
   }
 
+  // probably processes the bulk data returned... maybe
   private processSearchMock(searchRequest: string): SearchResults {
     return this.getSearchResultsMockData(searchRequest);
   }
