@@ -22,11 +22,23 @@ export class EstimatorModelActions {
     //     type: UPDATE_PHONE_MODELS,
     //     payload: phoneModels
     //   }))
-    const phoneModels = this.getPhoneModelsByType(typeId);
-    this._store.dispatch({
-      type: UPDATE_PHONE_MODELS,
-      payload: phoneModels
-    })
+
+    const url = '/api/estimator-models';
+    const body = typeId;
+    const httpOptions = {};
+
+    this._http.post(url,body,httpOptions)
+      .subscribe((phoneModels) => {
+        this._store.dispatch({
+          type: UPDATE_PHONE_MODELS,
+          payload: phoneModels
+        })
+      })
+    // const phoneModels = this.getPhoneModelsByType(typeId);
+    // this._store.dispatch({
+    //   type: UPDATE_PHONE_MODELS,
+    //   payload: phoneModels
+    // })
   }
 
   public clearPhoneModels():void {

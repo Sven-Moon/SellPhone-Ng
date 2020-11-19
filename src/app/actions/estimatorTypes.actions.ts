@@ -12,16 +12,15 @@ export class EstimatorTypeActions {
   ) {}
 
   public getPhoneTypes():void {
-    const url: string = 'api/estimator';
+    const url: string = 'api/estimator-types';
     const body: string = '';
     const httpOptions = {};
-
     this._http.post<PhoneTypes>(url,body,httpOptions)
-    .subscribe((phoneTypes:PhoneTypes) =>
+    .subscribe((phoneTypes:PhoneTypes) => {
       this._store.dispatch({
         type: GET_PHONE_TYPES,
-        payload: phoneTypes
-      })
+        payload: phoneTypes})
+      }
     )
     // const phoneTypes = this.getPhoneTypesMockData()
     // this._store.dispatch( {
