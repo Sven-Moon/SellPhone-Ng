@@ -19,7 +19,7 @@ export class AppSearchComponent {
     private searchActions: SearchActions
   ) { }
 
-   public onSearchRequested() {
+   public onSearchRequested():void {
 
     if (!this.searchText) {
       this.searchActions.clearSearch();

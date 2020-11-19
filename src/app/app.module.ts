@@ -16,7 +16,9 @@ import { AppMockInterceptors } from './app-mocks';
 import { environment } from 'src/environments/environment';
 
 @NgModule({
-  declarations: [...AppComponents, FilterPipe ], //spreader operator
+  declarations: [
+    ...AppComponents,
+    FilterPipe ],
   imports: [
     BrowserModule,
     AppRoutingModule,

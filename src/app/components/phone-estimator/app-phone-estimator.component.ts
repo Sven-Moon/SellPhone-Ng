@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { PhoneModel } from '../../models/PhoneModel';
 import { EstimatorService } from 'src/app/services/estimator.service';
-import { EstimatorTypeActions } from 'src/app/actions/estimatorTypes.actions';
 import { Store } from '@ngrx/store';
 import { PhoneTypes } from 'src/app/models/PhoneTypes';
 import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
@@ -17,11 +16,16 @@ export class AppPhoneEstimatorComponent implements OnInit {
   private estimatorTypeSubscription;
   private estimatorModelSubscription;
   phoneTypes:PhoneTypes;
+  selectedType: String = "--Choose Type--";
+  selectedModel: String = "--Choose Model--";
+  phoneModels:Array<PhoneModel> = [];
+  phoneMaxValue: String = "";
+  typeId:number;
+  isValueBoxVisible: boolean = false;
 
   constructor(
     private _title: Title,
     private _estimatorService: EstimatorService,
-    private _estimatorTypeActions: EstimatorTypeActions,
     private _estimatorModelActions: EstimatorModelActions,
     private _store: Store<any>
     // if you miss the <any>, it won't recognize the selected Store function
@@ -29,61 +33,36 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
   ngOnInit() {
     this._title.setTitle('sellphone-ng');
+
     this.estimatorTypeSubscription = this._store.select('estimatorTypes')
-    .subscribe((results:PhoneTypes) => {
-      this.phoneTypes = results;
+    .subscribe((obs:PhoneTypes) => {
+      this.phoneTypes = obs;
     });
+
+    this.estimatorModelSubscription = this._store.select('estimatorModels')
+    .subscribe((obs:Array<PhoneModel>) => {
+      this.phoneModels = obs;
+    })
   }
 
-  selectedType: String = "--Choose Type--";
-  selectedModel: String = "--Choose Model--";
-  phoneModels:Array<PhoneModel> = [];
-  phoneMaxValue: String = "";
-  isValueBoxVisible: boolean = false;
-
-  // phoneTypes:Array<PhoneType> = [
-  //   {"id": -1, "name": "-- Select Phone type -- "},
-  //   {"id": 1, "name": "iPhone "},
-  //   {"id": 2, "name": "Android "},
-  //   {"id": 3, "name": "Other"},
-  //  ];
-
   public onSelectedPhoneTypeChange(e:any):void {
-    let typeId = e.target.selectedOptions[0].id;
+    this.typeId = e.target.selectedOptions[0].id;
     // console.log("newly selected phoneType is: " + typeId);
-    this.phoneModels = this._estimatorModelActions.getPhoneModelsByType(typeId);
+    if (this.typeId > 0){
+      this._estimatorModelActions.getPhoneModels(this.typeId);
+    } else {
+      this._estimatorModelActions.clearPhoneModels();
+    }
+    this.onPhoneModelSelect(this.typeId);
   }
 
   public onSelectedPhoneModelChange(e):void {
     let modelId = e.target.selectedOptions[0].id;
     console.log("new phone Model ID is: " + modelId);
-    this.phoneMaxValue = this._estimatorService.onPhoneModelSelect(modelId);
+    this.phoneMaxValue = this.onPhoneModelSelect(modelId);
   }
 
-  // public getPhoneModelsByType(typeId:number):Array<PhoneModel> {
-  //   console.log(typeId);
-  //   if (typeId == 1) {
-  //     return [
-  //       { "id": 1, "name": "iPhone 7" },
-  //       { "id": 2, "name": "iPhone 8" },
-  //       { "id": 3, "name": "iPhone 9" },
-  //       { "id": 4, "name": "iPhone X" }
-  //     ]
-  //   } else if (typeId == 2) {
-  //     return [
-  //       { "id": 5, "name": "Pixel 1" },
-  //       { "id": 6, "name": "Pixel 2" },
-  //     ]
-  //   } else if (typeId == 3) {
-  //     return [
-  //       { "id": 5, "name": "Windows" },
-  //       { "id": 6, "name": "Uport" },
-  //     ]
-  //   } else {
-  //     return [];
-  //   }
-  // }
-
+  // Does not update value on initial type select
   private onPhoneModelSelect(id:number):string{
     if (id > 0 ) {
     this.isValueBoxVisible = true;}

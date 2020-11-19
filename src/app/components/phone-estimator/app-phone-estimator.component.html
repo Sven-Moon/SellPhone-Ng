@@ -5,7 +5,7 @@
     <div class="picker-box rounded-lg p-3">
 
 
-      <option>--Select Phone Type & Model--</option>
+      <option selected disabled hidden>--Select Phone Type & Model--</option>
       <select class="form-control" (change)="onSelectedPhoneTypeChange($event)">
         <option *ngFor="let phoneType of phoneTypes.results" id="{{phoneType.id}}">{{ phoneType.name }}</option>
       </select>
