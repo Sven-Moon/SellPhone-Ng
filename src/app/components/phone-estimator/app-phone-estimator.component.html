@@ -4,14 +4,15 @@
     <h1>Select the phone you want to sell:</h1>
     <div class="picker-box rounded-lg p-3">
 
-
-      <option selected disabled hidden>--Select Phone Type & Model--</option>
+      <span>--Select Phone Type & Model--</span>
       <select class="form-control" (change)="onSelectedPhoneTypeChange($event)">
+        <option selected disabled hidden>-- Phone Type --</option>
         <option *ngFor="let phoneType of phoneTypes.results" id="{{phoneType.id}}">{{ phoneType.name }}</option>
       </select>
 
 
       <select class="form-control" (change)="onSelectedPhoneModelChange($event)">
+        <!-- <option selected disabled hiddent>--Select Phone Model--</option> -->
         <option *ngFor="let phoneModel of phoneModels" id="{{phoneModel.id}}">{{ phoneModel.name }}</option>
       </select>
 

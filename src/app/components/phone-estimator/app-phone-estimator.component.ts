@@ -50,10 +50,11 @@ export class AppPhoneEstimatorComponent implements OnInit {
     // console.log("newly selected phoneType is: " + typeId);
     if (this.typeId > 0){
       this._estimatorModelActions.getPhoneModels(this.typeId);
-    } else {
-      this._estimatorModelActions.clearPhoneModels();
     }
-    this.onPhoneModelSelect(this.typeId);
+    // else {
+    //   this._estimatorModelActions.clearPhoneModels();
+    // }
+    // this.onPhoneModelSelect(this.typeId);
   }
 
   public onSelectedPhoneModelChange(e):void {
