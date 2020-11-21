@@ -24,7 +24,6 @@ export class MockEstimatorTypesInterceptor implements HttpInterceptor {
   private getPhoneTypesMockData ():PhoneTypes {
     return {
       results: [
-      {"id": -1, "name": "-- Select Phone type -- "},
       {"id": 1, "name": "iPhone "},
       {"id": 2, "name": "Android "},
       {"id": 3, "name": "Other"},

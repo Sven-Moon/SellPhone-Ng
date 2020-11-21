@@ -16,8 +16,8 @@ export class AppPhoneEstimatorComponent implements OnInit {
   private estimatorTypeSubscription;
   private estimatorModelSubscription;
   phoneTypes:PhoneTypes;
-  selectedType: String = "--Choose Type--";
-  selectedModel: String = "--Choose Model--";
+  selectedType: String;
+  selectedModel: String;
   phoneModels:Array<PhoneModel> = [];
   phoneMaxValue: String = "";
   typeId:number;
