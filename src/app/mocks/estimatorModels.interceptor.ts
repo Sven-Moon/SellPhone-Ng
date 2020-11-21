@@ -2,7 +2,7 @@ import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } fr
 import { Injectable } from "@angular/core";
 import { Store } from '@ngrx/store';
 import { Observable, of } from 'rxjs';
-import { PhoneModel } from '../models/phoneModel';
+import { PhoneModels } from '../models/phoneModels';
 
 @Injectable()
 export class MockEstimatorModelsInterceptor {
@@ -18,31 +18,31 @@ export class MockEstimatorModelsInterceptor {
     return next.handle(req);
   }
 
-  private processModelMock(typeId):Array<PhoneModel> {
+  private processModelMock(typeId):PhoneModels {
     return this.getPhoneModelsByType(typeId);
   }
 
-  private getPhoneModelsByType(typeId:number):Array<PhoneModel> {
+  private getPhoneModelsByType(typeId:number):PhoneModels {
 
     if (typeId == 1) {
-      return [
+      return {results:[
         { "id": 1, "name": "iPhone 7" },
         { "id": 2, "name": "iPhone 8" },
         { "id": 3, "name": "iPhone 9" },
         { "id": 4, "name": "iPhone X" }
-      ]
+      ]}
     } else if (typeId == 2) {
-      return [
+      return {results:[
         { "id": 5, "name": "Pixel 1" },
         { "id": 6, "name": "Pixel 2" },
-      ]
+      ]}
     } else if (typeId == 3) {
-      return [
+      return {results:[
         { "id": 5, "name": "Windows" },
         { "id": 6, "name": "Uport" },
-      ]
+      ]}
     } else {
-      return [];
+      return {results:[{"id":-1,"name": ""}]};
     }
   }
 

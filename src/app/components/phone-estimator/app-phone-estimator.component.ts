@@ -5,6 +5,7 @@ import { EstimatorService } from 'src/app/services/estimator.service';
 import { Store } from '@ngrx/store';
 import { PhoneTypes } from 'src/app/models/PhoneTypes';
 import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
+import { PhoneModels } from 'src/app/models/phoneModels';
 
 
 @Component({
@@ -18,7 +19,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   phoneTypes:PhoneTypes;
   selectedType: String;
   selectedModel: String;
-  phoneModels:Array<PhoneModel> = [];
+  phoneModels:PhoneModels = {results:[{"id":-1,"name":""}]};
   phoneMaxValue: String = "";
   typeId:number;
   isValueBoxVisible: boolean = false;
@@ -40,7 +41,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
     });
 
     this.estimatorModelSubscription = this._store.select('estimatorModels')
-    .subscribe((obs:Array<PhoneModel>) => {
+    .subscribe((obs:PhoneModels) => {
       this.phoneModels = obs;
     })
   }
