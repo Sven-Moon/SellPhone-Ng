@@ -4,17 +4,19 @@ import { PhoneTypes } from '../models/PhoneTypes';
 export type State = PhoneTypes;
 
 const initialState = null;
+// todo: what to do to make an array work properly throughout the application
+// const initialState = [];
 
-export const GET_PHONE_TYPES = 'GET_PHONE_TYPES';
+export const UPDATE_PHONE_TYPES = 'UPDATE_PHONE_TYPES';
 
 export class getPhoneTypesAction implements Action {
-  readonly type = GET_PHONE_TYPES;
+  readonly type = UPDATE_PHONE_TYPES;
   payload: PhoneTypes;
 }
 
 export function estimatorTypes(state: State = initialState, action: getPhoneTypesAction):State {
   switch (action.type) {
-    case GET_PHONE_TYPES:
+    case UPDATE_PHONE_TYPES:
       return action.payload;
 
     default:

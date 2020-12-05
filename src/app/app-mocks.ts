@@ -5,6 +5,5 @@ import { MockSearchInterceptor } from './mocks/search.interceptor';
 
 export const AppMockInterceptors = [
   { provide: HTTP_INTERCEPTORS, useClass: MockSearchInterceptor, multi:true },
-  { provide: HTTP_INTERCEPTORS, useClass: MockEstimatorTypesInterceptor, multi:true },
-  { provide: HTTP_INTERCEPTORS, useClass: MockEstimatorModelsInterceptor, multi:true }
+  { provide: HTTP_INTERCEPTORS, useClass: MockEstimatorTypesInterceptor, multi:true }
 ]

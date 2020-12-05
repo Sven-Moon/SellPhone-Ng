@@ -36,13 +36,13 @@ export class AppPhoneEstimatorComponent implements OnInit {
     this._title.setTitle('sellphone-ng');
 
     this.estimatorTypeSubscription = this._store.select('estimatorTypes')
-    .subscribe((obs:PhoneTypes) => {
-      this.phoneTypes = obs;
+    .subscribe((typesList:PhoneTypes) => {
+      this.phoneTypes = typesList;
     });
 
     this.estimatorModelSubscription = this._store.select('estimatorModels')
-    .subscribe((obs:PhoneModels) => {
-      this.phoneModels = obs;
+    .subscribe((modelsList:PhoneModels) => {
+      this.phoneModels = modelsList;
     })
   }
 
