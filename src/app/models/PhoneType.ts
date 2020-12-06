@@ -1,4 +1,4 @@
 export class PhoneType {
-  id: number; 
-  name: String; 
+  typeId: number;
+  name: String;
 }

@@ -12,7 +12,7 @@
 
 
       <select class="form-control" (change)="onSelectedPhoneModelChange($event)">
-        <option *ngFor="let phoneModel of phoneModels.results" id="{{phoneModel.id}}">{{ phoneModel.name }}</option>
+        <option *ngFor="let phoneModel of phoneModels.models" id="{{phoneModel.id}}">{{ phoneModel.name }}</option>
       </select>
 
       <div class="result-box" *ngIf="isValueBoxVisible">
