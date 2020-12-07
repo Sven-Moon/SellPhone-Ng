@@ -6,6 +6,7 @@ import { Store } from '@ngrx/store';
 import { PhoneTypes } from 'src/app/models/PhoneTypes';
 import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
 import { PhoneModels } from 'src/app/models/phoneModels';
+import { StaticData } from 'src/app/models/StaticData';
 
 
 @Component({
@@ -16,10 +17,12 @@ import { PhoneModels } from 'src/app/models/phoneModels';
 export class AppPhoneEstimatorComponent implements OnInit {
   private estimatorTypeSubscription;
   private estimatorModelSubscription;
+  private staticDataSubscription;
   phoneTypes:PhoneTypes;
   selectedType: String;
   selectedModel: String;
   phoneModels:PhoneModel[] = [{"modelId":-1,"name":""}];
+  staticData:StaticData = undefined;
   phoneMaxValue: String = "";
   typeId:number;
   isValueBoxVisible: boolean = false;
@@ -35,27 +38,34 @@ export class AppPhoneEstimatorComponent implements OnInit {
   ngOnInit() {
     this._title.setTitle('sellphone-ng');
 
-    this.estimatorTypeSubscription = this._store.select('estimatorTypes')
+    this.estimatorTypeSubscription = this
+    ._store.select('estimatorTypes')
     .subscribe((typesList:PhoneTypes) => {
       this.phoneTypes = typesList;
     });
 
-    this.estimatorModelSubscription = this._store.select('estimatorModels')
+    this.estimatorModelSubscription = this
+    ._store.select('estimatorModels')
     .subscribe((modelsList:PhoneModel[]) => {
       this.phoneModels = modelsList;
-    })
+    });
+
+    this.staticDataSubscription = this
+    ._store.select('staticData')
+    .subscribe((staticData: StaticData) => {
+      this.staticData = staticData;
+    });
   }
 
   public onSelectedPhoneTypeChange(e:any):void {
     this.typeId = e.target.selectedOptions[0].id;
     console.log("newly selected phoneType is: " + this.typeId);
+    // TO DO: access Static Data for model array
     if (this.typeId > 0){
       this._estimatorModelActions.getPhoneModels(this.typeId);
     }
-    // else {
-    //   this._estimatorModelActions.clearPhoneModels();
-    // }
-    // this.onPhoneModelSelect(this.typeId);
+    console.log('this is staticData:')
+    console.log(this.staticData);
   }
 
   public onSelectedPhoneModelChange(e):void {

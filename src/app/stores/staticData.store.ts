@@ -1,7 +1,7 @@
 import { Action } from '@ngrx/store';
 import { StaticData } from '../models/StaticData';
 
-export type StaticState = StaticData;
+export type StaticDataState = StaticData;
 
 const initialState = undefined;
 
@@ -13,6 +13,6 @@ export class LoadStaticDataAction implements Action {
 }
 
 // Reducer
-export function staticData(_,action:LoadStaticDataAction): StaticState {
+export function staticData(_,action:LoadStaticDataAction): StaticDataState {
   return action.payload;
 }

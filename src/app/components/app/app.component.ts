@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
 import { EstimatorTypeActions } from 'src/app/actions/estimatorTypes.actions';
 import { StaticDataActions } from 'src/app/actions/staticData.actions';
@@ -12,7 +13,7 @@ export class AppComponent {
   constructor (
     private _estimatorTypeActions: EstimatorTypeActions,
     private _estimatorModelActions: EstimatorModelActions,
-    private _staticDataActions: StaticDataActions
+    private _staticDataActions: StaticDataActions,
   ) {}
 
   public ngOnInit():void {

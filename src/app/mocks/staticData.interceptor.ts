@@ -5,11 +5,13 @@ import { StaticData } from '../models/StaticData';
 
 @Injectable()
 export class MockStaticDataInterceptor implements HttpInterceptor {
+
   public intercept(req: HttpRequest<any>, next: HttpHandler):
   Observable<HttpEvent<any>> {
     if (req.method === 'POST' && req.url == 'api/static-data') {
-      const staticDta = this.getMockStaticData();
+      const staticData = this.getMockStaticData();
       const response = new HttpResponse({
+        body: staticData
       });
       return of(response);
     }

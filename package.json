@@ -26,6 +26,7 @@
     "@angular/router": "~9.1.9",
     "@ng-bootstrap/ng-bootstrap": "^6.2.0",
     "@ngrx/store": "^10.0.1",
+    "@ngrx/store-devtools": "^10.1.0",
     "bootstrap": "^4.5.2",
     "jquery": "^3.5.1",
     "popper.js": "^1.16.1",
