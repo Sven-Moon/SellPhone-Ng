@@ -2,7 +2,7 @@ import { Action } from '@ngrx/store';
 import { PhoneModels } from '../models/phoneModels';
 
 export type State = PhoneModels;
-const initialState = {results:[{"id":-1,"name":""}]};
+const initialState = {"typeId": -1, models:[{"modelId":-1,"name":""}]};
 
 export const
   UPDATE_PHONE_MODELS = 'UPDATE_PHONE_MODELS',

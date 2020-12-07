@@ -19,7 +19,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   phoneTypes:PhoneTypes;
   selectedType: String;
   selectedModel: String;
-  phoneModels:PhoneModels = {results:[{"id":-1,"name":""}]};
+  phoneModels:PhoneModel[] = [{"modelId":-1,"name":""}];
   phoneMaxValue: String = "";
   typeId:number;
   isValueBoxVisible: boolean = false;
@@ -41,14 +41,14 @@ export class AppPhoneEstimatorComponent implements OnInit {
     });
 
     this.estimatorModelSubscription = this._store.select('estimatorModels')
-    .subscribe((modelsList:PhoneModels) => {
+    .subscribe((modelsList:PhoneModel[]) => {
       this.phoneModels = modelsList;
     })
   }
 
   public onSelectedPhoneTypeChange(e:any):void {
     this.typeId = e.target.selectedOptions[0].id;
-    // console.log("newly selected phoneType is: " + typeId);
+    console.log("newly selected phoneType is: " + this.typeId);
     if (this.typeId > 0){
       this._estimatorModelActions.getPhoneModels(this.typeId);
     }
@@ -60,7 +60,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
   public onSelectedPhoneModelChange(e):void {
     let modelId = e.target.selectedOptions[0].id;
-    console.log("new phone Model ID is: " + modelId);
+    // console.log("new phone Model ID is: " + modelId);
     this.phoneMaxValue = this.onPhoneModelSelect(modelId);
   }
 
@@ -72,7 +72,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
     return Math.round(id*50 + 50).toString();
   }
 
-  ngOnDestory() {
+  ngOnDestroy() {
     this.estimatorModelSubscription.unsubscribe();
     this.estimatorTypeSubscription.unsubscribe();
   }

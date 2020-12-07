@@ -7,12 +7,12 @@
       <span>--Select Phone Type & Model--</span>
       <select class="form-control" (change)="onSelectedPhoneTypeChange($event)">
         <option selected disabled hidden>-- Phone Type --</option>
-        <option *ngFor="let phoneType of phoneTypes.results" id="{{phoneType.id}}">{{ phoneType.name }}</option>
+        <option *ngFor="let phoneType of phoneTypes.results" id="{{phoneType.typeId}}">{{ phoneType.name }}</option>
       </select>
 
 
       <select class="form-control" (change)="onSelectedPhoneModelChange($event)">
-        <option *ngFor="let phoneModel of phoneModels.models" id="{{phoneModel.id}}">{{ phoneModel.name }}</option>
+        <option *ngFor="let phoneModel of phoneModels" id="{{phoneModel.modelId}}">{{ phoneModel.name }}</option>
       </select>
 
       <div class="result-box" *ngIf="isValueBoxVisible">
