@@ -10,13 +10,12 @@ import { StaticDataActions } from 'src/app/actions/staticData.actions';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  constructor (
+  constructor(
     private _estimatorTypeActions: EstimatorTypeActions,
-    private _estimatorModelActions: EstimatorModelActions,
     private _staticDataActions: StaticDataActions,
-  ) {}
+  ) { }
 
-  public ngOnInit():void {
+  public ngOnInit(): void {
     this._estimatorTypeActions.getPhoneTypes();
     this._staticDataActions.getStaticData();
   }

@@ -16,14 +16,14 @@ export class MockEstimatorInterceptor implements HttpInterceptor {
       });
       return of(response);
     }
-    else if (req.method === 'POST' && req.url == '/api/estimator-models') {
-      const phoneModels = this.getPhoneModelsByType(req.body);
-      const response = new HttpResponse ({
-        body: phoneModels
-      });
-      return of(response);
-    }
-    return next.handle(req);
+    // else if (req.method === 'POST' && req.url == '/api/estimator-models') {
+    //   const phoneModels = this.getPhoneModelsByType(req.body);
+    //   const response = new HttpResponse ({
+    //     body: phoneModels
+    //   });
+    //   return of(response);
+    // }
+    // return next.handle(req);
   }
 
   private getPhoneTypesMockData ():PhoneTypes {
@@ -52,8 +52,7 @@ export class MockEstimatorInterceptor implements HttpInterceptor {
         { "modelId": 14, "name": "Pixel 4" }
       ]
     } else if (typeId == 3) {
-      return
-        [
+      return[
         { "modelId": 21, "name": "Windows" },
         { "modelId": 22, "name": "Uport" }
       ]

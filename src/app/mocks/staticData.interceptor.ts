@@ -82,8 +82,8 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
         {"name": "Wyoming","id": "WY"}
       ],
       phoneTypes: [
-        {"typeId": 1, "name": "iPhone "},
-        {"typeId": 2, "name": "Android "},
+        {"typeId": 1, "name": "iPhone"},
+        {"typeId": 2, "name": "Android"},
         {"typeId": 3, "name": "Other"},
        ],
       phoneModels: [

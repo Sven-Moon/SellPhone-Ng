@@ -12,7 +12,7 @@ export class StaticDataActions {
   ){}
 
   public getStaticData():void {
-    const url: string = 'api/static-data'; // really?
+    const url: string = 'api/static-data';
     const body: string = '';
     const httpOptions = {};
     this._http.post<StaticData>(url,body,httpOptions)

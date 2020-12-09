@@ -54,18 +54,37 @@ export class AppPhoneEstimatorComponent implements OnInit {
     ._store.select('staticData')
     .subscribe((staticData: StaticData) => {
       this.staticData = staticData;
+      console.log('this is staticData:')
+      console.log(this.staticData);
+      // output:
+      // {results: Array(3)}
+      // expected: staticData object
+      // appeared when changed staticData type
+      // phoneModels: Array<PhoneModels>
+      // from
+      // phoneModels: PhoneModel[] (which is wrong)
     });
   }
 
   public onSelectedPhoneTypeChange(e:any):void {
     this.typeId = e.target.selectedOptions[0].id;
-    console.log("newly selected phoneType is: " + this.typeId);
-    // TO DO: access Static Data for model array
-    if (this.typeId > 0){
-      this._estimatorModelActions.getPhoneModels(this.typeId);
-    }
     console.log('this is staticData:')
     console.log(this.staticData);
+    console.log("newly selected phoneType is: " + this.typeId);
+    // TO DO: access Static Data for model array
+    if (this.typeId > 0) {
+      for (var i in this.staticData) {
+        if (this.staticData.phoneModels[i].typeId == this.typeId) {
+          this.phoneModels =
+          this.staticData.phoneModels[i].models
+        }
+      }
+    }
+    console.log(this.phoneModels);
+
+    // if (this.typeId > 0){
+    //   this._estimatorModelActions.getPhoneModels(this.typeId);
+    // }
   }
 
   public onSelectedPhoneModelChange(e):void {
