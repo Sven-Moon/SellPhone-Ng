@@ -5,6 +5,6 @@ import { MockStaticDataInterceptor } from './mocks/staticData.interceptor';
 
 export const AppMockInterceptors = [
   { provide: HTTP_INTERCEPTORS, useClass: MockSearchInterceptor, multi:true },
-  { provide: HTTP_INTERCEPTORS, useClass: MockEstimatorInterceptor, multi:true },
-  { provide: HTTP_INTERCEPTORS, useClass: MockStaticDataInterceptor, multi:true }
+  { provide: HTTP_INTERCEPTORS, useClass: MockStaticDataInterceptor, multi:true },
+  { provide: HTTP_INTERCEPTORS, useClass: MockEstimatorInterceptor, multi:true }
 ]

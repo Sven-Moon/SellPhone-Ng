@@ -19,6 +19,7 @@ export class EstimatorModelActions {
 
     this._http.post(url,body,httpOptions)
       .subscribe((phoneModels) => {
+        console.log('[estimator action] getPhoneModels()')
         this._store.dispatch({
           type: UPDATE_PHONE_MODELS,
           payload: phoneModels

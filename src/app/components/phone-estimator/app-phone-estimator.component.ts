@@ -45,34 +45,27 @@ export class AppPhoneEstimatorComponent implements OnInit {
       this.phoneTypes = typesList;
     });
 
-    this.estimatorModelSubscription = this
-    ._store.select('estimatorModels')
-    .subscribe((modelsByType:PhoneModels) => {
-      const modelsList = modelsByType.phoneModels;
-      this.phoneModels = modelsList;
-      console.log('phone models');
-      console.log(this.phoneModels);
-    });
+    // this.estimatorModelSubscription = this
+    // ._store.select('estimatorModels')
+    // .subscribe((modelsByType:PhoneModels) => {
+    //   const modelsList = modelsByType.phoneModels;
+    //   this.phoneModels = modelsList;
+    //   console.log('phone models from estimator store:');
+    //   console.log(this.phoneModels);
+    // });
 
     this.staticDataSubscription = this
     ._store.select('staticData')
     .subscribe((staticData: StaticData) => {
+      // console.log('[estimator Component] Subscription successful')
+      // console.log(staticData)
       this.staticData = staticData;
     });
   }
 
   public onSelectedPhoneTypeChange(e:any):void {
     this.typeId = e.target.selectedOptions[0].id;
-    console.log('this is staticData:')
-    console.log(this.staticData);
-    console.log("newly selected phoneType is: " + this.typeId);
     this.updatePhoneModels();
-    console.log('Phone Models after selection:');
-    console.log(this.phoneModels);
-
-    // if (this.typeId > 0){
-    //   this._estimatorModelActions.getPhoneModels(this.typeId);
-    // }
   }
   private updatePhoneModels() {
     if (this.typeId > 0 && this.staticData) {
