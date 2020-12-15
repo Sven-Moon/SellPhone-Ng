@@ -5,8 +5,9 @@ import { EstimatorService } from 'src/app/services/estimator.service';
 import { Store } from '@ngrx/store';
 import { PhoneTypes } from 'src/app/models/PhoneTypes';
 import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
-import { PhoneModels } from 'src/app/models/phoneModels';
+import { PhoneModels } from 'src/app/models/PhoneModels';
 import { StaticData } from 'src/app/models/StaticData';
+import { ControlContainer } from '@angular/forms';
 
 
 @Component({
@@ -22,7 +23,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   selectedType: String;
   selectedModel: String;
   phoneModels:PhoneModel[] = [{"modelId":-1,"name":""}];
-  staticData:StaticData = undefined;
+  staticData:StaticData = {usaStates:[],phoneTypes:[],phoneModelsByType:[]};
   phoneMaxValue: String = "";
   typeId:number;
   isValueBoxVisible: boolean = false;
@@ -46,23 +47,17 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
     this.estimatorModelSubscription = this
     ._store.select('estimatorModels')
-    .subscribe((modelsList:PhoneModel[]) => {
+    .subscribe((modelsByType:PhoneModels) => {
+      const modelsList = modelsByType.phoneModels;
       this.phoneModels = modelsList;
+      console.log('phone models');
+      console.log(this.phoneModels);
     });
 
     this.staticDataSubscription = this
     ._store.select('staticData')
     .subscribe((staticData: StaticData) => {
       this.staticData = staticData;
-      console.log('this is staticData:')
-      console.log(this.staticData);
-      // output:
-      // {results: Array(3)}
-      // expected: staticData object
-      // appeared when changed staticData type
-      // phoneModels: Array<PhoneModels>
-      // from
-      // phoneModels: PhoneModel[] (which is wrong)
     });
   }
 
@@ -71,20 +66,30 @@ export class AppPhoneEstimatorComponent implements OnInit {
     console.log('this is staticData:')
     console.log(this.staticData);
     console.log("newly selected phoneType is: " + this.typeId);
-    // TO DO: access Static Data for model array
-    if (this.typeId > 0) {
-      for (var i in this.staticData) {
-        if (this.staticData.phoneModels[i].typeId == this.typeId) {
-          this.phoneModels =
-          this.staticData.phoneModels[i].models
-        }
-      }
-    }
+    this.updatePhoneModels();
+    console.log('Phone Models after selection:');
     console.log(this.phoneModels);
 
     // if (this.typeId > 0){
     //   this._estimatorModelActions.getPhoneModels(this.typeId);
     // }
+  }
+  private updatePhoneModels() {
+    if (this.typeId > 0 && this.staticData) {
+      console.log(this.staticData.phoneModelsByType);
+      for (var i in this.staticData.phoneModelsByType) {
+        if (this.staticData.phoneModelsByType[i].typeId == this.typeId) {
+          this.phoneModels =
+          this.staticData.phoneModelsByType[i].phoneModels;
+          console.log(`Phone models:  ${this.phoneModels}`)
+          return;
+        }
+      }
+    } else {
+      console.log('Congrats, no valid phoneModel values');
+      console.log(this.typeId);
+      console.log(this.staticData)
+    }
   }
 
   public onSelectedPhoneModelChange(e):void {

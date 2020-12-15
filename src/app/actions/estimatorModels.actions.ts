@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Store } from '@ngrx/store';
-import { PhoneModel } from '../models/phoneModel';
+import { PhoneModel } from '../models/PhoneModel';
 import { CLEAR_PHONE_MODELS, UPDATE_PHONE_MODELS } from '../stores/estimatorModels.store';
 
 @Injectable()

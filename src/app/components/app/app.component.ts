@@ -17,6 +17,7 @@ export class AppComponent {
 
   public ngOnInit(): void {
     this._estimatorTypeActions.getPhoneTypes();
+    console.log('Look at me!');
     this._staticDataActions.getStaticData();
   }
 

@@ -1,8 +1,8 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable, of } from 'rxjs';
-import { PhoneModel } from '../models/phoneModel';
-import { PhoneModels } from '../models/phoneModels';
+import { PhoneModel } from '../models/PhoneModel';
+import { PhoneModels } from '../models/PhoneModels';
 import { PhoneTypes } from '../models/PhoneTypes';
 
 @Injectable()

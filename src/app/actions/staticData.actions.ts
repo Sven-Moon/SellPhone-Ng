@@ -15,8 +15,12 @@ export class StaticDataActions {
     const url: string = 'api/static-data';
     const body: string = '';
     const httpOptions = {};
+    debugger;
     this._http.post<StaticData>(url,body,httpOptions)
     .subscribe((staticData) => {
+      debugger;
+      console.log('Dispatch:');
+      console.log(staticData);
       this._store.dispatch({
         type: LOAD_STATIC_DATA,
         payload: staticData

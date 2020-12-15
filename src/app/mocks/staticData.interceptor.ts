@@ -86,9 +86,9 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
         {"typeId": 2, "name": "Android"},
         {"typeId": 3, "name": "Other"},
        ],
-      phoneModels: [
+       phoneModelsByType: [
         {"typeId": 1,
-          models: [
+          phoneModels: [
             { "modelId": 1, "name": "iPhone 7" },
             { "modelId": 2, "name": "iPhone 8" },
             { "modelId": 3, "name": "iPhone 9" },
@@ -96,7 +96,7 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
           ]
         },
         {"typeId": 2,
-          models: [
+          phoneModels: [
             { "modelId": 11, "name": "Pixel 1" },
             { "modelId": 12, "name": "Pixel 2" },
             { "modelId": 13, "name": "Pixel 3" },
@@ -104,7 +104,7 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
           ]
         },
         {"typeId": 3,
-          models: [
+          phoneModels: [
             { "modelId": 21, "name": "Windows" },
             { "modelId": 22, "name": "Uport" }
           ]
