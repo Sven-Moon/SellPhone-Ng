@@ -1,5 +1,4 @@
 import { Action } from '@ngrx/store';
-import { PhoneModel } from '../models/PhoneModel';
 import { PhoneModels } from '../models/PhoneModels';
 import { PhoneType } from '../models/PhoneType';
 import { StaticData } from '../models/StaticData';
@@ -36,7 +35,7 @@ export class UpdatePhoneTypes implements Action {
 
 export class UpdatePhoneModels implements Action {
   readonly type = UPDATE_PHONE_MODELS;
-  payload: PhoneModels[];
+  payload: Array<PhoneModels>;
 }
 
 export type Actions = LoadStaticDataAction | UpdateUsaStates | UpdatePhoneTypes | UpdatePhoneModels;
@@ -45,21 +44,19 @@ export type Actions = LoadStaticDataAction | UpdateUsaStates | UpdatePhoneTypes 
 // Reducer
 export function staticData(state:StaticDataState = initialState,action:Actions): StaticDataState {
   switch (action.type) {
-    case LOAD_STATIC_DATA:
-      return action.payload;
 
     case UPDATE_USA_STATES:
-      let newState1 = Object.assign({},state);
+      let newState1: StaticDataState = Object.assign({},state);
       newState1.usaStates = action.payload;
       return newState1;
 
     case UPDATE_PHONE_TYPES:
-      let newState2 = Object.assign({},state);
+      let newState2: StaticDataState = Object.assign({},state);
       newState2.phoneTypes = action.payload;
       return newState2;
 
     case UPDATE_PHONE_MODELS:
-      let newState3 = Object.assign({},state);
+      let newState3: StaticDataState = Object.assign({},state);
       newState3.phoneModelsByType = action.payload;
       return newState3;
 

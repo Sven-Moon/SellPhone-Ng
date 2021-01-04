@@ -1,7 +1,4 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
-import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
-import { EstimatorTypeActions } from 'src/app/actions/estimatorTypes.actions';
 import { StaticDataActions } from 'src/app/actions/staticData.actions';
 
 @Component({
@@ -11,12 +8,11 @@ import { StaticDataActions } from 'src/app/actions/staticData.actions';
 })
 export class AppComponent {
   constructor(
-    private _estimatorTypeActions: EstimatorTypeActions,
     private _staticDataActions: StaticDataActions,
   ) { }
 
   public ngOnInit(): void {
-    this._estimatorTypeActions.getPhoneTypes();
+    this._staticDataActions.getUsaStates();
     this._staticDataActions.getPhoneTypes();
     this._staticDataActions.getPhoneModelsByType();
   }

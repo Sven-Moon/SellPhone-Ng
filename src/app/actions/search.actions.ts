@@ -20,7 +20,9 @@ export class SearchActions {
 
     this._http.post<SearchResults>(url, body, httpOptions)
     .subscribe((searchResults:SearchResults) => {
-      this._store.dispatch({ type: UPDATE_SEARCH_RESULTS, payload: searchResults });
+      this._store.dispatch({ 
+        type: UPDATE_SEARCH_RESULTS, 
+        payload: searchResults });
     });
   }
 
