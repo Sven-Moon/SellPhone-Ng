@@ -3,52 +3,27 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { SearchResult } from '../models/SearchResult';
 import { SearchResults } from '../models/SearchResults';
+import { searchResults } from '../stores/searchResults.store';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SearchService {
 
-  private searchResultsMockData:SearchResults = {
-    results: [
-    {
-      "id": 1,
-      "name": "iphone 7"
-    },
-    {
-      "id": 2,
-      "name": "iphone X"
-    },
-    {
-      "id": 3,
-      "name": "windows"
-    },
-    {
-      "id": 4,
-      "name": "pixel 2"
-    },
-    {
-      "id": 5,
-      "name": "pixel 3"
-    },
-    {
-      "id": 6,
-      "name": "pixel 32"
-    },
-    {
-      "id": 7,
-      "name": "pixel 82"
-    }
-  ]};
+  
 
-constructor( ) {  }
+constructor(private http: HttpClient) {  }
+  baseUrl: string = "http://localhost:3000/search/";
 
   // public getSearchResults() {
   //   return this.http.get('data/fakeDB.json')
   // };
+  getSearchResultsDB(searchText: string): Observable<SearchResults> {
+    return this.http.get<SearchResults>(this.baseUrl + searchText);
+  }
 
-  public getSearchResults(inputText:string):SearchResults{
-    // update searchText
-    return this.searchResultsMockData;
-    }
+  // public getSearchResults(inputText:string):SearchResults{
+  //   // update searchText
+  //   return this.searchResultsMockData;
+  //   }
 }
