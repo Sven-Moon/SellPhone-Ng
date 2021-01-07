@@ -7,6 +7,10 @@ export const submitSearch = createAction(
   "[Search Component] Submit Search",
   props<{ searchText: string }>()
 );
+ 
+export const clearSearch = createAction(
+  "[Search Component] Clear Search"
+);
 
 // -- RETURN FROM SERVER
 export const returnSearchResultsSuccess = createAction(

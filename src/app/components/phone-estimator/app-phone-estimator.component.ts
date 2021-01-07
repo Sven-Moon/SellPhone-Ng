@@ -100,7 +100,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    this.estimatorModelSubscription.unsubscribe();
+    // this.estimatorModelSubscription.unsubscribe();
     this.estimatorTypeSubscription.unsubscribe();
   }
 }

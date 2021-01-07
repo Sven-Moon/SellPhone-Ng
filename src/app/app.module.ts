@@ -14,6 +14,7 @@ import { AppActions } from './app-actions';
 import { StoreModule } from '@ngrx/store';
 import { AppMockInterceptors } from './app-mocks';
 import { environment } from 'src/environments/environment';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,11 @@ import { environment } from 'src/environments/environment';
     NgbModule,
     FormsModule,
     HttpClientModule,
-    StoreModule.forRoot(AppStores)
+    StoreModule.forRoot(AppStores),
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: environment.production
+    })
   ],
   providers: [
     ...AppServices,

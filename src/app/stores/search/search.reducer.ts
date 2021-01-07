@@ -2,7 +2,7 @@ import { state } from "@angular/animations";
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { createReducer, on, Action } from "@ngrx/store";
 import { SearchResults } from "src/app/models/SearchResults";
-import { returnSearchResultsFailure, returnSearchResultsSuccess, submitSearch } from "./search.actions";
+import { clearSearch, returnSearchResultsFailure, returnSearchResultsSuccess, submitSearch } from "./search.actions";
 
 export const searchFeatureKey = "search";
 
@@ -25,7 +25,8 @@ const searchReducer = createReducer(
   ),
   on(returnSearchResultsFailure, (state,action) => 
   ({...state, error: action.error })
-  )
+  ),
+  on(clearSearch, () => initialState)
 )
 
 export function reducer(state: SearchResults | null, action: Action) {
