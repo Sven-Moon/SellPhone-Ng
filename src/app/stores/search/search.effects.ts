@@ -7,7 +7,7 @@ import { of } from "rxjs";
 import { Router } from "@angular/router";
 
 @Injectable()
-export class ProductEffects {
+export class SearchEffects {
   getSearchResults$ = createEffect(() =>
     this.actions$.pipe(
       ofType(fromSearchActions.submitSearch),

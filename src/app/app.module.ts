@@ -15,6 +15,8 @@ import { StoreModule } from '@ngrx/store';
 import { AppMockInterceptors } from './app-mocks';
 import { environment } from 'src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import { SearchEffects } from './stores/search/search.effects';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     StoreDevtoolsModule.instrument({
       maxAge: 25,
       logOnly: environment.production
-    })
+    }),
+    EffectsModule.forRoot([SearchEffects])
   ],
   providers: [
     ...AppServices,
