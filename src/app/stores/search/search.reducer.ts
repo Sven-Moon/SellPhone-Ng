@@ -7,15 +7,15 @@ import { clearSearch, returnSearchResultsFailure, returnSearchResultsSuccess, su
 
 export const searchFeatureKey = "search";
 
-export interface SearchState extends EntityState<SearchResults> {
+export interface SearchState extends EntityState<SearchResult> {
   error: any;
   selectedSearchResult: SearchResult;
 }
 
-export const adapter: EntityAdapter<SearchResults> 
-  = createEntityAdapter<SearchResults>();
+export const adapter: EntityAdapter<SearchResult> 
+  = createEntityAdapter<SearchResult>();
 
-export const initialState: SearchResults = adapter.getInitialState({
+export const initialState: SearchState = adapter.getInitialState({
   error: undefined,
   results: null,
   selectedSearchResult: null
@@ -23,8 +23,9 @@ export const initialState: SearchResults = adapter.getInitialState({
 
 const searchReducer = createReducer(
   initialState,
-  on(returnSearchResultsSuccess, (_,action) => 
-    action.searchResults
+  // ---- RETURN RESULTS[] ----  
+  on(returnSearchResultsSuccess, (state,action) => 
+  adapter.setAll<SearchState>(action.searchResults, state)
   ),
   on(returnSearchResultsFailure, (state,action) => 
   ({...state, error: action.error })
@@ -32,7 +33,7 @@ const searchReducer = createReducer(
   on(clearSearch, () => initialState)
 )
 
-export function reducer(state: SearchResults | null, action: Action) {
+export function reducer(state: SearchState | undefined, action: Action) {
   return searchReducer(state,action);
 }
 

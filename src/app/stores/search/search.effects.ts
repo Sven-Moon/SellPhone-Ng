@@ -12,7 +12,9 @@ export class SearchEffects {
     this.actions$.pipe(
       ofType(fromSearchActions.submitSearch),
       mergeMap(action =>
-        this.searchService.getSearchResultsDB(action.searchText).pipe(
+        // this.searchService.getSearchResultsDB(action.searchText).pipe(
+          
+        this.searchService.getSearchResultsDB().pipe(
           map(results => fromSearchActions.returnSearchResultsSuccess({ searchResults: results })),
           catchError(error =>
             of(fromSearchActions.returnSearchResultsFailure({ error }))

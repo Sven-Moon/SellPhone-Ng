@@ -13,13 +13,19 @@ export class SearchService {
   
 
 constructor(private http: HttpClient) {  }
-  baseUrl: string = "http://localhost:3000/search/";
 
-  // public getSearchResults() {
-  //   return this.http.get('data/fakeDB.json')
+  // public getSearchResultsDB() {
+  //   return this.http.get('server/database.json')
   // };
-  getSearchResultsDB(searchText: string): Observable<SearchResults> {
-    return this.http.get<SearchResults>(this.baseUrl + searchText);
+
+  // don't submit search text for now
+  // getSearchResultsDB(searchText: string): Observable<SearchResults> {
+  //   return this.http.get<SearchResults>(this.baseUrl + searchText);
+  // }
+  baseUrl: string = "http://localhost:3000/results";
+  // debugger;
+  getSearchResultsDB(): Observable<SearchResult[]> {
+    return this.http.get<SearchResult[]>(this.baseUrl);
   }
 
   // public getSearchResults(inputText:string):SearchResults{
