@@ -16,6 +16,7 @@ export class MockEstimatorInterceptor implements HttpInterceptor {
       });
       return of(response);
     }
+    return next.handle(req);
   }
 
   private getPhoneTypesMockData ():PhoneTypes {

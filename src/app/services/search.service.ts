@@ -8,11 +8,9 @@ import { searchResults } from '../stores/searchResults.store';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService {
+export class SearchService { 
 
-  
-
-constructor(private http: HttpClient) {  }
+  constructor(private http: HttpClient) {  }
 
   // public getSearchResultsDB() {
   //   return this.http.get('server/database.json')
@@ -23,8 +21,8 @@ constructor(private http: HttpClient) {  }
   //   return this.http.get<SearchResults>(this.baseUrl + searchText);
   // }
   baseUrl: string = "http://localhost:3000/results";
-  // debugger;
-  getSearchResultsDB(): Observable<SearchResult[]> {
+
+  public getSearchResultsDB(): Observable<SearchResult[]> {
     return this.http.get<SearchResult[]>(this.baseUrl);
   }
 
