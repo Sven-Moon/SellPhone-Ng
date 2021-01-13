@@ -22,7 +22,7 @@ export class SearchService {
   // }
   baseUrl: string = "http://localhost:3000/results";
 
-  public getSearchResultsDB(): Observable<SearchResult[]> {
+  public getSearchResultsDB(inputText:string): Observable<SearchResult[]> {
     return this.http.get<SearchResult[]>(this.baseUrl);
   }
 

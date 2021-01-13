@@ -12,9 +12,9 @@ import { SearchResult } from 'src/app/models/SearchResult';
   styleUrls: ['./app-search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  searchResults:SearchResults;
-  private searchResultsSubscription;
-  searchText:string='';
+  // searchResults:SearchResults;
+  // private searchResultsSubscription;
+  // searchText:string='';
   searchResults$: Observable<SearchResult[]>;
 
   constructor(private _store: Store<any>) { }
@@ -35,8 +35,8 @@ export class SearchResultsComponent implements OnInit {
     this.searchResults$ = this._store.pipe(select(selectSearchResults));
   }
 
-  ngOnDestory() {
-    this.searchResultsSubscription.unsubscribe();
-  }
+  // ngOnDestory() {
+  //   this.searchResultsSubscription.unsubscribe();
+  // }
 
 }

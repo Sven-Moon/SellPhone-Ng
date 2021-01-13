@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs/internal/Observable';
+import { SearchResult } from 'src/app/models/SearchResult';
 import { SearchResults } from 'src/app/models/SearchResults';
+import { selectSearchResults } from 'src/app/stores/search/search.selectors';
 
 @Component({
   selector: 'app-main-panel',
@@ -11,16 +14,24 @@ export class AppMainPanelComponent {
   searchResults:SearchResults;
   private searchResultsSubscription;
 
+  searchResults$: Observable<SearchResult[]>;
+
+
   constructor(private _store: Store<any>) { }
 
   public ngOnInit(): void {
     //.select('searchResults') matches the name of the function in the store
-    this.searchResultsSubscription = this._store.select('searchResults').subscribe((sr: SearchResults) => {
-      this.searchResults = sr;
-    })
+    // this.searchResultsSubscription = this._store.select('searchResults').subscribe((sr: SearchResults) => {
+    //   this.searchResults = sr;
+    // })
   }
 
-  ngOnDestory() {
-    this.searchResultsSubscription.unsubscribe();
+  
+  loadSearchResults() {
+    this.searchResults$ = this._store.pipe(select(selectSearchResults));
   }
+
+  // ngOnDestory() {
+  //   this.searchResultsSubscription.unsubscribe();
+  // }
 }

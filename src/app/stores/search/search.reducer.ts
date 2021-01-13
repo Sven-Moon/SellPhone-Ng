@@ -25,7 +25,7 @@ const searchReducer = createReducer(
   initialState,
   // ---- RETURN RESULTS[] ----  
   on(returnSearchResultsSuccess, (state,action) => 
-  adapter.setAll<SearchState>(action.searchResults, state)
+  adapter.setAll<SearchState>(action.resultsV2, state)
   ),
   on(returnSearchResultsFailure, (state,action) => 
   ({...state, error: action.error })

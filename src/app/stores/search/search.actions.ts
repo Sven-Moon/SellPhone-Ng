@@ -20,7 +20,7 @@ export const clearSearch = createAction(
 // -- RETURN FROM SERVER ---
 export const returnSearchResultsSuccess = createAction(
   "[Search Effect] Return Search Results Success",
-  props<{ searchResults: SearchResult[] }>()
+  props<{ resultsV2: SearchResult[] }>()
 );
 export const returnSearchResultsFailure = createAction(
   "[Search Effect] Return Search Results Failure",
