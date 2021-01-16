@@ -3,7 +3,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { SearchResult } from 'src/app/models/SearchResult';
 import { SearchResults } from 'src/app/models/SearchResults';
-import { selectSearchResults } from 'src/app/stores/search/search.selectors';
+import { siteSearchResults } from 'src/app/stores/search/search.selectors';
 
 @Component({
   selector: 'app-main-panel',
@@ -11,7 +11,7 @@ import { selectSearchResults } from 'src/app/stores/search/search.selectors';
   styleUrls: ['./app-main-panel.component.scss']
 })
 export class AppMainPanelComponent {
-  searchResults:SearchResults;
+  searchResults:SearchResult[]=[];
   private searchResultsSubscription;
 
   searchResults$: Observable<SearchResult[]>;
@@ -24,11 +24,13 @@ export class AppMainPanelComponent {
     // this.searchResultsSubscription = this._store.select('searchResults').subscribe((sr: SearchResults) => {
     //   this.searchResults = sr;
     // })
+    this.loadSearchResults();
   }
 
-  
+
   loadSearchResults() {
-    this.searchResults$ = this._store.pipe(select(selectSearchResults));
+    this.searchResults$ = this._store.pipe(select(siteSearchResults));
+    this.searchResults$.subscribe(data => this.searchResults = data);
   }
 
   // ngOnDestory() {

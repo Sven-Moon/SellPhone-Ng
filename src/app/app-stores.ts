@@ -1,15 +1,15 @@
 // barrel
-import { searchResults } from './stores/searchResults.store';
+// import { searchResults } from './stores/searchResults.store';
 import { estimatorModels } from './stores/estimatorModels.store';
 import { estimatorTypes } from './stores/estimatorTypes.store';
 import { staticData } from './stores/staticData.store';
-import { reducer } from './stores/search/search.reducer'
+import { searchReducer } from './stores/search/search.reducer'
 
 
 export const AppStores = {
-  searchResults,
+  // searchResults,
   estimatorTypes,
   estimatorModels,
   staticData,
-  reducer
+  siteSearchResults: searchReducer 
 }

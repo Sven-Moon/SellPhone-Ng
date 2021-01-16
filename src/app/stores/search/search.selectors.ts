@@ -5,7 +5,7 @@ import { searchFeatureKey, SearchState, selectAll } from "./search.reducer";
 export const selectSearchState = 
   createFeatureSelector<SearchState>(searchFeatureKey);
 
-export const selectSearchResults = createSelector(
+export const siteSearchResults = createSelector(
   selectSearchState,
   selectAll
 );

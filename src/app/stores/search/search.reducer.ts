@@ -5,7 +5,7 @@ import { SearchResult } from "src/app/models/SearchResult";
 import { SearchResults } from "src/app/models/SearchResults";
 import { clearSearch, returnSearchResultsFailure, returnSearchResultsSuccess, submitSearch } from "./search.actions";
 
-export const searchFeatureKey = "search";
+export const searchFeatureKey = "siteSearchResults";
 
 export interface SearchState extends EntityState<SearchResult> {
   error: any;
@@ -18,10 +18,11 @@ export const adapter: EntityAdapter<SearchResult>
 export const initialState: SearchState = adapter.getInitialState({
   error: undefined,
   results: null,
-  selectedSearchResult: null
+  selectedSearchResult: null,
+  resultsV2:[]
 });
 
-const searchReducer = createReducer(
+export const searchReducer = createReducer(
   initialState,
   // ---- RETURN RESULTS[] ----  
   on(returnSearchResultsSuccess, (state,action) => 
@@ -33,9 +34,9 @@ const searchReducer = createReducer(
   on(clearSearch, () => initialState)
 )
 
-export function reducer(state: SearchState | undefined, action: Action) {
-  return searchReducer(state,action);
-}
+// export function searchStore(state: SearchState | undefined, action: Action) {
+//   return searchReducer(state,action);
+// }
 
 export const {
   selectIds,

@@ -1,4 +1,4 @@
 <div role="main" class="container" style="margin-top: 66px;">
-  <app-search-results *ngIf="searchResults$"></app-search-results>
-  <app-phone-estimator *ngIf="!searchResults$"></app-phone-estimator>
+  <app-search-results *ngIf="searchResults.length>0"></app-search-results>
+  <app-phone-estimator *ngIf="!(searchResults.length>0)"></app-phone-estimator>
 </div>

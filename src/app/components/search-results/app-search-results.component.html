@@ -4,7 +4,7 @@
   </div>
 </div> -->
 
-<div *ngIf="searchResults$">
+<div *ngIf="searchResults.length>0">
   <div *ngFor="let result of searchResults$ | async">
     Results v2: {{result.name}}
   </div>
