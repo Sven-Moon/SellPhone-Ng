@@ -8,6 +8,8 @@ import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
 import { PhoneModels } from 'src/app/models/PhoneModels';
 import { StaticData } from 'src/app/models/StaticData';
 import { ControlContainer } from '@angular/forms';
+import { staticDataReducer } from 'src/app/stores/staticData/staticData.reducer';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -24,6 +26,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   selectedModel: String;
   phoneModels:PhoneModel[] = [{"modelId":-1,"name":""}];
   staticData:StaticData = {usaStates:[],phoneTypes:[],phoneModelsByType:[]};
+  staticData$:Observable<StaticData>;
   phoneMaxValue: String = "";
   typeId:number;
   isValueBoxVisible: boolean = false;
@@ -38,6 +41,8 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
   ngOnInit() {
     this._title.setTitle('sellphone-ng');
+    this.staticData$ = this._store.select('staticdatav2')
+
 
     this.estimatorTypeSubscription = this
     ._store.select('estimatorTypes')

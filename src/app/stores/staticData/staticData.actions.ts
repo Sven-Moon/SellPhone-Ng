@@ -1,18 +1,14 @@
 import { createAction, props } from "@ngrx/store";
-import { PhoneModel } from "src/app/models/PhoneModel";
-import { PhoneType } from "src/app/models/PhoneType";
-import { USA_States } from "src/app/models/USA_States";
+import { PhoneTypes } from "src/app/models/PhoneTypes";
+import { StaticData } from "src/app/models/StaticData";
 
 export const loadStaticData = createAction(
   "[Main Panel Component] Load Static Data"
 );
 
 export const loadStaticDataSuccess = createAction(
-  "[Estimator Effect] Load Static Data Success", props<{
-    phoneModels:Array<PhoneModel>,
-    phoneTypes: Array<PhoneType>,
-    usaStates: USA_States
-  }>()
+  "[Estimator Effect] Load Static Data Success", 
+  props<{ staticData: StaticData }>()
 );
 
 export const loadStaticDataFailure = createAction(
@@ -20,14 +16,15 @@ export const loadStaticDataFailure = createAction(
   props<{ error: any }>()
 );
 
-export const UpdateUsaStates = createAction(
-  "[Some Component] Update USA States"
-);
+// export const updateUsaStates = createAction(
+//   "[Some Component] Update USA States"
+// );
 
-export const updatePhoneTypes = createAction(
-  '[Estimator Component] Update Phone Types'
-);
+// export const updatePhoneTypes = createAction(
+//   '[Estimator Component] Update Phone Types',
+//   props<{ phoneTypes: PhoneTypes[] }>()
+// );
 
-export const updatePhoneModels = createAction(
-  '[Estimator Component] Update Phone Models'
-); 
+// export const updatePhoneModels = createAction(
+//   '[Estimator Component] Update Phone Models'
+// ); 

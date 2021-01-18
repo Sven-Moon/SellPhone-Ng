@@ -17,6 +17,7 @@ import { environment } from 'src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { SearchEffects } from './stores/search/search.effects';
+import { StaticDataEffects } from './stores/staticData/staticData.effects';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,7 @@ import { SearchEffects } from './stores/search/search.effects';
       maxAge: 25,
       logOnly: environment.production
     }),
-    EffectsModule.forRoot([SearchEffects])
+    EffectsModule.forRoot([SearchEffects,StaticDataEffects])
   ],
   providers: [
     ...AppServices,

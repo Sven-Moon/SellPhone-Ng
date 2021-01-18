@@ -4,6 +4,7 @@ import { estimatorModels } from './stores/estimatorModels.store';
 import { estimatorTypes } from './stores/estimatorTypes.store';
 import { staticData } from './stores/staticData.store';
 import { searchReducer } from './stores/search/search.reducer'
+import { staticDataReducer } from './stores/staticData/staticData.reducer';
 
 
 export const AppStores = {
@@ -11,5 +12,6 @@ export const AppStores = {
   estimatorTypes,
   estimatorModels,
   staticData,
-  siteSearchResults: searchReducer 
+  siteSearchResults: searchReducer,
+  staticDataV2: staticDataReducer
 }
