@@ -16,6 +16,17 @@ export const loadStaticDataFailure = createAction(
   props<{ error: any }>()
 );
 
+export const updateSelectedPhoneType = createAction(
+  "[Estimator Component] Update Selected Phone Type",
+  props<{ selectedTypeId: number }>()
+)
+
+// export const updatePhoneModelsList = createAction(
+//   "[Estimator Component] Update Phone Models List"
+// );
+
+
+
 // export const updateUsaStates = createAction(
 //   "[Some Component] Update USA States"
 // );

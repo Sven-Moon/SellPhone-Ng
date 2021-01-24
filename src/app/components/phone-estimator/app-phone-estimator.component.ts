@@ -29,7 +29,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   staticData$:Observable<StaticData>;
   phoneMaxValue: String = "";
   typeId:number;
-  isValueBoxVisible: boolean = false;
+  isValueBoxVisible: boolean = false;  
 
   constructor(
     private _title: Title,
@@ -41,7 +41,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
   ngOnInit() {
     this._title.setTitle('sellphone-ng');
-    this.staticData$ = this._store.select('staticdatav2')
+    this.staticData$ = this._store.select('staticData')
 
 
     this.estimatorTypeSubscription = this
@@ -66,12 +66,19 @@ export class AppPhoneEstimatorComponent implements OnInit {
       // console.log(staticData)
       this.staticData = staticData;
     });
-  }
 
+
+  }
+// typeId is selected from template, used to update PhoneModels list
+// stays
   public onSelectedPhoneTypeChange(e:any):void {
     this.typeId = e.target.selectedOptions[0].id;
     this.updatePhoneModels();
-  }
+  } 
+
+// uses staticData (local)
+// todo: use async + filter to come up with list in reducer
+// create selector so dropdown can output on async 
   private updatePhoneModels() {
     if (this.typeId > 0 && this.staticData) {
       console.log(this.staticData.phoneModelsByType);
@@ -89,7 +96,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
       console.log(this.staticData)
     }
   }
-
+  
   public onSelectedPhoneModelChange(e):void {
     let modelId = e.target.selectedOptions[0].id;
     // console.log("new phone Model ID is: " + modelId);

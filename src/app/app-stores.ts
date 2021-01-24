@@ -8,10 +8,10 @@ import { staticDataReducer } from './stores/staticData/staticData.reducer';
 
 
 export const AppStores = {
-  // searchResults,
-  estimatorTypes,
-  estimatorModels,
-  staticData,
+  // // searchResults,
+  // estimatorTypes,
+  // estimatorModels,
+  // staticData, :: old method
   siteSearchResults: searchReducer,
-  staticDataV2: staticDataReducer
+  staticData: staticDataReducer
 }

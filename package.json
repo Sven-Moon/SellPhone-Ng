@@ -10,11 +10,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "clean": "rimraf -- dist/* node_modules",
+    "clean": "rm -r node_modules && npm cache clean --force",
     "cis": "rimraf -- dist/* node_modules && install && build",
     "generate": "node ./server/generate.js > ./server/database.json",
     "server": "json-server --watch ./server/database.json",
-    "dev": "concurrently \"npm run server\" \"npm run start\""
+    "dev": "concurrently \"npm run server\" \"npm run start\"",
+    "getstarted": "npm install"
   },
   "private": true,
   "dependencies": {
