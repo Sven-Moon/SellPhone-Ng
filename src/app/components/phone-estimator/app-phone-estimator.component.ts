@@ -10,6 +10,7 @@ import { StaticData } from 'src/app/models/StaticData';
 import { ControlContainer } from '@angular/forms';
 import { staticDataReducer } from 'src/app/stores/staticData/staticData.reducer';
 import { Observable } from 'rxjs';
+import { loadPhoneModelsByType, updateSelectedPhoneType } from 'src/app/stores/estimator/estimator.actions';
 
 
 @Component({
@@ -27,6 +28,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   phoneModels:PhoneModel[] = [{"modelId":-1,"name":""}];
   staticData:StaticData = {usaStates:[],phoneTypes:[],phoneModelsByType:[]};
   staticData$:Observable<StaticData>;
+  phoneModelsByType$:Observable<PhoneModels>;
   phoneMaxValue: String = "";
   typeId:number;
   isValueBoxVisible: boolean = false;  
@@ -42,6 +44,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   ngOnInit() {
     this._title.setTitle('sellphone-ng');
     this.staticData$ = this._store.select('staticData')
+    this.phoneModelsByType$ = this._store.select('phoneModelsByType')
 
 
     this.estimatorTypeSubscription = this
@@ -80,6 +83,9 @@ export class AppPhoneEstimatorComponent implements OnInit {
 // todo: use async + filter to come up with list in reducer
 // create selector so dropdown can output on async 
   private updatePhoneModels() {
+
+    this._store.dispatch(updateSelectedPhoneType({ selectedTypeId: this.typeId }))
+
     if (this.typeId > 0 && this.staticData) {
       console.log(this.staticData.phoneModelsByType);
       for (var i in this.staticData.phoneModelsByType) {

@@ -22,7 +22,6 @@ export const adapter: EntityAdapter<PhoneModels> =
 
 export const initialState: PhoneModelsState =
   adapter.getInitialState({
-    phoneModelsByType: [],
     error: undefined,
     selectedTypeId: -1,
     phoneModelsList: []
@@ -40,10 +39,7 @@ export const estimatorReducer = createReducer(
   ),
   on(updateSelectedPhoneType, (state,action) =>
     ({...state, selectedTypeId: action.selectedTypeId})
-  ),
-  // on(updatePhoneModelsList, (state,action) => {
-  //   return state.phoneModelsList.map(state.selectedTypeId =>)
-  // }) 
+  )
 )
 
 export function reducer(state: PhoneModelsState | undefined, action: Action) {

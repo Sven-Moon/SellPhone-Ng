@@ -11,3 +11,8 @@ createSelector(selectEstimatorState,selectAll);
 
 export const selectPhoneModelsByType = 
 (state:Estimator) => state.phoneModelsByType
+
+
+
+// TODO: select the phones with id = typeID
+// First: create action to update the phoneModelsList??
