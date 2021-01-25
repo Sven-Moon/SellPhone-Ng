@@ -23,13 +23,13 @@ export class AppPhoneEstimatorComponent implements OnInit {
   private estimatorModelSubscription;
   private staticDataSubscription;
   phoneTypes:PhoneTypes;
-  selectedType: String;
-  selectedModel: String;
+  selectedType: string;
+  selectedModel: string;
   phoneModels:PhoneModel[] = [{"modelId":-1,"name":""}];
   staticData:StaticData = {usaStates:[],phoneTypes:[],phoneModelsByType:[]};
   staticData$:Observable<StaticData>;
   phoneModelsByType$:Observable<PhoneModels>;
-  phoneMaxValue: String = "";
+  phoneMaxValue: string = "";
   typeId:number;
   isValueBoxVisible: boolean = false;  
 

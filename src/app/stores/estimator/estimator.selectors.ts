@@ -1,16 +1,32 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
 import { Estimator } from "src/app/models/EstimatorModel";
-import { selectAll } from "../estimator/estimator.reducer";
+import { PhoneModels } from "src/app/models/PhoneModels";
+import { selectAll, selectPhoneTypeId } from "../estimator/estimator.reducer";
 import { estimatorFeatureKey, PhoneModelsState } from "./estimator.reducer";
 
-export const selectEstimatorState = 
+export const selectPhoneModelsByTypeState = 
 createFeatureSelector<PhoneModelsState>(estimatorFeatureKey)
 
-export const selectEstimator =
-createSelector(selectEstimatorState,selectAll);
+export const selectPhoneModelsByType =
+createSelector(selectPhoneModelsByTypeState,selectAll);
 
-export const selectPhoneModelsByType = 
-(state:Estimator) => state.phoneModelsByType
+export const selectTypeId = (
+  (state:PhoneModelsState) => state.selectedTypeId
+)
+
+export const selectModelListState = 
+createFeatureSelector<PhoneModelsState, Array<PhoneModels>>
+("phoneModelsList");
+
+export const selectPhoneModelsList = 
+createSelector(
+  selectPhoneModelsByType,
+  selectModelListState,
+  (models: PhoneModelsState, list: Array<PhoneModels>) => {
+    return models.ids.map((id) =>  
+        id == models.selectedTypeId) 
+  }
+);
 
 
 
