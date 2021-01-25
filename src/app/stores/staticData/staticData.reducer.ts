@@ -4,7 +4,7 @@ import { Action, createReducer, on } from "@ngrx/store";
 import { PhoneModel } from "src/app/models/PhoneModel";
 import { StaticData } from "src/app/models/StaticData";
 import { returnSearchResultsFailure, returnSearchResultsSuccess } from "../search/search.actions";
-import { loadStaticDataFailure, loadStaticDataSuccess, updateSelectedPhoneType } from "./staticData.actions";
+import { loadStaticDataFailure, loadStaticDataSuccess } from "./staticData.actions";
 
 export const staticDataFeatureKey = "staticData";
 
@@ -40,13 +40,7 @@ export const staticDataReducer = createReducer(
   }),
   on(loadStaticDataFailure, (state,action) => 
     ({...state, error: action.error})
-  ),
-  on(updateSelectedPhoneType, (state,action) =>
-    ({...state, selectedTypeId: action.selectedTypeId})
-  ),
-  // on(updatePhoneModelsList, (state,action) => {
-  //   return state.phoneModelsList.map(state.selectedTypeId =>)
-  // }) 
+  )
 )
 
 

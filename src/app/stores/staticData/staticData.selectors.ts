@@ -23,19 +23,19 @@ export const selectPhoneModelsByType =
 //   (state:StaticData) => state.)
 
 
-export const selectPhoneModelList = 
-createSelector(
-  selectPhoneModelsByType,
-  selectStaticData, // returns type staticData[] ??? 
-  (phoneModelsByType:Array<PhoneModels>, selectedTypeId:number) => {
-    if (selectedTypeId && phoneModelsByType) {
-      return phoneModelsByType.filter((phoneType:PhoneType) => phoneType.typeId === selectedTypeId)
-    } else {
-      return [{modelId: -1, name: "you missed"}]
-    }
-  }
+// export const selectPhoneModelList = 
+// createSelector(
+//   selectPhoneModelsByType,
+//   selectStaticData, // returns type staticData[] ??? 
+//   (phoneModelsByType:Array<PhoneModels>, selectedTypeId:number) => {
+//     if (selectedTypeId && phoneModelsByType) {
+//       return phoneModelsByType.filter((phoneType:PhoneType) => phoneType.typeId === selectedTypeId)
+//     } else {
+//       return [{modelId: -1, name: "you missed"}]
+//     }
+//   }
   
-)
+// )
 
 // export const selectedPhoneType = createSelector(
 //   selectStaticData,

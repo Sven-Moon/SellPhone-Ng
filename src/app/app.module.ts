@@ -18,6 +18,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { SearchEffects } from './stores/search/search.effects';
 import { StaticDataEffects } from './stores/staticData/staticData.effects';
+import { EstimatorEffects } from './stores/estimator/estimator.effects';
 
 @NgModule({
   declarations: [
@@ -34,11 +35,15 @@ import { StaticDataEffects } from './stores/staticData/staticData.effects';
       maxAge: 25,
       logOnly: environment.production
     }),
-    EffectsModule.forRoot([SearchEffects,StaticDataEffects])
+    EffectsModule.forRoot([
+      SearchEffects,
+      StaticDataEffects,
+      EstimatorEffects
+    ])
   ],
   providers: [
     ...AppServices,
-    ...AppActions,
+    ...AppActions, // not needed for new method
     ...(environment.useMocking ? AppMockInterceptors : [])
   ],
   bootstrap: [AppComponent]

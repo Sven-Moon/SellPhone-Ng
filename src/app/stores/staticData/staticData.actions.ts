@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { PhoneModels } from "src/app/models/PhoneModels";
 import { PhoneTypes } from "src/app/models/PhoneTypes";
 import { StaticData } from "src/app/models/StaticData";
 
@@ -15,17 +16,6 @@ export const loadStaticDataFailure = createAction(
   "[Estimator Effect] Load Static Data Failure",
   props<{ error: any }>()
 );
-
-export const updateSelectedPhoneType = createAction(
-  "[Estimator Component] Update Selected Phone Type",
-  props<{ selectedTypeId: number }>()
-)
-
-// export const updatePhoneModelsList = createAction(
-//   "[Estimator Component] Update Phone Models List"
-// );
-
-
 
 // export const updateUsaStates = createAction(
 //   "[Some Component] Update USA States"

@@ -28,6 +28,31 @@
       "name": "pixel 82v2"
     }
   ],
+  "phoneModelsByType": [
+    {"typeId": 1,
+      "phoneModels": [
+        { "modelId": 1, "name": "iPhone 7" },
+        { "modelId": 2, "name": "iPhone 8" },
+        { "modelId": 3, "name": "iPhone 9" },
+        { "modelId": 4, "name": "iPhone X" }
+      ]
+    },
+    {"typeId": 2,
+      "phoneModels": [
+        { "modelId": 11, "name": "Pixel 1" },
+        { "modelId": 12, "name": "Pixel 2" },
+        { "modelId": 13, "name": "Pixel 3" },
+        { "modelId": 14, "name": "Pixel 4" }
+      ]
+    },
+    {"typeId": 4,
+      "phoneModels": [
+        { "modelId": 21, "name": "Windows" },
+        { "modelId": 22, "name": "Uport" }
+      ]
+    }
+  ]
+  ,
   "staticData": {
     "usaStates": [
       {"name": "Alabama","id": "AL"},
@@ -95,7 +120,7 @@
       {"typeId": 2, "name": "Android"},
       {"typeId": 3, "name": "Other"}
      ],
-     "phoneModelsByType": [
+    "phoneModelsByType": [
       {"typeId": 1,
         "phoneModels": [
           { "modelId": 1, "name": "iPhone 7" },

@@ -1,17 +1,11 @@
 // barrel
-// import { searchResults } from './stores/searchResults.store';
-import { estimatorModels } from './stores/estimatorModels.store';
-import { estimatorTypes } from './stores/estimatorTypes.store';
-import { staticData } from './stores/staticData.store';
 import { searchReducer } from './stores/search/search.reducer'
 import { staticDataReducer } from './stores/staticData/staticData.reducer';
+import { estimatorReducer } from './stores/estimator/estimator.reducer';
 
 
 export const AppStores = {
-  // // searchResults,
-  // estimatorTypes,
-  // estimatorModels,
-  // staticData, :: old method
   siteSearchResults: searchReducer,
-  staticData: staticDataReducer
+  staticData: staticDataReducer,
+  phoneModelsByType: estimatorReducer
 }
