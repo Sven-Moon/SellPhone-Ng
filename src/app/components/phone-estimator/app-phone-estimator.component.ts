@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { PhoneModel } from '../../models/PhoneModel';
 import { EstimatorService } from 'src/app/services/estimator.service';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { PhoneTypes } from 'src/app/models/PhoneTypes';
 import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
 import { PhoneModels } from 'src/app/models/PhoneModels';
@@ -32,6 +32,7 @@ export class AppPhoneEstimatorComponent implements OnInit {
   phoneMaxValue: string = "";
   typeId:number;
   isValueBoxVisible: boolean = false;  
+  phoneModelsList$ = this._store.pipe(select('selectPhoneModelsList'));
 
   constructor(
     private _title: Title,

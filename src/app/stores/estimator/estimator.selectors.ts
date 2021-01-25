@@ -14,16 +14,18 @@ export const selectTypeId = (
   (state:PhoneModelsState) => state.selectedTypeId
 )
 
+// Creates selector for phoneModelsList$ in 
+// app-phone-estimator.components
 export const selectModelListState = 
-createFeatureSelector<PhoneModelsState, Array<PhoneModels>>
+createFeatureSelector<PhoneModels> //, Array<PhoneModels>>
 ("phoneModelsList");
 
 export const selectPhoneModelsList = 
 createSelector(
   selectPhoneModelsByType,
   selectModelListState,
-  (models: PhoneModelsState, list: Array<PhoneModels>) => {
-    return models.ids.map((id) =>  
+  (models: PhoneModelsState) => {
+    return models.entities.map((id) =>  
         id == models.selectedTypeId) 
   }
 );

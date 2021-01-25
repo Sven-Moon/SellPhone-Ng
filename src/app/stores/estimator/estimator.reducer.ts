@@ -8,7 +8,7 @@ export const estimatorFeatureKey = "phoneModelsByType";
 export interface PhoneModelsState extends EntityState<PhoneModels> {
   error: any;
   selectedTypeId: number;
-  phoneModelsList: Array<PhoneModels>
+  phoneModelsList: PhoneModels
 }
 
 export function selectPhoneTypeId(phoneModelsByType: PhoneModels): number {
@@ -24,7 +24,13 @@ export const initialState: PhoneModelsState =
   adapter.getInitialState({
     error: undefined,
     selectedTypeId: -1,
-    phoneModelsList: []
+    phoneModelsList: {
+      typeId: -1, 
+      phoneModels: [{
+        modelId:-1,
+        name: "Select a Phone Type"
+      }]
+    }
 })
 
 export const estimatorReducer = createReducer(
