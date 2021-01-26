@@ -45,14 +45,14 @@ export class AppPhoneEstimatorComponent implements OnInit {
       this.phoneTypes = typesList;
     });
 
-    // this.estimatorModelSubscription = this
-    // ._store.select('estimatorModels')
-    // .subscribe((modelsByType:PhoneModels) => {
-    //   const modelsList = modelsByType.phoneModels;
-    //   this.phoneModels = modelsList;
-    //   console.log('phone models from estimator store:');
-    //   console.log(this.phoneModels);
-    // });
+    this.estimatorModelSubscription = this
+    ._store.select('estimatorModels')
+    .subscribe((modelsByType:PhoneModels) => {
+      const modelsList = modelsByType.phoneModels;
+      this.phoneModels = modelsList;
+      console.log('phone models from estimator store:');
+      console.log(this.phoneModels);
+    });
 
     this.staticDataSubscription = this
     ._store.select('staticData')
