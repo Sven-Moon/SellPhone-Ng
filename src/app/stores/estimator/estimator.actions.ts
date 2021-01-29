@@ -15,7 +15,7 @@ export const loadPhoneModelsByTypeFailure = createAction(
   props<{ error: any }>()
 );
 
-export const updateSelectedPhoneType = createAction(
+export const updatePhoneModelsList = createAction(
   "[Estimator Component] Update Selected Phone Type",
   props<{ selectedTypeId: number }>()
 )

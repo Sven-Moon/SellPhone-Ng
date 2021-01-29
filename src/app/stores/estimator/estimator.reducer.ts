@@ -1,7 +1,7 @@
 import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { Action, createReducer, on } from "@ngrx/store";
 import { PhoneModels } from "src/app/models/PhoneModels";
-import { loadPhoneModelsByTypeFailure, loadPhoneModelsByTypeSuccess, updateSelectedPhoneType } from "./estimator.actions";
+import { loadPhoneModelsByTypeFailure, loadPhoneModelsByTypeSuccess } from "./estimator.actions";
 
 export const estimatorFeatureKey = "phoneModelsByType";
 
@@ -43,9 +43,9 @@ export const estimatorReducer = createReducer(
   on(loadPhoneModelsByTypeFailure, (state,action) => 
     ({...state, error: action.error})
   ),
-  on(updateSelectedPhoneType, (state,action) =>
-    ({...state, selectedTypeId: action.selectedTypeId})
-  )
+  // on(updateSelectedPhoneType, (state,action) =>
+  //   ({...state, selectedTypeId: action.selectedTypeId})
+  // )
 )
 
 export function reducer(state: PhoneModelsState | undefined, action: Action) {

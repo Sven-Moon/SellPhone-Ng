@@ -20,15 +20,15 @@ export const selectModelListState =
 createFeatureSelector<PhoneModels> //, Array<PhoneModels>>
 ("phoneModelsList");
 
-export const selectPhoneModelsList = 
-createSelector(
-  selectPhoneModelsByType,
-  selectModelListState,
-  (models: PhoneModelsState) => {
-    return models.entities.map((id) =>  
-        id == models.selectedTypeId) 
-  }
-);
+// export const selectPhoneModelsList = 
+// createSelector(
+//   selectPhoneModelsByType,
+//   selectModelListState,
+//   (models: PhoneModelsState) => {
+//     return models.entities.map((id) =>  
+//         id == models.selectedTypeId) 
+//   }
+// );
 
 
 

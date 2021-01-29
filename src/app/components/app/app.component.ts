@@ -13,17 +13,12 @@ import * as fromStaticDataActions from 'src/app/stores/staticData/staticData.act
 })
 export class AppComponent {
   constructor(
-    // private _staticDataActions: StaticDataActions,
     private _store: Store<StaticData>,
     private store: Store<Estimator>
   ) { }
 
   public ngOnInit(): void {
-    // this._staticDataActions.getUsaStates();
-    // this._staticDataActions.getPhoneTypes();
-    // this._staticDataActions.getPhoneModelsByType();
-    this._store.dispatch(fromStaticDataActions.loadStaticData())
-    this._store.dispatch(loadPhoneModelsByType())
+    this._store.dispatch(fromStaticDataActions.loadStaticData());
   }
 
 }

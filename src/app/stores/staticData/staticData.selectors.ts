@@ -5,22 +5,40 @@ import { PhoneModels } from "src/app/models/PhoneModels";
 import { PhoneType } from "src/app/models/PhoneType";
 import { StaticData } from "src/app/models/StaticData";
 import { staticData } from "../staticData.store";
-import { selectAll } from "../staticData/staticData.reducer";
 import { staticDataFeatureKey, StaticDataState } from "./staticData.reducer";
 
 export const selectStaticDataState = 
-  createFeatureSelector<StaticDataState>(staticDataFeatureKey);
+createFeatureSelector<StaticDataState>(staticDataFeatureKey);
 
 export const selectStaticData = 
-createSelector(selectStaticDataState, selectAll
+createSelector(
+  selectStaticDataState,
+  (state: StaticData) => state
+);
+
+export const selectPhoneTypes = 
+createSelector(
+  selectStaticDataState,
+  (state: StaticData) => state.phoneTypes
 );
 
 export const selectPhoneModelsByType = 
-(state:StaticData) => state.phoneModelsByType
+createSelector(
+  selectStaticDataState,
+  (state: StaticData) => state.phoneModelsByType
+);
 
-// export const selectedphoneType =
-// createSelector(selectStaticDataState,
-//   (state:StaticData) => state.)
+export const selectStaticUsaStates = 
+createSelector(
+  selectStaticDataState,
+  (state: StaticData) => state.usaStates
+);
+
+export const selectPhoneModelsList =
+createSelector(
+  selectStaticDataState,
+  (state:StaticDataState) => state.phoneModelsList
+)
 
 
 // export const selectPhoneModelList = 
