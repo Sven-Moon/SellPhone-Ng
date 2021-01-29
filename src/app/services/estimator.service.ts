@@ -1,9 +1,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { PhoneModel } from '../models/phoneModel';
 import { PhoneModels } from "../models/PhoneModels";
-import { PhoneTypes } from '../models/PhoneTypes';
 
 @Injectable({
   providedIn: "root"
@@ -18,9 +16,6 @@ export class EstimatorService {
 
   getPhoneModelsByType():Observable<Array<PhoneModels>> {
     let url=this.baseUrl + "phoneModelsByType";
-    let body="";
-    let httpOptions: {};
-
     return this.http.get<any>(url);
   }
 

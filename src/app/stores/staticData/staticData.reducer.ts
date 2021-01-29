@@ -1,9 +1,6 @@
-import { state } from "@angular/animations";
-import { createEntityAdapter, EntityAdapter, EntityState } from "@ngrx/entity";
 import { Action, createReducer, on } from "@ngrx/store";
 import { PhoneModel } from "src/app/models/PhoneModel";
 import { StaticData } from "src/app/models/StaticData";
-import { returnSearchResultsFailure, returnSearchResultsSuccess } from "../search/search.actions";
 import { loadStaticDataFailure, loadStaticDataSuccess, updatePhoneModelsList, } from "./staticData.actions";
 
 export const staticDataFeatureKey = "staticData";
@@ -13,9 +10,6 @@ export interface StaticDataState extends StaticData {
   selectedTypeId: number;
   phoneModelsList: Array<PhoneModel>
 }
-
-// export const adapter: EntityAdapter<StaticData> = 
-//   createEntityAdapter<StaticData>();
 
 export const initialState: StaticDataState =
   {
@@ -47,21 +41,9 @@ export const staticDataReducer = createReducer(
         return {
           ...state,
           phoneModelsList: state.phoneModelsByType[i].phoneModels 
-        } 
-      }
-    }
-  })
-    // state.phoneModelsList = state.phoneModelsByType.filter((type) => {
-    //   if (type.typeId == action.typeId) {
-    //     return {
-    //       ...state,
-    //       phoneModelsList: type.phoneModels // phoneModel[]
-    //     }
-    //   }
-    // });
-  // ))  
+        }       }    }
+  }) 
 )
-
 
 export function reducer(state: StaticDataState | undefined, action: Action) {
   return staticDataReducer(state, action);

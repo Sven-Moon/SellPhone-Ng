@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { PhoneModel } from '../../models/PhoneModel';
-import { EstimatorService } from 'src/app/services/estimator.service';
 import { select, Store } from '@ngrx/store';
-import { PhoneTypes } from 'src/app/models/PhoneTypes';
-import { EstimatorModelActions } from 'src/app/actions/estimatorModels.actions';
-import { PhoneModels } from 'src/app/models/PhoneModels';
-import { StaticData } from 'src/app/models/StaticData';
 import { Observable } from 'rxjs';
 import { updatePhoneModelsList } from 'src/app/stores/staticData/staticData.actions';
 import { PhoneType } from 'src/app/models/PhoneType';
-import { selectPhoneModelsByType, selectPhoneModelsList, selectPhoneTypes, selectStaticData } from 'src/app/stores/staticData/staticData.selectors';
+import {  selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticData/staticData.selectors';
 
 
 @Component({
