@@ -21,6 +21,9 @@
       <div class="result-box" *ngIf="isValueBoxVisible">
         Your phone could be worth<br> $$
         <span>{{phoneMaxValue}}</span>
+        <button [routerLink]="['/sellmyphone']"
+          class="btn">Get Your Money!
+        </button>
       </div>
     </div>
     <!-- /.container -->

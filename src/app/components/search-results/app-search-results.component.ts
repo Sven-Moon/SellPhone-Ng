@@ -4,6 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { siteSearchResults } from 'src/app/stores/search/search.selectors';
 import { SearchResult } from 'src/app/models/SearchResult';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -17,7 +18,10 @@ export class SearchResultsComponent implements OnInit {
   // searchText:string='';
   searchResults$: Observable<SearchResult[]>;
 
-  constructor(private _store: Store<any>) { }
+  constructor(
+    private _store: Store<any>,
+    private _router: Router
+  ) { }
 
   public ngOnInit(): void {
 

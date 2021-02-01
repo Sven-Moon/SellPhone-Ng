@@ -6,14 +6,15 @@ import { Observable } from 'rxjs';
 import { updatePhoneModelsList } from 'src/app/stores/staticData/staticData.actions';
 import { PhoneType } from 'src/app/models/PhoneType';
 import {  selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticData/staticData.selectors';
+import { Router } from '@angular/router';
 
 
 @Component({
   selector: 'app-phone-estimator',
-  templateUrl: './app-phone-estimator.component.html',
-  styleUrls: ['./app-phone-estimator.component.scss']
+  templateUrl: './phone-estimator.component.html',
+  styleUrls: ['./phone-estimator.component.scss']
 })
-export class AppPhoneEstimatorComponent implements OnInit {
+export class PhoneEstimatorComponent implements OnInit {
   phoneTypes$: Observable<Array<PhoneType>>;
   phoneModelsList$: Observable<Array<PhoneModel>>;
   phoneMaxValue: string = "";
@@ -21,7 +22,8 @@ export class AppPhoneEstimatorComponent implements OnInit {
 
   constructor(
     private _title: Title,
-    private _store: Store<any>
+    private _store: Store<any>,
+    private _router: Router
   ) {}
 
   ngOnInit() {

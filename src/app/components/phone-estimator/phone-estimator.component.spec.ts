@@ -1,6 +1,6 @@
 import { TestBed, waitForAsync } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
-import { AppPhoneEstimatorComponent } from './app-phone-estimator.component';
+import { PhoneEstimatorComponent } from './phone-estimator.component';
 
 describe('AppPhoneEstimatorComponent', () => {
   beforeEach(waitForAsync(() => {
@@ -9,13 +9,13 @@ describe('AppPhoneEstimatorComponent', () => {
         RouterTestingModule
       ],
       declarations: [
-        AppPhoneEstimatorComponent
+        PhoneEstimatorComponent
       ],
     }).compileComponents();
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppPhoneEstimatorComponent);
+    const fixture = TestBed.createComponent(PhoneEstimatorComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
@@ -27,7 +27,7 @@ describe('AppPhoneEstimatorComponent', () => {
   // });
 
   it('should render title', () => {
-    const fixture = TestBed.createComponent(AppPhoneEstimatorComponent);
+    const fixture = TestBed.createComponent(PhoneEstimatorComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement;
     expect(compiled.querySelector('.content span').textContent).toContain('sellphone-ng app is running!');
