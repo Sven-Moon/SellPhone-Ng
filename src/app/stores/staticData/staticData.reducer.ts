@@ -41,7 +41,7 @@ export const staticDataReducer = createReducer(
         return {
           ...state,
           phoneModelsList: state.phoneModelsByType[i].phoneModels 
-        }       }    }
+        }            }        }  
   }) 
 )
 

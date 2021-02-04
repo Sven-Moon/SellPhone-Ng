@@ -7,6 +7,7 @@ import { updatePhoneModelsList } from 'src/app/stores/staticData/staticData.acti
 import { PhoneType } from 'src/app/models/PhoneType';
 import {  selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticData/staticData.selectors';
 import { Router } from '@angular/router';
+import { updateSelectedPhoneModelId, updateSelectedPhoneTypeId } from 'src/app/stores/sale-calculator/sale-calculator.actions';
 
 
 @Component({
@@ -35,11 +36,15 @@ export class PhoneEstimatorComponent implements OnInit {
   public onSelectedPhoneTypeChange(e:any):void {
     let typeId:number = e.target.selectedOptions[0].id;
     this._store.dispatch(updatePhoneModelsList({ typeId: typeId }))
+    this._store.dispatch(updateSelectedPhoneTypeId(
+      { selectedPhoneTypeId: typeId }))
   } 
   
   public onSelectedPhoneModelChange(e):void {
     let modelId: number = e.target.selectedOptions[0].id;
     this.phoneMaxValue = this.onPhoneModelSelect(modelId);
+    this._store.dispatch(updateSelectedPhoneModelId(
+      { selectedPhoneModelId: modelId }))
   }
 
   private onPhoneModelSelect(id:number):string{
