@@ -1,12 +1,4 @@
-import {
-  ActionReducer,
-  ActionReducerMap,
-  createFeatureSelector,
-  createReducer,
-  createSelector,
-  MetaReducer,
-  on
-} from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { OrderDetail } from 'src/app/models/OrderDetail';
 import * as fromSaleCalculatorActions from './sale-calculator.actions'
 
@@ -18,9 +10,9 @@ export interface OrderDetailState extends OrderDetail {
 
 export const initialState: OrderDetailState = {
   lineId: null,
-  phoneTypeId: null,
+  selectedPhoneType: {typeId:null, name: null},
   phoneModelId: null,
-  phonecondition: null,
+  phoneCondition: null,
   quantity: null,
   subTotal: null
 }
@@ -29,15 +21,17 @@ export const initialState: OrderDetailState = {
 export const saleCalculatorReducer = createReducer(
   initialState,
   // update inputs from estimator
-  on(fromSaleCalculatorActions.updateSelectedPhoneTypeId, 
-    (state,action) => (
-      {...state, phoneTypeId: action.selectedPhoneTypeId})
+  on(fromSaleCalculatorActions.updateSelectedPhoneType,
+    (state,action) => ({
+      ...state, selectedPhoneType: action.phoneType
+      }
+    )
   ),
-  on(fromSaleCalculatorActions.updateSelectedPhoneModelId, 
+  on(fromSaleCalculatorActions.updateSelectedPhoneModelId,
     (state,action) => (
       {...state, phoneModelId: action.selectedPhoneModelId})
   ),
-  on(fromSaleCalculatorActions.updateSelectedPhoneConditionId, 
+  on(fromSaleCalculatorActions.updateSelectedPhoneConditionId,
     (state,action) => (
       {...state, phoneConditionId: action.selectedPhoneConditionId})
   )

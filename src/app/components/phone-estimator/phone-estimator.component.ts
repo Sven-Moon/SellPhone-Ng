@@ -7,7 +7,7 @@ import { updatePhoneModelsList } from 'src/app/stores/staticData/staticData.acti
 import { PhoneType } from 'src/app/models/PhoneType';
 import {  selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticData/staticData.selectors';
 import { Router } from '@angular/router';
-import { updateSelectedPhoneModelId, updateSelectedPhoneTypeId } from 'src/app/stores/sale-calculator/sale-calculator.actions';
+import { updateSelectedPhoneModelId, updateSelectedPhoneType } from 'src/app/stores/sale-calculator/sale-calculator.actions';
 
 
 @Component({
@@ -23,8 +23,7 @@ export class PhoneEstimatorComponent implements OnInit {
 
   constructor(
     private _title: Title,
-    private _store: Store<any>,
-    private _router: Router
+    private _store: Store<any>
   ) {}
 
   ngOnInit() {
@@ -34,12 +33,19 @@ export class PhoneEstimatorComponent implements OnInit {
   }
 
   public onSelectedPhoneTypeChange(e:any):void {
-    let typeId:number = e.target.selectedOptions[0].id;
-    this._store.dispatch(updatePhoneModelsList({ typeId: typeId }))
-    this._store.dispatch(updateSelectedPhoneTypeId(
-      { selectedPhoneTypeId: typeId }))
-  } 
-  
+    let selectedPhoneType:PhoneType = {
+      "typeId": e.target.selectedOptions[0].id,
+      "name": e.target.selectedOptions[0].innerText
+    }
+    // send phone type to sale-calculator
+    this._store.dispatch(updateSelectedPhoneType(
+      { phoneType: selectedPhoneType } ))
+    // return array of models matching typeId
+    this._store.dispatch(updatePhoneModelsList({
+      typeId: selectedPhoneType.typeId
+    }))
+  }
+
   public onSelectedPhoneModelChange(e):void {
     let modelId: number = e.target.selectedOptions[0].id;
     this.phoneMaxValue = this.onPhoneModelSelect(modelId);
