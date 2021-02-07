@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs/internal/Observable';
 import { OrderDetail } from 'src/app/models/OrderDetail';
-import { saleCalculatorService } from 'src/app/services/sale-calculator.service';
 import { OrderDetailState } from 'src/app/stores/sale-calculator/sale-calculator.reducer';
 import { selectOrderDetail } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
 
@@ -28,24 +27,23 @@ export class SaleCalculatorComponent implements OnInit {
   phoneConditionControl = new FormControl('');
 
   constructor(
-    private _store: Store<OrderDetail>,
-    private _saleCalculatorService: saleCalculatorService
+    private _store: Store<OrderDetail>
   ) { }
 
   ngOnInit() {
-    // TO DO: Add phoneTypes & phoneModels
-    // probably move selected phoneType/Model to calculator store
+  // subscribe to selected Phone Type
     this._store.pipe(select(selectOrderDetail))
       .subscribe(oD => this.orderDetail = oD);
-    // phoneModel$ = this._store.dispatch(select(selectedPhoneModel));
+  // subscribe to selected Phone Model
+    this._store.pipe(select(selectOrderDetail))
+      .subscribe(oD => this.orderDetail = oD);
   // Reactive Method
     this.updateInitialValues()
   }
 
   updateInitialValues() {
-    let selectedType = this.orderDetail.selectedPhoneType
-    this.phoneTypeControl.setValue(selectedType.name);
-    this.phoneModelControl.setValue(this.orderDetail.phoneModelId)
+    this.phoneTypeControl.setValue(this.orderDetail.selectedPhoneType.name);
+    this.phoneModelControl.setValue(this.orderDetail.selectedPhoneModel.name)
   }
 
   // Template-driven Method

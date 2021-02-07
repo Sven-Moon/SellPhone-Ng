@@ -1,9 +1,10 @@
+import { PhoneModel } from "./PhoneModel";
 import { PhoneType } from "./PhoneType";
 
 export interface OrderDetail {
   lineId: number,
   selectedPhoneType: PhoneType,
-  phoneModelId: number,
+  selectedPhoneModel: PhoneModel,
   phoneCondition: number,
   quantity: number,
   subTotal: number

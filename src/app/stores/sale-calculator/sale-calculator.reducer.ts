@@ -11,7 +11,7 @@ export interface OrderDetailState extends OrderDetail {
 export const initialState: OrderDetailState = {
   lineId: null,
   selectedPhoneType: {typeId:null, name: null},
-  phoneModelId: null,
+  selectedPhoneModel: { modelId: null, name:null },
   phoneCondition: null,
   quantity: null,
   subTotal: null
@@ -20,17 +20,20 @@ export const initialState: OrderDetailState = {
 
 export const saleCalculatorReducer = createReducer(
   initialState,
-  // update inputs from estimator
+// update inputs from estimator
+
   on(fromSaleCalculatorActions.updateSelectedPhoneType,
     (state,action) => ({
       ...state, selectedPhoneType: action.phoneType
       }
     )
   ),
-  on(fromSaleCalculatorActions.updateSelectedPhoneModelId,
+
+  on(fromSaleCalculatorActions.updateSelectedPhoneModel,
     (state,action) => (
-      {...state, phoneModelId: action.selectedPhoneModelId})
+      {...state, selectedPhoneModel: action.selectedPhoneModel})
   ),
+
   on(fromSaleCalculatorActions.updateSelectedPhoneConditionId,
     (state,action) => (
       {...state, phoneConditionId: action.selectedPhoneConditionId})

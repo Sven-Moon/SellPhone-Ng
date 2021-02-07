@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { PhoneModel } from "src/app/models/PhoneModel";
 import { PhoneType } from "src/app/models/PhoneType";
 
 // export const updateSelectedPhoneTypeId = createAction(
@@ -11,9 +12,9 @@ export const updateSelectedPhoneType = createAction(
   props<{ phoneType: PhoneType }>()
 )
 
-export const updateSelectedPhoneModelId = createAction(
+export const updateSelectedPhoneModel = createAction(
   "[Estimator Component] Update Selected Phone Model ID",
-  props<{ selectedPhoneModelId: number }>()
+  props<{ selectedPhoneModel: PhoneModel }>()
 )
 
 export const updateSelectedPhoneConditionId = createAction(
