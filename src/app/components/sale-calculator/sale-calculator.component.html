@@ -1,13 +1,23 @@
-<p>sale-calculator works!</p>
 
-<label>Type: 
-  <input type="text" [formControl]="phoneTypeControl">
+<form [formGroup]='saleOrderForm'>
+<label>Type:
+  <input type="text" formControlName="phoneTypeControl">
 </label>
-<label>Model: 
-  <input  type="text" [formControl]="phoneModelControl">
+<label>Model:
+  <input  type="text" formControlName="phoneModelControl">
 </label>
 
-<div>Phone Condition: <input [formControl]="phoneConditionControl"  
-    type="text" 
+<!-- <div>Phone Condition: <input [formControl]="phoneConditionControl"
+    type="text"
   >
-</div>
+</div> -->
+<select name="Phone Condition"
+  (change)="changeCondition($event)" formControlName="phoneConditionControl">
+  <option value="" disabled>
+    Select your phone's condition
+  </option>
+  <option *ngFor="let condition of conditionsList" [ngValue]="condition">
+    {{condition}}
+  </option>
+</select>
+</form>

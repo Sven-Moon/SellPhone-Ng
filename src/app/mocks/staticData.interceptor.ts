@@ -19,16 +19,16 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
         body: staticData
       });
       return of(response);
-    } 
-    
+    }
+
     else if (req.method === 'POST' && req.url == 'api/usa-states') {
       const usaStates = this.getMockUsaStates();
       const response = new HttpResponse({
         body: usaStates
       });
       return of(response);
-    } 
-    
+    }
+
     else if (req.method === 'POST' && req.url == 'api/phone-types') {
       // console.log('[Static Data Interceptor] phone-types Successful');
       const phoneTypes = this.getMockPhoneTypes();
@@ -37,11 +37,11 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
       const response = new HttpResponse({
         body: phoneTypes
       });
-      // console.log('[Static Data Interceptor] response:');      
+      // console.log('[Static Data Interceptor] response:');
       // console.log(response);
       return of(response);
-    } 
-    
+    }
+
     else if (req.method === 'POST' && req.url == 'api/phone-models-by-type') {
       // console.log('[Static Data Interceptor] phone-models-by-type Successful');
       const phoneModelsByType = this.getMockPhoneModels();
@@ -146,7 +146,8 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
             { "modelId": 22, "name": "Uport" }
           ]
         }
-      ]
+      ],
+      conditions: []
     }
   }
 
@@ -211,7 +212,7 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
       {"name": "West Virginia","id": "WV"},
       {"name": "Wisconsin","id": "WI"},
       {"name": "Wyoming","id": "WY"}
-    ]    
+    ]
   }
 
   private getMockPhoneTypes(): PhoneType[] {
@@ -221,7 +222,7 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
       {"typeId": 3, "name": "Other"}
     ]
   }
-  
+
 
   private getMockPhoneModels(): PhoneModels[] {
   return [
@@ -247,6 +248,6 @@ export class MockStaticDataInterceptor implements HttpInterceptor {
           { "modelId": 22, "name": "Uport" }
         ]
       }
-    ]    
+    ]
   }
 }

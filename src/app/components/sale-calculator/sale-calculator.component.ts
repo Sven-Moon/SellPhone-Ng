@@ -1,30 +1,26 @@
 import { Component, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs/internal/Observable';
 import { OrderDetail } from 'src/app/models/OrderDetail';
-import { OrderDetailState } from 'src/app/stores/sale-calculator/sale-calculator.reducer';
 import { selectOrderDetail } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
+import { selectStaticData } from 'src/app/stores/staticData/staticData.selectors';
+import {FormGroup, Validators,  FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-sale-calculator',
   templateUrl: './sale-calculator.component.html',
-  //Template-driven method
-  // template:`
-  // Condition: <input type="text" [(ngModel)]="phoneCondition">
-  // `,
   styleUrls: ['./sale-calculator.component.scss']
 })
 export class SaleCalculatorComponent implements OnInit {
-  orderDetail$:Observable<OrderDetailState>;
   orderDetail: OrderDetail;
-  orderDetails: OrderDetail;
+  conditionsList: Array<string>;
 
-
-  phoneTypeControl = new FormControl('');
-  phoneModelControl = new FormControl('');
-  phoneConditionControl = new FormControl('');
+  //TO DO: Add form group
+  saleOrderForm = new FormGroup({
+  phoneTypeControl: new FormControl(''),
+  phoneModelControl: new FormControl(''),
+  phoneConditionControl: new FormControl('')
+});
 
   constructor(
     private _store: Store<OrderDetail>
@@ -39,13 +35,29 @@ export class SaleCalculatorComponent implements OnInit {
       .subscribe(oD => this.orderDetail = oD);
   // Reactive Method
     this.updateInitialValues()
+  // get conditions list
+    this._store.pipe(select(selectStaticData))
+      .subscribe(sD => this.conditionsList = sD.conditions)
   }
 
-  updateInitialValues() {
-    this.phoneTypeControl.setValue(this.orderDetail.selectedPhoneType.name);
-    this.phoneModelControl.setValue(this.orderDetail.selectedPhoneModel.name)
+  private updateInitialValues() {
+    this.saleOrderForm.patchValue({
+      phoneTypeControl: this.orderDetail.selectedPhoneType.name,
+      phoneModelControl:this.orderDetail.selectedPhoneModel.name
+    })
   }
 
-  // Template-driven Method
-  phoneCondition = '';
+  public changeCondition(e) {
+    this.saleOrderForm.patchValue({
+      phoneConditionControl: e.target.value
+      // { onlySelf: true}
+    })
+  }
+
+  // **** Form *****
+  // registrationForm = this.fb.group({
+  //   phoneTypeControl: [''],
+  //   phoneModelControl: [''],
+  //   phoneCondition: ['']
+  // })
 }

@@ -6,4 +6,5 @@ export class StaticData {
   usaStates: Array<USA_State>;
   phoneTypes: Array<PhoneType>;
   phoneModelsByType: Array<PhoneModels>;
+  conditions: Array<string>;
 }
