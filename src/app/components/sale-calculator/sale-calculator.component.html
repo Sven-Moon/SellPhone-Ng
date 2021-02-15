@@ -1,37 +1,47 @@
 
 <form [formGroup]='saleOrderForm' class="form-group">
 
+
+<label>Phone Type</label>
 <select formControlName="phoneTypeControl"
+  id="phoneTypeControl"
   (change)="onSelectedPhoneTypeChange($event)"
   class="form-control">
   Select Phone Type
   <option selected disabled hidden>--Select Your Phone Type --</option>
-  <option *ngFor="let phoneType of phoneTypesList"
-    id="phoneType.typeId">{{phoneType.name}}</option>
-</select>
-
-
-<select formControlName="phoneModelControl"
-  (change)="onSelectedPhoneModelChange($event)"
-  class="form-control">
-  Select Phone Model
-  <option selected disabled hidden>-- Select Your Model --</option>
-  <option *ngFor="let phoneModel of phoneModelList"
-    [ngValue]="phoneModel">
-    {{phoneModel.name}}
+  <option [ngValue]="phoneType.typeId" *ngFor="let phoneType of phoneTypesList">
+    {{phoneType.name}}
   </option>
 </select>
 
+<label>Phone Model</label>
+<select formControlName="phoneModelControl"
+  id="phoneModelControl"
+  (change)="onSelectedPhoneModelChange($event)"
+  class="form-control">
+  Select Phone Model
+  <ng-container *ngFor="let phoneModel of (phoneModelList$ | async)">
+    <!-- <option selected disabled hidden>-- Select Your Model --</option> -->
+    <option
+      [ngValue]="phoneModel.modelId">
+      {{phoneModel.name}}
+    </option>
+  </ng-container>
+</select>
 
+<label>Condition</label>
 <select formControlName="phoneConditionControl"
   (change)="changeCondition($event)"
   class="form-control">
   <option value="" disabled>
     Select your phone's condition
   </option>
-  <option [ngValue]="condition"
-  *ngFor="let condition of conditionsList" >
+  <option *ngFor="let condition of conditionsList">
     {{condition}}
   </option>
 </select>
-</form>
+
+<label>Quantity</label>
+<input formControlName="quantity"
+  id="quantity" type="text" class="form-control">
+</form>  <!-- saleOrderForm -->
