@@ -1,25 +1,31 @@
 <div role="main" class="container">
+<form [formGroup]='estimatorForm' class="form-group">
 
   <div class="starter-template">
     <h1>Select the phone you want to sell:</h1>
     <div class="picker-box rounded-lg p-3">
 
       <span>-- Select Phone Type & Model --</span>
-      <select id="estimatorTypeSelector"
+
+      <select formControlName="phoneTypeControl"
+        id="estimatorTypeSelector"
         class="form-control" (change)="onSelectedPhoneTypeChange($event)">
-        <option selected disabled hidden>-- Phone Type --</option>
+        <option selected disabled hidden [value]="-1">-- Phone Type --</option>
         <option *ngFor="let phoneType of phoneTypes$ | async"
           id="{{phoneType.typeId}}">{{ phoneType.name }}</option>
       </select>
 
 
-      <select id="estimatorModelSeletor"
+      <select formControlName="phoneModelControl"
+        id="estimatorModelSeletor"
         class="form-control"
         (change)="onSelectedPhoneModelChange($event)">
         <option selected disabled hidden [value]="-1">-- Model --</option>
         <option *ngFor="let phoneModel of phoneModelsList$ | async"
-        id="{{phoneModel.modelId}}"
-        >{{ phoneModel.name }}</option>
+          id="{{phoneModel.modelId}}"
+          [ngValue]="phoneModel.modelId">
+          {{ phoneModel.name }}
+        </option>
       </select>
 
       <div class="result-box" *ngIf="isValueBoxVisible">
@@ -32,5 +38,6 @@
     </div>
     <!-- /.container -->
   </div>
+</form>
 
 </div>

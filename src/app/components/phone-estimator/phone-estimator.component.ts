@@ -8,6 +8,7 @@ import {  selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticD
 import { Router } from '@angular/router';
 import { updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions';
 import { Helpers } from 'src/app/helpers/helpers';
+import { FormBuilder } from '@angular/forms';
 
 
 @Component({
@@ -20,11 +21,16 @@ export class PhoneEstimatorComponent implements OnInit {
   phoneModelsList$: Observable<Array<PhoneModel>>;
   phoneMaxValue: number = null;
   isValueBoxVisible: boolean = false;
+  estimatorForm = this._fb.group({
+    phoneTypeControl: [-1],
+    phoneModelControl: [-1]
+  })
 
   constructor(
     private _title: Title,
     private _store: Store<any>,
-    private _helper: Helpers
+    private _helper: Helpers,
+    private _fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -40,6 +46,9 @@ export class PhoneEstimatorComponent implements OnInit {
     }
 
     this._helper.storeUpdateOnTypeChange(selectedPhoneType);
+
+    this.estimatorForm.controls['phoneModelControl']
+    .patchValue(-1);
 
   }
 
