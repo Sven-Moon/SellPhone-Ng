@@ -89,7 +89,7 @@ saleOrderForm = this.fb.group({
   public onSelectedPhoneTypeChange(e:any):void {
 
     let selectedPhoneType:PhoneType = {
-      "typeId": Number(e.target.selectedOptions[0].attributes[2].nodeValue),
+      "typeId": Number(e.target.selectedOptions[0].id),
       "name": e.target.selectedOptions[0].innerText.trim()
     };
 
@@ -108,15 +108,19 @@ saleOrderForm = this.fb.group({
   }
 
   public onSelectedPhoneModelChange(e):void {
-  //   let selectedPhoneModel:PhoneModel = {
-  //     modelId: e.target.selectedOptions[0].id,
-  //     name: e.target.selectedOptions[0].innerText
-  //   }
-  //   // this.phoneMaxValue = this.onPhoneModelSelect(
-  //   //   selectedPhoneModel.modelId
-  //   // );
-  //   this._store.dispatch(updateSelectedPhoneModel(
-  //     { selectedPhoneModel: selectedPhoneModel }))
+
+    let modelId:number = e.target.selectedOptions[0].id;
+    let maxVal = this._helper.getMaxValue(modelId);
+    let selectedPhoneModel:PhoneModel = {
+      modelId: modelId,
+      name: e.target.selectedOptions[0].label,
+      maxValue: maxVal
+    }
+    // this.phoneMaxValue = this.onPhoneModelSelect(
+    //   selectedPhoneModel.modelId
+    // );
+    this._store.dispatch(updateSelectedPhoneModel(
+      { selectedPhoneModel: selectedPhoneModel }))
   }
 
 }

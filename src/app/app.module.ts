@@ -11,7 +11,7 @@ import { FilterPipe } from './pipes/filter.pipe';
 import { AppServices } from './app-services';
 import { AppStores } from './app-stores';
 import { StoreModule } from '@ngrx/store';
-import { AppMockInterceptors } from './app-mocks';
+// import { AppMockInterceptors } from './app-mocks';
 import { environment } from 'src/environments/environment';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
@@ -42,7 +42,7 @@ import { Helpers } from './helpers/helpers';
   ],
   providers: [
     ...AppServices,
-    ...(environment.useMocking ? AppMockInterceptors : []),
+    // ...(environment.useMocking ? AppMockInterceptors : []),
     Helpers
   ],
   bootstrap: [AppComponent]

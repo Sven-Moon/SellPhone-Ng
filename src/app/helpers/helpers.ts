@@ -1,13 +1,19 @@
 import { Injectable } from "@angular/core";
 import { select, Store } from "@ngrx/store";
+import { Observable } from "rxjs";
 import { PhoneModel } from "../models/PhoneModel";
+import { PhoneModels } from "../models/PhoneModels";
 import { PhoneType } from "../models/PhoneType";
 import { updateSelectedPhoneType } from "../stores/sale-calculator/sale-calculator.actions";
+import { OrderDetailState } from "../stores/sale-calculator/sale-calculator.reducer";
+import { selectOrderDetailState } from "../stores/sale-calculator/sale-calculator.selectors";
 import { updatePhoneModelsList } from "../stores/staticData/staticData.actions";
-import { selectStaticData } from "../stores/staticData/staticData.selectors";
+import { StaticDataState } from "../stores/staticData/staticData.reducer";
+import { selectStaticData, selectStaticDataState } from "../stores/staticData/staticData.selectors";
 
 @Injectable()
 export class Helpers {
+
   constructor (private _store: Store<any>) {}
 
   public storeUpdateOnTypeChange (selectedPhoneType:PhoneType):void {
@@ -43,6 +49,27 @@ export class Helpers {
 
     // return the phoneModelsList
     return phoneModels;
+  }
+
+  private onPhoneModelSelect(id:number):boolean{
+    if (id > 0 ) {
+      return true;}
+    else { return false;}
+  }
+
+  public getMaxValue(modelId:number):number {
+    let maxValue: number = null;
+    let modelList: Array<PhoneModel> = [];
+
+    this._store.pipe(select(selectStaticDataState))
+    .subscribe(sD => modelList = sD.phoneModelsList);
+
+    modelList.forEach(model => {
+      model.modelId == modelId
+      ? maxValue = model.maxValue : null
+    })
+
+    return maxValue;
   }
 
 }

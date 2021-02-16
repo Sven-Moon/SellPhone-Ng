@@ -99,24 +99,24 @@
     "phoneModelsByType": [
       {"typeId": 1,
         "phoneModels": [
-          { "modelId": 1, "name": "iPhone 7" },
-          { "modelId": 2, "name": "iPhone 8" },
-          { "modelId": 3, "name": "iPhone 9" },
-          { "modelId": 4, "name": "iPhone X" }
+          { "modelId": 1, "name": "iPhone 7", "maxValue": 200 },
+          { "modelId": 2, "name": "iPhone 8", "maxValue": 300 },
+          { "modelId": 3, "name": "iPhone 9", "maxValue": 500 },
+          { "modelId": 4, "name": "iPhone X", "maxValue": 700 }
         ]
       },
       {"typeId": 2,
         "phoneModels": [
-          { "modelId": 11, "name": "Pixel 1" },
-          { "modelId": 12, "name": "Pixel 2" },
-          { "modelId": 13, "name": "Pixel 3" },
-          { "modelId": 14, "name": "Pixel 4" }
+          { "modelId": 11, "name": "Pixel 1", "maxValue": 100 },
+          { "modelId": 12, "name": "Pixel 2", "maxValue": 200 },
+          { "modelId": 13, "name": "Pixel 3", "maxValue": 300 },
+          { "modelId": 14, "name": "Pixel 4", "maxValue": 400 }
         ]
       },
       {"typeId": 3,
         "phoneModels": [
-          { "modelId": 21, "name": "Windows" },
-          { "modelId": 22, "name": "Uport" }
+          { "modelId": 21, "name": "Windows", "maxValue": 20 },
+          { "modelId": 22, "name": "Uport", "maxValue": 15 }
         ]
       }
     ],

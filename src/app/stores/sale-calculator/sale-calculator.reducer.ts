@@ -11,7 +11,7 @@ export interface OrderDetailState extends OrderDetail {
 export const initialState: OrderDetailState = {
   lineId: null,
   selectedPhoneType: {typeId:null, name: null},
-  selectedPhoneModel: { modelId: null, name:null },
+  selectedPhoneModel: { modelId: null, name:null, maxValue: null},
   phoneCondition: null,
   quantity: null,
   subTotal: null

@@ -9,7 +9,9 @@
   class="form-control">
   Select Phone Type
   <option selected disabled hidden>--Select Your Phone Type --</option>
-  <option [ngValue]="phoneType.typeId" *ngFor="let phoneType of phoneTypesList">
+  <option [ngValue]="phoneType.typeId"
+  *ngFor="let phoneType of phoneTypesList"
+  id="{{phoneType.typeId}}">
     {{phoneType.name}}
   </option>
 </select>
@@ -21,8 +23,8 @@
   class="form-control">
   Select Phone Model
   <ng-container *ngFor="let phoneModel of (phoneModelList$ | async)">
-    <!-- <option selected disabled hidden>-- Select Your Model --</option> -->
-    <option
+    <option selected disabled hidden>-- Select Your Model --</option>
+    <option id="{{phoneModel.modelId}}"
       [ngValue]="phoneModel.modelId">
       {{phoneModel.name}}
     </option>

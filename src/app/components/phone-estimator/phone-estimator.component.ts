@@ -18,7 +18,7 @@ import { Helpers } from 'src/app/helpers/helpers';
 export class PhoneEstimatorComponent implements OnInit {
   phoneTypes$: Observable<Array<PhoneType>>;
   phoneModelsList$: Observable<Array<PhoneModel>>;
-  phoneMaxValue: string = "";
+  phoneMaxValue: number = null;
   isValueBoxVisible: boolean = false;
 
   constructor(
@@ -44,22 +44,32 @@ export class PhoneEstimatorComponent implements OnInit {
   }
 
   public onSelectedPhoneModelChange(e):void {
-    let selectedPhoneModel:PhoneModel = {
-      modelId: e.target.selectedOptions[0].id,
-      name: e.target.selectedOptions[0].innerText
-    }
-    this.phoneMaxValue = this.onPhoneModelSelect(
-      selectedPhoneModel.modelId
-    );
-    // send selected phone model to  sale-calculator
-    this._store.dispatch(updateSelectedPhoneModel(
-      { selectedPhoneModel: selectedPhoneModel }))
+    let modelId:number = e.target.selectedOptions[0].id;
+  // update selected store if model selected
+    if (modelId > 0) {
+
+      this.phoneMaxValue = this._helper.getMaxValue(modelId);
+
+      let selectedPhoneModel:PhoneModel = {
+        modelId: modelId,
+        name: e.target.selectedOptions[0].label,
+        maxValue: this.phoneMaxValue
+      }
+
+      // send selected phone model to  sale-calculator
+      this._store.dispatch(updateSelectedPhoneModel(
+        { selectedPhoneModel: selectedPhoneModel }))
+
+    // show the max value box
+      this.isValueBoxVisible = true;
+    } else { this.isValueBoxVisible = false;}
+
   }
 
-  private onPhoneModelSelect(id:number):string{
-    if (id > 0 ) {
-      this.isValueBoxVisible = true;}
-    else { this.isValueBoxVisible = false;}
-    return Math.round(id*50 + 50).toString();
-  }
+  // private onPhoneModelSelect(id:number):number {
+  //   if (id > 0 ) {
+  //     this.isValueBoxVisible = true;}
+  //   else { this.isValueBoxVisible = false;}
+  //   return this._helper.getMaxValue();
+  // }
 }
