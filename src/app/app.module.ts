@@ -17,6 +17,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import { SearchEffects } from './stores/search/search.effects';
 import { StaticDataEffects } from './stores/staticData/staticData.effects';
+import { Helpers } from './helpers/helpers';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { StaticDataEffects } from './stores/staticData/staticData.effects';
   ],
   providers: [
     ...AppServices,
-    ...(environment.useMocking ? AppMockInterceptors : [])
+    ...(environment.useMocking ? AppMockInterceptors : []),
+    Helpers
   ],
   bootstrap: [AppComponent]
 })

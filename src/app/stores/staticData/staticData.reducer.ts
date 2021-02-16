@@ -32,17 +32,18 @@ export const staticDataReducer = createReducer(
       conditions: action.staticData.conditions
     }
   }),
+
   on(loadStaticDataFailure, (state,action) =>
     ({...state, error: action.error})
   ),
+
   on(updatePhoneModelsList, (state,action) => {
-    for (var i in state.phoneModelsByType) {
-      if (state.phoneModelsByType[i].typeId == action.typeId) {
-        return {
-          ...state,
-          phoneModelsList: state.phoneModelsByType[i].phoneModels
-        }            }        }
+    return {
+      ...state,
+      phoneModelsList: action.phoneModelList
+    }
   })
+
 )
 
 export function reducer(state: StaticDataState | undefined, action: Action) {

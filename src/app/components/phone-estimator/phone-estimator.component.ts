@@ -3,11 +3,11 @@ import { Title } from '@angular/platform-browser';
 import { PhoneModel } from '../../models/PhoneModel';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { updatePhoneModelsList } from 'src/app/stores/staticData/staticData.actions';
 import { PhoneType } from 'src/app/models/PhoneType';
 import {  selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticData/staticData.selectors';
 import { Router } from '@angular/router';
-import { updateSelectedPhoneModel, updateSelectedPhoneType } from 'src/app/stores/sale-calculator/sale-calculator.actions';
+import { updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions';
+import { Helpers } from 'src/app/helpers/helpers';
 
 
 @Component({
@@ -23,7 +23,8 @@ export class PhoneEstimatorComponent implements OnInit {
 
   constructor(
     private _title: Title,
-    private _store: Store<any>
+    private _store: Store<any>,
+    private _helper: Helpers
   ) {}
 
   ngOnInit() {
@@ -37,13 +38,9 @@ export class PhoneEstimatorComponent implements OnInit {
       "typeId": e.target.selectedOptions[0].id,
       "name": e.target.selectedOptions[0].innerText
     }
-    // send phone type to sale-calculator
-    this._store.dispatch(updateSelectedPhoneType(
-      { phoneType: selectedPhoneType } ))
-    // return array of models matching typeId
-    this._store.dispatch(updatePhoneModelsList({
-      typeId: selectedPhoneType.typeId
-    }))
+
+    this._helper.storeUpdateOnTypeChange(selectedPhoneType);
+
   }
 
   public onSelectedPhoneModelChange(e):void {

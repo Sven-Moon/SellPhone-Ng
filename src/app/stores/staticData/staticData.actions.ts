@@ -1,4 +1,5 @@
 import { createAction, props } from "@ngrx/store";
+import { PhoneModel } from "src/app/models/PhoneModel";
 import { StaticData } from "src/app/models/StaticData";
 
 // Load Static Data
@@ -7,7 +8,7 @@ export const loadStaticData = createAction(
 );
 
 export const loadStaticDataSuccess = createAction(
-  "[Estimator Effect] Load Static Data Success", 
+  "[Estimator Effect] Load Static Data Success",
   props<{ staticData: StaticData }>()
 );
 
@@ -18,5 +19,5 @@ export const loadStaticDataFailure = createAction(
 
 export const updatePhoneModelsList = createAction(
   '[Estimator Component] Update Phone Models List',
-  props<{typeId: number}>()
-); 
+  props<{phoneModelList: Array<PhoneModel>}>()
+);

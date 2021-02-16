@@ -5,17 +5,18 @@
     <div class="picker-box rounded-lg p-3">
 
       <span>-- Select Phone Type & Model --</span>
-      <select class="form-control" (change)="onSelectedPhoneTypeChange($event)">
+      <select id="estimatorTypeSelector"
+        class="form-control" (change)="onSelectedPhoneTypeChange($event)">
         <option selected disabled hidden>-- Phone Type --</option>
         <option *ngFor="let phoneType of phoneTypes$ | async"
           id="{{phoneType.typeId}}">{{ phoneType.name }}</option>
       </select>
 
 
-      <select
+      <select id="estimatorModelSeletor"
         class="form-control"
         (change)="onSelectedPhoneModelChange($event)">
-        <option selected disabled hidden>-- Model --</option>
+        <option selected disabled hidden [value]="-1">-- Model --</option>
         <option *ngFor="let phoneModel of phoneModelsList$ | async"
         id="{{phoneModel.modelId}}"
         >{{ phoneModel.name }}</option>
