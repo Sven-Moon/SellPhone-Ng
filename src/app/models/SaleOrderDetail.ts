@@ -1,7 +1,7 @@
 import { PhoneModel } from "./PhoneModel";
 import { PhoneType } from "./PhoneType";
 
-export interface OrderDetail {
+export interface SaleOrderDetail {
   lineId: number,
   selectedPhoneType: PhoneType,
   selectedPhoneModel: PhoneModel,

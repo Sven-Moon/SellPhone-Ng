@@ -1,17 +1,17 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { OrderDetail } from 'src/app/models/OrderDetail';
-import { selectOrderDetail } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
-import { selectPhoneModelsByType, selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors';
-import {FormGroup, Validators,  FormControl, FormBuilder } from '@angular/forms';
+import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail';
+import { selectSaleOrderDetail } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
+import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors';
+import { Validators,  FormBuilder } from '@angular/forms';
 import { StaticData } from 'src/app/models/StaticData';
 import { PhoneModel } from 'src/app/models/PhoneModel';
 import { PhoneType } from 'src/app/models/PhoneType';
-import { updateSelectedPhoneModel, updateSelectedPhoneType } from 'src/app/stores/sale-calculator/sale-calculator.actions';
-import { updatePhoneModelsList } from 'src/app/stores/staticData/staticData.actions';
+import { updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions';
 import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/helpers/helpers';
+import { Condition } from 'src/app/models/Condition';
 
 @Component({
   selector: 'app-sale-calculator',
@@ -19,8 +19,8 @@ import { Helpers } from 'src/app/helpers/helpers';
   styleUrls: ['./sale-calculator.component.scss']
 })
 export class SaleCalculatorComponent implements OnInit {
-  orderDetail: OrderDetail;
-  conditionsList: Array<string>;
+  orderDetail: SaleOrderDetail;
+  conditionsList: Array<Condition>;
   phoneModelList$: Observable<Array<PhoneModel>>;
   phoneTypesList: Array<PhoneType>
 
@@ -43,16 +43,15 @@ saleOrderForm = this.fb.group({
 });
 
   constructor(
-    private _store: Store<OrderDetail>,
+    private _store: Store<SaleOrderDetail>,
     private _storeSD: Store<StaticData>,
     private fb: FormBuilder,
     private _helper: Helpers
   ) { }
 
-
   ngOnInit() {
   // subscribe to OrderDetail
-    this._store.pipe(select(selectOrderDetail))
+    this._store.pipe(select(selectSaleOrderDetail))
       .subscribe(oD => this.orderDetail = oD);
   // get conditions list
     this._store.pipe(select(selectStaticData))
@@ -94,17 +93,6 @@ saleOrderForm = this.fb.group({
     };
 
     this._helper.storeUpdateOnTypeChange(selectedPhoneType);
-
-    // // send phone type to sale-calculator
-    // this._store.dispatch(updateSelectedPhoneType(
-    //   { phoneType: selectedPhoneType } ));
-
-    // let phoneModelList = this.helper.getPhoneModelsByPhoneType(selectedPhoneType.typeId)
-
-    // // return array of models matching typeId
-    // this._store.dispatch(updatePhoneModelsList({
-    //   typeId: selectedPhoneType.typeId
-    // }));
   }
 
   public onSelectedPhoneModelChange(e):void {
@@ -123,4 +111,13 @@ saleOrderForm = this.fb.group({
       { selectedPhoneModel: selectedPhoneModel }))
   }
 
+  public calcSale():number {
+    let total: number = 0;
+    let maxValue, conditionMod, quantity:number = null;
+    maxValue = this.orderDetail.selectedPhoneModel.maxValue;
+    conditionMod = this.orderDetail.selectedPhoneModel.maxValue;
+    quantity = this.orderDetail.selectedPhoneModel.maxValue;
+
+    return total;
+  }
 }

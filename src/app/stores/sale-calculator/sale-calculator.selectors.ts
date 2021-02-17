@@ -1,12 +1,12 @@
 import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { OrderDetail } from "src/app/models/OrderDetail";
-import { orderDetailFeatureKey, OrderDetailState } from "./sale-calculator.reducer";
+import { SaleOrderDetail } from "src/app/models/SaleOrderDetail";
+import { saleOrderDetailFeatureKey, SaleOrderDetailState } from "./sale-calculator.reducer";
 
-export const selectOrderDetailState = 
-createFeatureSelector<OrderDetailState>(orderDetailFeatureKey)
+export const selectSaleOrderDetailState =
+createFeatureSelector<SaleOrderDetailState>(saleOrderDetailFeatureKey)
 
-export const selectOrderDetail = 
+export const selectSaleOrderDetail =
 createSelector(
-  selectOrderDetailState,
-  (state: OrderDetail) => state
+  selectSaleOrderDetailState,
+  (state: SaleOrderDetail) => state
 )

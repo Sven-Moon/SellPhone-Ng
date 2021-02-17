@@ -1,14 +1,14 @@
 import { createReducer, on } from '@ngrx/store';
-import { OrderDetail } from 'src/app/models/OrderDetail';
+import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail';
 import * as fromSaleCalculatorActions from './sale-calculator.actions'
 
-export const orderDetailFeatureKey = "orderDetail";
+export const saleOrderDetailFeatureKey = "saleOrderDetail";
 
-export interface OrderDetailState extends OrderDetail {
+export interface SaleOrderDetailState extends SaleOrderDetail {
 
 }
 
-export const initialState: OrderDetailState = {
+export const initialState: SaleOrderDetailState = {
   lineId: null,
   selectedPhoneType: {typeId:null, name: null},
   selectedPhoneModel: { modelId: null, name:null, maxValue: null},
