@@ -23,17 +23,17 @@
         <option selected disabled hidden [value]="-1">-- Model --</option>
         <option *ngFor="let phoneModel of phoneModelsList$ | async"
           id="{{phoneModel.modelId}}"
-          [ngValue]="phoneModel.modelId">
-          {{ phoneModel.name }}
-        </option>
+          [ngValue]="phoneModel.modelId"
+          >{{ phoneModel.name }}</option>
       </select>
 
       <div class="result-box" *ngIf="isValueBoxVisible">
         Your phone could be worth<br> $$
-        <span>{{phoneMaxValue}}</span>
-        <button [routerLink]="['/sellmyphone']"
-          class="btn">Get Your Money!
-        </button>
+        <span>{{phoneMaxValue}}</span><br>
+        <button id="estimator-saleCalcBtn"
+          [routerLink]="['/sellmyphone']"
+          class="btn"
+          >Get Your Money!</button>
       </div>
     </div>
     <!-- /.container -->

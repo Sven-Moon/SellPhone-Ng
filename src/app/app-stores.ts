@@ -7,5 +7,5 @@ import { staticDataReducer } from './stores/staticData/staticData.reducer';
 export const AppStores = {
   siteSearchResults: searchReducer,
   staticData: staticDataReducer,
-  orderDetail: saleCalculatorReducer
+  saleOrderDetail: saleCalculatorReducer
 }

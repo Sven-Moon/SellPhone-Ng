@@ -4,7 +4,7 @@ import { select, Store } from '@ngrx/store';
 import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail';
 import { selectSaleOrderDetail } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
 import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors';
-import { Validators,  FormBuilder } from '@angular/forms';
+import { Validators,  FormBuilder, FormArray, FormGroup } from '@angular/forms';
 import { StaticData } from 'src/app/models/StaticData';
 import { PhoneModel } from 'src/app/models/PhoneModel';
 import { PhoneType } from 'src/app/models/PhoneType';
@@ -19,28 +19,19 @@ import { Condition } from 'src/app/models/Condition';
   styleUrls: ['./sale-calculator.component.scss']
 })
 export class SaleCalculatorComponent implements OnInit {
+
   orderDetail: SaleOrderDetail;
   conditionsList: Array<Condition>;
   phoneModelList$: Observable<Array<PhoneModel>>;
   phoneTypesList: Array<PhoneType>
+  saleOrderForm: FormGroup;
 
-//   saleOrderForm = new FormGroup({
-//     phoneTypeControl: new FormControl(''),
-//     phoneModelControl: new FormControl(''),
-//     phoneConditionControl: new FormControl(''),
-//     quantity: new FormControl(''),
-//     subTotal: new FormControl('') ,
-//     lineId: new FormControl('')
-// });
 
-saleOrderForm = this.fb.group({
-  phoneTypeControl: [2, Validators.required],
-  phoneModelControl: [1, Validators.required],
-  phoneConditionControl: ["", Validators.required],
-  quantity: [1, Validators.required],
-  subTotal:  [0, Validators.required],
-  lineId: [1, Validators.required]
-});
+
+
+get orderDetails() {
+  return this.saleOrderForm.get('orderDetails') as FormArray;
+}
 
   constructor(
     private _store: Store<SaleOrderDetail>,
@@ -62,19 +53,40 @@ saleOrderForm = this.fb.group({
   // subscribe to store
     this.phoneModelList$ = this._storeSD.pipe(select(selectPhoneModelsList));
   //update dropdown values
-    this.updateValues();
-  }
+    // this.updateValues();
+
+
+    this.saleOrderForm = this.fb.group({
+      orderId: [{value: '001', disabled: true}, Validators.required],
+      total: [null, Validators.required],
+      orderDate: [null, Validators.required],
+      orderStatus: ['incomplete'],
+      orderDetails: this.fb.array([
+        this.fb.group({
+          phoneTypeControl: [Number(this.orderDetail.selectedPhoneType.typeId), Validators.required],
+          phoneModelControl: [Number(this.orderDetail.selectedPhoneModel.modelId), Validators.required],
+          phoneConditionControl: ["", Validators.required],
+          quantity: [1, Validators.required],
+          subTotal:  [0, Validators.required],
+          lineId: [1, Validators.required]
+        })
+      ])
+    });
+
+  } //ngOnInit
 
 
   private updateValues() {
-    this.saleOrderForm.controls['phoneTypeControl']
-      .patchValue(
-        Number(this.orderDetail.selectedPhoneType.typeId)
+    this.saleOrderForm.get('orderDetails')
+      .setValue(
+        {phoneTypeControl: Number(this.orderDetail.selectedPhoneType.typeId)}
     );
-    this.saleOrderForm.controls['phoneModelControl']
-      .patchValue(
+
+    this.saleOrderForm['controls'].orderDetails['controls'].phoneModelControl
+      .setValue(
         Number(this.orderDetail.selectedPhoneModel.modelId)
     );
+
     console.log(this.saleOrderForm.value)
   }
 
@@ -120,4 +132,25 @@ saleOrderForm = this.fb.group({
 
     return total;
   }
+
+  public addOrderDetails() {
+    this.orderDetails.push(this.fb.group({}));
+  }
+
+  public deleteOrderDetails(index) {
+    this.orderDetails.removeAt(index);
+  }
+
+  public onSubmit() {
+    // TODO: use event emitter with form value
+    console.warn(this.saleOrderForm.value);
+  }
+
+  public onFormChange() {
+    if (this.saleOrderForm.valid) {
+
+    }
+
+  }
+
 }

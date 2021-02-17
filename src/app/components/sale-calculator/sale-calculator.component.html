@@ -1,82 +1,106 @@
 
-<div id="mainFormColumn" class="col-8 d-flex justify-content-center">
-  <form [formGroup]='saleOrderForm' class="py-1" (change)="calcSale()">
+<div id="pageContainer"
+  class="row">
+  <div id="mainFormColumn"
+    class="col-8 d-flex justify-content-center">
+    <form [formGroup]='saleOrderForm' class="py-1" (change)="calcSale()">
 
-    <div class="perk-box rounded-lg py-2 px-3 bg-secondary text-white my-2">
+      <label>
+        Order Id: <input  formControlName="orderId" />
+      </label>
 
-      <div class="form-group">
-        <label>Phone Type: </label>
-        <select formControlName="phoneTypeControl"
-          id="phoneTypeControl"
-          (change)="onSelectedPhoneTypeChange($event)"
-          class="form-control">
-          Type
-          <option selected disabled hidden>--Select Your Phone Type --</option>
-          <option [ngValue]="phoneType.typeId"
-          *ngFor="let phoneType of phoneTypesList"
-          id="{{phoneType.typeId}}">
-            {{phoneType.name}}
-          </option>
-        </select>
-      </div>
 
-      <div class="form-group">
-        <label>Phone Model: </label>
-        <select formControlName="phoneModelControl"
-          id="phoneModelControl"
-          (change)="onSelectedPhoneModelChange($event)"
-          class="form-control">
-          Model
-          <ng-container *ngFor="let phoneModel of (phoneModelList$ | async)">
-            <option selected disabled hidden>-- Select Your Model --</option>
-            <option id="{{phoneModel.modelId}}"
-              [ngValue]="phoneModel.modelId">
-              {{phoneModel.name}}
+      <div formArrayName="orderDetails"
+        class="perk-box rounded-lg py-2 px-3 bg-secondary text-white my-2">
+
+        <div *ngFor="let od of orderDetails.controls;
+          let detailsIndex=index"
+          [formGroupName]="detailsIndex">
+
+        <div class="form-group">
+          <label>Phone Type: </label>
+          <select formControlName="phoneTypeControl"
+            id="phoneTypeControl"
+            (change)="onSelectedPhoneTypeChange($event)"
+            class="form-control">
+            Type
+            <option selected disabled hidden>--Select Your Phone Type --</option>
+            <option [ngValue]="phoneType.typeId"
+            *ngFor="let phoneType of phoneTypesList"
+            id="{{phoneType.typeId}}"
+            >{{phoneType.name}}</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Phone Model: </label>
+          <select formControlName="phoneModelControl"
+            id="phoneModelControl"
+            (change)="onSelectedPhoneModelChange($event)"
+            class="form-control">
+            Model
+            <ng-container *ngFor="let phoneModel of (phoneModelList$ | async)">
+              <option selected disabled hidden>-- Select Your Model --</option>
+              <option id="{{phoneModel.modelId}}"
+                [ngValue]="phoneModel.modelId"
+                >{{phoneModel.name}}</option>
+            </ng-container>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Condition: </label>
+          <select formControlName="phoneConditionControl"
+            (change)="changeCondition($event)"
+            class="form-control">
+            <option value="" disabled hidden>
+              Condition
             </option>
-          </ng-container>
-        </select>
-      </div>
+            <option *ngFor="let condition of conditionsList">
+              {{condition.id}}
+            </option>
+          </select>
+        </div>
 
-      <div class="form-group">
-        <label>Condition: </label>
-        <select formControlName="phoneConditionControl"
-          (change)="changeCondition($event)"
-          class="form-control">
-          <option value="" disabled hidden>
-            Condition
-          </option>
-          <option *ngFor="let condition of conditionsList">
-            {{condition.id}}
-          </option>
-        </select>
-      </div>
+        <div class="form-group">
+          <label>Quantity: </label>
+          <input formControlName="quantity"
+            id="quantity" type="text" class="form-control">
+        </div>
 
-      <div class="form-group">
-        <label>Quantity: </label>
-        <input formControlName="quantity"
-          id="quantity" type="text" class="form-control">
-      </div>
+        <button (click)="deleteOrderDetails(detailsIndex)"
+          class="btn-danger button-narrow rounded m-1 h6">
+          Remove
+        </button>
+
+        </div> <!-- ngFor -->
+
+      </div> <!--orderDetails formArray -->
 
 
+      <div id="repeatButtons"
+      class="btn-group-sm d-flex justify-content-center">
+      <button  (click)="addOrderDetails()"
+        class="btn-dark button-narrow rounded m-1 h6">
+        Add Phones
+      </button>
     </div>
 
+    </form>  <!-- saleOrderForm -->
+  </div> <!-- form column -->
 
-    <div id="repeatButtons"
-    class="btn-group-sm d-flex justify-content-center">
-    <button  class="btn-dark button-narrow rounded m-1 h6">Add Phones</button>
-    <button  class="btn-danger button-narrow rounded m-1 h6">Remove</button>
+  <div class="col-4">
+    <div id="floatingTotal"
+      class=" sidebar-item mt-5">
+      <div class="perk-box rounded-lg bg-green make-me-sticky">I will give you da money!</div>
+    </div>
   </div>
 
-  </form>  <!-- saleOrderForm -->
-</div> <!-- form column -->
+</div>  <!--  pageContainer  -->
 
-<div id="floatingTotal"
-  class="col-4 float-right">
-  <div class="perk-box rounded-lg bg-green">I will give you da money!</div>
-</div>
-<div class="d-flex justify-content-center">
+<div id="page-centeredButtonGroup-bot"
+  class="d-flex justify-content-center">
   <button id="submitButton"
-  type="submit" class="btn-lg btn-primary m-1">
-  Get to the Money!
-  </button>
+    type="button" class="btn-lg btn-primary m-1"
+    >Get to the Money!</button>
 </div>

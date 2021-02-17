@@ -1,8 +1,9 @@
 import { SaleOrderDetail } from "./SaleOrderDetail";
 
 export interface SaleOrder {
-  id: string,
+  orderId: string,
   total: number,
-  date: string,
-  details: Array<SaleOrderDetail>
+  orderDate: string,
+  orderStatus: string,
+  orderDetails: Array<SaleOrderDetail>
 }
