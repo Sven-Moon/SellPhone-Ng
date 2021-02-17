@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { StaticData } from 'src/app/models/StaticData';
-import * as fromStaticDataActions from 'src/app/stores/staticData/staticData.actions'
+import * as fromStaticDataActions from 'src/app/stores/staticData/staticData.actions';
 
 @Component({
   selector: 'app-root',

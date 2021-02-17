@@ -1,5 +1,5 @@
 export class PhoneModel {
-  modelId:number;
+  modelId: number;
   name: string;
   maxValue: number;
 }

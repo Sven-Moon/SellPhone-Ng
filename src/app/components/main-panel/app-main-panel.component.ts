@@ -10,7 +10,7 @@ import { siteSearchResults } from 'src/app/stores/search/search.selectors';
   styleUrls: ['./app-main-panel.component.scss']
 })
 export class AppMainPanelComponent {
-  searchResults:SearchResult[]=[];
+  searchResults: SearchResult[] = [];
 
   searchResults$: Observable<SearchResult[]>;
 

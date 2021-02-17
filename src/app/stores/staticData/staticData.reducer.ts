@@ -1,13 +1,13 @@
-import { Action, createReducer, on } from "@ngrx/store";
-import { PhoneModel } from "src/app/models/PhoneModel";
-import { StaticData } from "src/app/models/StaticData";
-import { loadStaticDataFailure, loadStaticDataSuccess, updatePhoneModelsList, } from "./staticData.actions";
+import { Action, createReducer, on } from '@ngrx/store';
+import { PhoneModel } from 'src/app/models/PhoneModel';
+import { StaticData } from 'src/app/models/StaticData';
+import { loadStaticDataFailure, loadStaticDataSuccess, updatePhoneModelsList, } from './staticData.actions';
 
-export const staticDataFeatureKey = "staticData";
+export const staticDataFeatureKey = 'staticData';
 
 export interface StaticDataState extends StaticData {
   error: any;
-  phoneModelsList: Array<PhoneModel>
+  phoneModelsList: Array<PhoneModel>;
 }
 
 export const initialState: StaticDataState =
@@ -18,33 +18,33 @@ export const initialState: StaticDataState =
     phoneModelsByType: [],
     phoneModelsList: [],
     conditions: []
-}
+};
 
 export const staticDataReducer = createReducer(
   initialState,
   // Load StaticData from DB
-  on(loadStaticDataSuccess, (state,action) => {
+  on(loadStaticDataSuccess, (state, action) => {
     return {
       ...state,
       usaStates: action.staticData.usaStates,
       phoneTypes: action.staticData.phoneTypes,
       phoneModelsByType: action.staticData.phoneModelsByType,
       conditions: action.staticData.conditions
-    }
+    };
   }),
 
-  on(loadStaticDataFailure, (state,action) =>
+  on(loadStaticDataFailure, (state, action) =>
     ({...state, error: action.error})
   ),
 
-  on(updatePhoneModelsList, (state,action) => {
+  on(updatePhoneModelsList, (state, action) => {
     return {
       ...state,
       phoneModelsList: action.phoneModelList
-    }
+    };
   })
 
-)
+);
 
 export function reducer(state: StaticDataState | undefined, action: Action) {
   return staticDataReducer(state, action);

@@ -13,17 +13,19 @@ export interface SearchText {
   styleUrls: ['./app-search.component.scss']
 })
 export class AppSearchComponent {
-  searchText:string;
+  searchText: string;
   constructor(
     private _store: Store<SearchResults>
   ) { }
 
-  public onSearchRequested():void {
+  public onSearchRequested(): void {
 
     if (!this.searchText) {
       this._store.dispatch(fromSearchActions.clearSearch());
     } else {
-      this._store.dispatch(fromSearchActions.submitSearch({ searchText: this.searchText }));
+      this._store.dispatch(fromSearchActions
+        .submitSearch({ searchText: this.searchText }));
+
     }
   }
 }

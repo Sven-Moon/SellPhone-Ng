@@ -1,4 +1,4 @@
 export interface Condition {
-  id: string,
-  priceMod: number
+  id: string;
+  priceMod: number;
 }

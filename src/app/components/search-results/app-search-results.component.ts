@@ -13,9 +13,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./app-search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  searchResults:SearchResult[] = [];
-  // private searchResultsSubscription;
-  // searchText:string='';
+  searchResults: SearchResult[] = [];
   searchResults$: Observable<SearchResult[]>;
 
   constructor(
@@ -25,23 +23,12 @@ export class SearchResultsComponent implements OnInit {
 
   public ngOnInit(): void {
 
-    // --- REACTIVATE FOR DATED METHOD ---
-    // this.searchResultsSubscription = this._store.select('searchResults')
-    //   .subscribe((sr: SearchResult[]) => {
-    //   this.searchResults = sr;
-    // })
-    //  ---
     this.loadSearchResults();
   }
-
 
   loadSearchResults() {
     this.searchResults$ = this._store.pipe(select(siteSearchResults));
     this.searchResults$.subscribe(data => this.searchResults = data);
   }
-
-  // ngOnDestory() {
-  //   this.searchResultsSubscription.unsubscribe();
-  // }
 
 }

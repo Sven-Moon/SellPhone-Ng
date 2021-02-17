@@ -1,6 +1,6 @@
 import { Condition } from './Condition';
-import { PhoneModels } from './PhoneModels'
-import { PhoneType } from './PhoneType'
+import { PhoneModels } from './PhoneModels';
+import { PhoneType } from './PhoneType';
 import { USA_State } from './USA_State';
 
 export class StaticData {

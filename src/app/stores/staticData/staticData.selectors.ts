@@ -1,6 +1,6 @@
-import { createFeatureSelector, createSelector } from "@ngrx/store";
-import { StaticData } from "src/app/models/StaticData";
-import { staticDataFeatureKey, StaticDataState } from "./staticData.reducer";
+import { createFeatureSelector, createSelector } from '@ngrx/store';
+import { StaticData } from 'src/app/models/StaticData';
+import { staticDataFeatureKey, StaticDataState } from './staticData.reducer';
 
 export const selectStaticDataState =
 createFeatureSelector<StaticDataState>(staticDataFeatureKey);
@@ -32,5 +32,5 @@ createSelector(
 export const selectPhoneModelsList =
 createSelector(
   selectStaticDataState,
-  (state:StaticDataState) => state.phoneModelsList
-)
+  (state: StaticDataState) => state.phoneModelsList
+);

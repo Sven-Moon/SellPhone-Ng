@@ -6,12 +6,12 @@ import { SearchResult } from '../models/SearchResult';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchService { 
+export class SearchService {
 
   constructor(private http: HttpClient) {  }
-  baseUrl: string = "http://localhost:3000/results";
+  baseUrl = 'http://localhost:3000/results';
 
-  public getSearchResultsDB(inputText:string): Observable<SearchResult[]> {
+  public getSearchResultsDB(inputText: string): Observable<SearchResult[]> {
     return this.http.get<SearchResult[]>(this.baseUrl);
   }
 }

@@ -68,10 +68,16 @@
             id="quantity" type="text" class="form-control">
         </div>
 
-        <button (click)="deleteOrderDetails(detailsIndex)"
-          class="btn-danger button-narrow rounded m-1 h6">
-          Remove
-        </button>
+        <div id="orderDetailActionsArea"
+          class="row-col-2 d-flex justify-content-md-between align-content-center">
+          <button (click)="deleteOrderDetails(detailsIndex)"
+            class="btn-danger button-narrow rounded m-1 h6">
+            Remove
+          </button>
+          <label class="rounded-0">
+            Subtotal: <!--${{orderSubtotal}}-->
+          </label>
+        </div>
 
         </div> <!-- ngFor -->
 
@@ -79,7 +85,7 @@
 
 
       <div id="repeatButtons"
-      class="btn-group-sm d-flex justify-content-center">
+      class="btn-group-sm d-flex justify-content-center row-cols-2">
       <button  (click)="addOrderDetails()"
         class="btn-dark button-narrow rounded m-1 h6">
         Add Phones

@@ -20,11 +20,11 @@ export class PhoneEstimatorComponent implements OnInit {
   phoneTypes$: Observable<Array<PhoneType>>;
   phoneModelsList$: Observable<Array<PhoneModel>>;
   phoneMaxValue: number = null;
-  isValueBoxVisible: boolean = false;
+  isValueBoxVisible = false;
   estimatorForm = this._fb.group({
     phoneTypeControl: [-1],
     phoneModelControl: [-1]
-  })
+  });
 
   constructor(
     private _title: Title,
@@ -39,39 +39,39 @@ export class PhoneEstimatorComponent implements OnInit {
     this.phoneModelsList$ = this._store.pipe(select(selectPhoneModelsList));
   }
 
-  public onSelectedPhoneTypeChange(e:any):void {
-    let selectedPhoneType:PhoneType = {
-      "typeId": e.target.selectedOptions[0].id,
-      "name": e.target.selectedOptions[0].innerText
-    }
+  public onSelectedPhoneTypeChange(e: any): void {
+    const selectedPhoneType: PhoneType = {
+      typeId: e.target.selectedOptions[0].id,
+      name: e.target.selectedOptions[0].innerText
+    };
 
     this._helper.storeUpdateOnTypeChange(selectedPhoneType);
 
-    this.estimatorForm.controls['phoneModelControl']
+    this.estimatorForm.controls.phoneModelControl
     .patchValue(-1);
 
   }
 
-  public onSelectedPhoneModelChange(e):void {
-    let modelId:number = e.target.selectedOptions[0].id;
+  public onSelectedPhoneModelChange(e): void {
+    const modelId: number = e.target.selectedOptions[0].id;
   // update selected store if model selected
     if (modelId > 0) {
 
       this.phoneMaxValue = this._helper.getMaxValue(modelId);
 
-      let selectedPhoneModel:PhoneModel = {
-        modelId: modelId,
+      const selectedPhoneModel: PhoneModel = {
+        modelId,
         name: e.target.selectedOptions[0].label,
         maxValue: this.phoneMaxValue
-      }
+      };
 
       // send selected phone model to  sale-calculator
       this._store.dispatch(updateSelectedPhoneModel(
-        { selectedPhoneModel: selectedPhoneModel }))
+        { selectedPhoneModel }));
 
     // show the max value box
       this.isValueBoxVisible = true;
-    } else { this.isValueBoxVisible = false;}
+    } else { this.isValueBoxVisible = false; }
 
   }
 

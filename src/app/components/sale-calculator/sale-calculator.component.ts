@@ -23,7 +23,7 @@ export class SaleCalculatorComponent implements OnInit {
   orderDetail: SaleOrderDetail;
   conditionsList: Array<Condition>;
   phoneModelList$: Observable<Array<PhoneModel>>;
-  phoneTypesList: Array<PhoneType>
+  phoneTypesList: Array<PhoneType>;
   saleOrderForm: FormGroup;
 
 
@@ -52,7 +52,7 @@ get orderDetails() {
       });
   // subscribe to store
     this.phoneModelList$ = this._storeSD.pipe(select(selectPhoneModelsList));
-  //update dropdown values
+  // update dropdown values
     // this.updateValues();
 
 
@@ -65,7 +65,7 @@ get orderDetails() {
         this.fb.group({
           phoneTypeControl: [Number(this.orderDetail.selectedPhoneType.typeId), Validators.required],
           phoneModelControl: [Number(this.orderDetail.selectedPhoneModel.modelId), Validators.required],
-          phoneConditionControl: ["", Validators.required],
+          phoneConditionControl: ['', Validators.required],
           quantity: [1, Validators.required],
           subTotal:  [0, Validators.required],
           lineId: [1, Validators.required]
@@ -73,21 +73,21 @@ get orderDetails() {
       ])
     });
 
-  } //ngOnInit
+  } // ngOnInit
 
 
   private updateValues() {
-    this.saleOrderForm.get('orderDetails')
-      .setValue(
-        {phoneTypeControl: Number(this.orderDetail.selectedPhoneType.typeId)}
-    );
+    // this.saleOrderForm.get('orderDetails')
+    //   .setValue(
+    //     {phoneTypeControl: Number(this.orderDetail.selectedPhoneType.typeId)}
+    // );
 
-    this.saleOrderForm['controls'].orderDetails['controls'].phoneModelControl
-      .setValue(
-        Number(this.orderDetail.selectedPhoneModel.modelId)
-    );
+    // this.saleOrderForm.controls.orderDetails.controls.phoneModelControl
+    //   .setValue(
+    //     Number(this.orderDetail.selectedPhoneModel.modelId)
+    // );
 
-    console.log(this.saleOrderForm.value)
+    console.log(this.saleOrderForm.value);
   }
 
   public changeCondition(e) {
@@ -97,35 +97,35 @@ get orderDetails() {
     // })
   }
 
-  public onSelectedPhoneTypeChange(e:any):void {
+  public onSelectedPhoneTypeChange(e: any): void {
 
-    let selectedPhoneType:PhoneType = {
-      "typeId": Number(e.target.selectedOptions[0].id),
-      "name": e.target.selectedOptions[0].innerText.trim()
+    const selectedPhoneType: PhoneType = {
+      typeId: Number(e.target.selectedOptions[0].id),
+      name: e.target.selectedOptions[0].innerText.trim()
     };
 
     this._helper.storeUpdateOnTypeChange(selectedPhoneType);
   }
 
-  public onSelectedPhoneModelChange(e):void {
+  public onSelectedPhoneModelChange(e): void {
 
-    let modelId:number = e.target.selectedOptions[0].id;
-    let maxVal = this._helper.getMaxValue(modelId);
-    let selectedPhoneModel:PhoneModel = {
-      modelId: modelId,
+    const modelId: number = e.target.selectedOptions[0].id;
+    const maxVal = this._helper.getMaxValue(modelId);
+    const selectedPhoneModel: PhoneModel = {
+      modelId,
       name: e.target.selectedOptions[0].label,
       maxValue: maxVal
-    }
+    };
     // this.phoneMaxValue = this.onPhoneModelSelect(
     //   selectedPhoneModel.modelId
     // );
     this._store.dispatch(updateSelectedPhoneModel(
-      { selectedPhoneModel: selectedPhoneModel }))
+      { selectedPhoneModel }));
   }
 
-  public calcSale():number {
-    let total: number = 0;
-    let maxValue, conditionMod, quantity:number = null;
+  public calcSale(): number {
+    const total = 0;
+    let maxValue, conditionMod, quantity: number = null;
     maxValue = this.orderDetail.selectedPhoneModel.maxValue;
     conditionMod = this.orderDetail.selectedPhoneModel.maxValue;
     quantity = this.orderDetail.selectedPhoneModel.maxValue;
