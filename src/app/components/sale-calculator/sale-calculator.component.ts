@@ -58,13 +58,13 @@ get orderDetails() {
 
     this.saleOrderForm = this.fb.group({
       orderId: [{value: '001', disabled: true}, Validators.required],
-      total: [null, Validators.required],
-      orderDate: [null, Validators.required],
+      total: [null],
+      orderDate: [null],
       orderStatus: ['incomplete'],
       orderDetails: this.fb.array([
         this.fb.group({
-          phoneTypeControl: [Number(this.orderDetail.selectedPhoneType.typeId), Validators.required],
-          phoneModelControl: [Number(this.orderDetail.selectedPhoneModel.modelId), Validators.required],
+          phoneType: [Number(this.orderDetail.selectedPhoneType.typeId), Validators.required],
+          phoneModel: [Number(this.orderDetail.selectedPhoneModel.modelId), Validators.required],
           phoneConditionControl: ['', Validators.required],
           quantity: [1, Validators.required],
           subTotal:  [0, Validators.required],
@@ -79,10 +79,10 @@ get orderDetails() {
   private updateValues() {
     // this.saleOrderForm.get('orderDetails')
     //   .setValue(
-    //     {phoneTypeControl: Number(this.orderDetail.selectedPhoneType.typeId)}
+    //     {phoneType: Number(this.orderDetail.selectedPhoneType.typeId)}
     // );
 
-    // this.saleOrderForm.controls.orderDetails.controls.phoneModelControl
+    // this.saleOrderForm.controls.orderDetails.controls.phoneModel
     //   .setValue(
     //     Number(this.orderDetail.selectedPhoneModel.modelId)
     // );
@@ -134,7 +134,14 @@ get orderDetails() {
   }
 
   public addOrderDetails() {
-    this.orderDetails.push(this.fb.group({}));
+    this.orderDetails.push(this.fb.group(new SaleOrderDetail(
+      1,
+      {typeId:null,name:""},
+      {modelId:null,name:"",maxValue:null},
+      3,
+      1,
+      null
+    )));
   }
 
   public deleteOrderDetails(index) {
@@ -146,9 +153,10 @@ get orderDetails() {
     console.warn(this.saleOrderForm.value);
   }
 
-  public onFormChange() {
-    if (this.saleOrderForm.valid) {
+  public onOrderDetailsChange() {
 
+    if (this.saleOrderForm.get('orderDetails').valid ) {
+      console.log(this.saleOrderForm.get('orderDetails').value)
     }
 
   }

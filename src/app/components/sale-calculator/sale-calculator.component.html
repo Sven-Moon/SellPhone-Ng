@@ -2,7 +2,7 @@
 <div id="pageContainer"
   class="row">
   <div id="mainFormColumn"
-    class="col-8 d-flex justify-content-center">
+    class="col-7 d-flex justify-content-center">
     <form [formGroup]='saleOrderForm' class="py-1" (change)="calcSale()">
 
       <label>
@@ -11,16 +11,18 @@
 
 
       <div formArrayName="orderDetails"
-        class="perk-box rounded-lg py-2 px-3 bg-secondary text-white my-2">
+        class="perk-box rounded-lg py-2 px-3 bg-secondary text-white my-2"
+        (change)="onOrderDetailsChange()">
 
         <div *ngFor="let od of orderDetails.controls;
           let detailsIndex=index"
           [formGroupName]="detailsIndex">
 
-        <div class="form-group">
+        <div id="typeFormGroup" class="form-group">
           <label>Phone Type: </label>
-          <select formControlName="phoneTypeControl"
-            id="phoneTypeControl"
+          <select formControlName="phoneType"
+            placeholder="Phone Type"
+            id="phoneType"
             (change)="onSelectedPhoneTypeChange($event)"
             class="form-control">
             Type
@@ -32,10 +34,10 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <div id="modelFormGroup" class="form-group">
           <label>Phone Model: </label>
-          <select formControlName="phoneModelControl"
-            id="phoneModelControl"
+          <select formControlName="phoneModel"
+            id="phoneModel"
             (change)="onSelectedPhoneModelChange($event)"
             class="form-control">
             Model
@@ -48,7 +50,7 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <div id="conditionFormGroup" class="form-group">
           <label>Condition: </label>
           <select formControlName="phoneConditionControl"
             (change)="changeCondition($event)"
@@ -62,7 +64,7 @@
           </select>
         </div>
 
-        <div class="form-group">
+        <div id="quantityFormGroup" class="form-group">
           <label>Quantity: </label>
           <input formControlName="quantity"
             id="quantity" type="text" class="form-control">
@@ -95,10 +97,12 @@
     </form>  <!-- saleOrderForm -->
   </div> <!-- form column -->
 
-  <div class="col-4">
+  <div id="sideBarRunningTotal" class="col-5">
     <div id="floatingTotal"
       class=" sidebar-item mt-5">
-      <div class="perk-box rounded-lg bg-green make-me-sticky">I will give you da money!</div>
+      <div class="perk-box rounded-lg bg-green make-me-sticky">I will give you da money!
+        {{saleOrderForm.value | json}}
+      </div>
     </div>
   </div>
 

@@ -17,7 +17,8 @@ export const initialState: StaticDataState =
     phoneTypes: [],
     phoneModelsByType: [],
     phoneModelsList: [],
-    conditions: []
+    conditions: [],
+    orderStatus: []
 };
 
 export const staticDataReducer = createReducer(
@@ -29,7 +30,8 @@ export const staticDataReducer = createReducer(
       usaStates: action.staticData.usaStates,
       phoneTypes: action.staticData.phoneTypes,
       phoneModelsByType: action.staticData.phoneModelsByType,
-      conditions: action.staticData.conditions
+      conditions: action.staticData.conditions,
+      orderStatus: action.staticData.orderStatus
     };
   }),
 

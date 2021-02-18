@@ -1,11 +1,13 @@
 import { PhoneModel } from './PhoneModel';
 import { PhoneType } from './PhoneType';
 
-export interface SaleOrderDetail {
-  lineId: number;
-  selectedPhoneType: PhoneType;
-  selectedPhoneModel: PhoneModel;
-  phoneCondition: number;
-  quantity: number;
-  subTotal: number;
+export class SaleOrderDetail {
+  constructor(
+    public lineId: number,
+    public selectedPhoneType: PhoneType,
+    public selectedPhoneModel: PhoneModel,
+    public phoneCondition: number,
+    public quantity: number,
+    public subTotal: number
+  ) {}
 }

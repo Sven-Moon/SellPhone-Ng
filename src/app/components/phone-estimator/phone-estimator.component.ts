@@ -22,8 +22,8 @@ export class PhoneEstimatorComponent implements OnInit {
   phoneMaxValue: number = null;
   isValueBoxVisible = false;
   estimatorForm = this._fb.group({
-    phoneTypeControl: [-1],
-    phoneModelControl: [-1]
+    phoneType: [-1],
+    phoneModel: [-1]
   });
 
   constructor(
@@ -47,7 +47,7 @@ export class PhoneEstimatorComponent implements OnInit {
 
     this._helper.storeUpdateOnTypeChange(selectedPhoneType);
 
-    this.estimatorForm.controls.phoneModelControl
+    this.estimatorForm.controls.phoneModel
     .patchValue(-1);
 
   }

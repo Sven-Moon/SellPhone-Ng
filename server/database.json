@@ -126,6 +126,14 @@
       {"id":"Good", "priceMod": 0.7},
       {"id":"Poor", "priceMod": 0.4},
       {"id":"Inoperable", "priceMod": 0.2}
+    ],
+    "orderStatus":[
+      {"statusId": "new"},
+      {"statusId": "incomplete"},
+      {"statusId": "pending"},
+      {"statusId": "cancelled"},
+      {"statusId": "complete"}
+
     ]
   }
 }

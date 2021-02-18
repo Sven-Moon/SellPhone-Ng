@@ -8,4 +8,5 @@ export class StaticData {
   phoneTypes: Array<PhoneType>;
   phoneModelsByType: Array<PhoneModels>;
   conditions: Array<Condition>;
+  orderStatus: Array<string>
 }

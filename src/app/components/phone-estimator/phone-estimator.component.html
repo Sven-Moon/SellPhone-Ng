@@ -7,7 +7,7 @@
 
       <span>-- Select Phone Type & Model --</span>
 
-      <select formControlName="phoneTypeControl"
+      <select formControlName="phoneType"
         id="estimatorTypeSelector"
         class="form-control" (change)="onSelectedPhoneTypeChange($event)">
         <option selected disabled hidden [value]="-1">-- Phone Type --</option>
@@ -16,7 +16,7 @@
       </select>
 
 
-      <select formControlName="phoneModelControl"
+      <select formControlName="phoneModel"
         id="estimatorModelSeletor"
         class="form-control"
         (change)="onSelectedPhoneModelChange($event)">
