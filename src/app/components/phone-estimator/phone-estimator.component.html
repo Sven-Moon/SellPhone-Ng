@@ -21,7 +21,7 @@
         class="form-control"
         (change)="onSelectedPhoneModelChange($event)">
         <option selected disabled hidden [value]="-1">-- Model --</option>
-        <option *ngFor="let phoneModel of phoneModelsList$ | async"
+        <option *ngFor="let phoneModel of phoneModelsList$ "
           id="{{phoneModel.modelId}}"
           [ngValue]="phoneModel.modelId"
           >{{ phoneModel.name }}</option>

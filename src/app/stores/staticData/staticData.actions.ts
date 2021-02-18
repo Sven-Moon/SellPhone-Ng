@@ -19,5 +19,5 @@ export const loadStaticDataFailure = createAction(
 
 export const updatePhoneModelsList = createAction(
   '[Estimator Component] Update Phone Models List',
-  props<{phoneModelList: Array<PhoneModel>}>()
+  props<{phoneModelList: Array<Array<PhoneModel>>}>()
 );

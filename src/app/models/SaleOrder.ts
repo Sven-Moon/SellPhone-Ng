@@ -1,4 +1,4 @@
-import { SaleOrderDetail } from "./SaleOrderDetail";
+import { SaleOrderDetail } from './SaleOrderDetail'
 
 export interface SaleOrder {
   orderId: string,

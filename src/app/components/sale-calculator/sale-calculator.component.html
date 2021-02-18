@@ -3,7 +3,7 @@
   class="row">
   <div id="mainFormColumn"
     class="col-7 d-flex justify-content-center">
-    <form [formGroup]='saleOrderForm' class="py-1" (change)="calcSale()">
+    <form [formGroup]='saleOrderForm' class="py-1" (change)="calcTotalSale()">
 
       <label>
         Order Id: <input  formControlName="orderId" />
@@ -41,7 +41,7 @@
             (change)="onSelectedPhoneModelChange($event)"
             class="form-control">
             Model
-            <ng-container *ngFor="let phoneModel of (phoneModelList$ | async)">
+            <ng-container *ngFor="let phoneModel of (phoneModelList$)">
               <option selected disabled hidden>-- Select Your Model --</option>
               <option id="{{phoneModel.modelId}}"
                 [ngValue]="phoneModel.modelId"

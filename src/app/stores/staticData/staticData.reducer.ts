@@ -7,7 +7,7 @@ export const staticDataFeatureKey = 'staticData';
 
 export interface StaticDataState extends StaticData {
   error: any;
-  phoneModelsList: Array<PhoneModel>;
+  phoneModelsList: Array<Array<PhoneModel>>;
 }
 
 export const initialState: StaticDataState =

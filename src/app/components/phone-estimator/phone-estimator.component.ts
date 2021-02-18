@@ -1,15 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { Title } from '@angular/platform-browser';
-import { PhoneModel } from '../../models/PhoneModel';
-import { select, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { PhoneType } from 'src/app/models/PhoneType';
-import {  selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticData/staticData.selectors';
-import { Router } from '@angular/router';
-import { updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions';
-import { Helpers } from 'src/app/helpers/helpers';
-import { FormBuilder } from '@angular/forms';
-
+/* eslint-disable no-useless-constructor */
+import { Component, OnInit } from '@angular/core'
+import { Title } from '@angular/platform-browser'
+import { PhoneModel } from '../../models/PhoneModel'
+import { select, Store } from '@ngrx/store'
+import { Observable } from 'rxjs'
+import { PhoneType } from 'src/app/models/PhoneType'
+import { selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticData/staticData.selectors'
+import { updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions'
+import { Helpers } from 'src/app/helpers/helpers'
+import { FormBuilder } from '@angular/forms'
 
 @Component({
   selector: 'app-phone-estimator',
@@ -18,7 +17,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class PhoneEstimatorComponent implements OnInit {
   phoneTypes$: Observable<Array<PhoneType>>;
-  phoneModelsList$: Observable<Array<PhoneModel>>;
+  phoneModelsList$: Array<PhoneModel>;
   phoneMaxValue: number = null;
   isValueBoxVisible = false;
   estimatorForm = this._fb.group({
@@ -26,53 +25,56 @@ export class PhoneEstimatorComponent implements OnInit {
     phoneModel: [-1]
   });
 
-  constructor(
+  constructor (
     private _title: Title,
     private _store: Store<any>,
     private _helper: Helpers,
     private _fb: FormBuilder
   ) {}
 
-  ngOnInit() {
-    this._title.setTitle('sellphone-ng');
-    this.phoneTypes$ = this._store.pipe(select(selectPhoneTypes));
-    this.phoneModelsList$ = this._store.pipe(select(selectPhoneModelsList));
+  ngOnInit () {
+    this._title.setTitle('sellphone-ng')
+    this.phoneTypes$ = this._store.pipe(select(selectPhoneTypes))
+    this._store.pipe(select(selectPhoneModelsList))
+      // eslint-disable-next-line no-return-assign
+      .subscribe(formArray => this.phoneModelsList$ = formArray[0])
   }
 
-  public onSelectedPhoneTypeChange(e: any): void {
+  public onSelectedPhoneTypeChange (e: any): void {
     const selectedPhoneType: PhoneType = {
       typeId: e.target.selectedOptions[0].id,
       name: e.target.selectedOptions[0].innerText
-    };
+    }
 
-    this._helper.storeUpdateOnTypeChange(selectedPhoneType);
+    // 0 is always the form index when coming from estimator
+    this._helper.storeUpdateOnTypeChange(0, selectedPhoneType)
 
     this.estimatorForm.controls.phoneModel
-    .patchValue(-1);
-
+      .patchValue(-1)
   }
 
-  public onSelectedPhoneModelChange(e): void {
-    const modelId: number = e.target.selectedOptions[0].id;
-  // update selected store if model selected
+  public onSelectedPhoneModelChange (e): void {
+    const modelId: number = e.target.selectedOptions[0].id
+    // update selected store if model selected
     if (modelId > 0) {
-
-      this.phoneMaxValue = this._helper.getMaxValue(modelId);
+      // 0 is always the form index when coming from estimator
+      this.phoneMaxValue = this._helper.getMaxValue(0, modelId)
 
       const selectedPhoneModel: PhoneModel = {
         modelId,
         name: e.target.selectedOptions[0].label,
         maxValue: this.phoneMaxValue
-      };
+      }
 
-      // send selected phone model to  sale-calculator
+      // send selected phone model to sale-calculator
+      // initial form index = 0
+      const formIndex = 0
       this._store.dispatch(updateSelectedPhoneModel(
-        { selectedPhoneModel }));
+        { formIndex, selectedPhoneModel }))
 
-    // show the max value box
-      this.isValueBoxVisible = true;
-    } else { this.isValueBoxVisible = false; }
-
+      // show the max value box
+      this.isValueBoxVisible = true
+    } else { this.isValueBoxVisible = false }
   }
 
   // private onPhoneModelSelect(id:number):number {
