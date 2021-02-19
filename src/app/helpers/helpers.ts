@@ -20,14 +20,14 @@ export class Helpers {
     const phoneModelList: Array<PhoneModel[]> =
       this.getPhoneModelsByPhoneType(formIndex, selectedPhoneType.typeId)
 
-    // return array of models matching typeId
+    // return array of models matching typeId --> StaticData
     this._store.dispatch(updatePhoneModelsList(
-      { phoneModelList }
+      { formIndex, phoneModelList }
     ))
   }
 
   public getPhoneModelsByPhoneType (formIndex: number, selectedPhoneTypeId: number): Array<PhoneModel[]> {
-    const phoneModels: Array<PhoneModel[]> = []
+    // const phoneModelsList: Array<PhoneModel> = []
     // get current state of selectedPhoneTypes
     let state = null
 
@@ -35,16 +35,17 @@ export class Helpers {
       .subscribe(sD => {
         state = sD
       })
+debugger;
 
-    // build phoneModels array base on the selectedPhoneType
+      // build phoneModels array base on the selectedPhoneType
     for (const i in state.phoneModelsByType) {
       if (state.phoneModelsByType[i].typeId == selectedPhoneTypeId) {
-        phoneModels[formIndex] = state.phoneModelsByType[i].phoneModels
+        return state.phoneModelsByType[i].phoneModels
       }
     }
 
     // return the phoneModelsList
-    return phoneModels
+    // return phoneModelsList
   }
 
   private onPhoneModelSelect (id: number): boolean {

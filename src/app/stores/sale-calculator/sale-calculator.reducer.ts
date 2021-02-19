@@ -1,4 +1,5 @@
 import { createReducer, on } from '@ngrx/store'
+import produce from 'immer'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import * as fromSaleCalculatorActions from './sale-calculator.actions'
 
@@ -8,7 +9,7 @@ export interface SaleOrderState extends SaleOrder {
 
 }
 
-// export interface SaleOrderDetailState extends SaleOrderDetail {
+// export interface SaleOrderDetailState extends EntityState<SaleOrderDetails> {
 
 // }
 
@@ -27,15 +28,6 @@ export const initialState: SaleOrderState = {
   }]
 }
 
-// export const initialState: SaleOrderDetailState = {
-//   lineId: null,
-//   selectedPhoneType: {typeId: null, name: null},
-//   selectedPhoneModel: { modelId: null, name: null, maxValue: null},
-//   phoneCondition: null,
-//   quantity: null,
-//   subTotal: null
-// };
-
 export const saleCalculatorReducer = createReducer(
   initialState,
   // update inputs from estimator
@@ -43,14 +35,27 @@ export const saleCalculatorReducer = createReducer(
   on(fromSaleCalculatorActions.updateSelectedPhoneType,
     (state, action) => ({
       ...state,
-      selectedPhoneType: action.selectedPhoneType
-    }
-    )
+      orderDetails: {
+        ...state.orderDetails,
+        [action.formIndex]: {
+          ...state.orderDetails[action.formIndex],
+          selectedPhoneType: action.selectedPhoneType
+        }
+      }
+    })
   ),
 
   on(fromSaleCalculatorActions.updateSelectedPhoneModel,
-    (state, action) => (
-      { ...state, selectedPhoneModel: action.selectedPhoneModel })
+    (state, action) => ({
+      ...state,
+      orderDetails: {
+        ...state.orderDetails,
+        [action.formIndex]: {
+          ...state.orderDetails[action.formIndex],
+          selectedPhoneModel: action.selectedPhoneModel
+        }
+      }
+    })
   ),
 
   on(fromSaleCalculatorActions.updateSelectedPhoneConditionId,

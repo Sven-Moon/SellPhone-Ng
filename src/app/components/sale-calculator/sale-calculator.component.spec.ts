@@ -31,6 +31,6 @@ describe('SaleCalculatorComponent', () => {
     input.value = 'Red';
     input.dispatchEvent(event);
 
-    expect(fixture.componentInstance.phoneConditionControl.value).toEqual('Red');
+    expect(fixture.componentInstance.phoneCondition.value).toEqual('Red');
   });
 });

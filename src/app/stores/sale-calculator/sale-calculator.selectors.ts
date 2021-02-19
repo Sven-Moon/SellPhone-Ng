@@ -10,3 +10,9 @@ createSelector(
   selectSaleOrderState,
   (state: SaleOrder) => state
 )
+
+export const selectOrderDetail =
+createSelector(
+  selectSaleOrderState,
+  (state:SaleOrder) => state.orderDetails
+)

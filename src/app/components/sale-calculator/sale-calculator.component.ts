@@ -59,12 +59,12 @@ export class SaleCalculatorComponent implements OnInit {
       orderDetails: this.fb.array([
         this.fb.group({
           phoneType: [Number(
-            // this.saleOrder.orderDetails[0].selectedPhoneType.typeId
+            this.saleOrder.orderDetails[0].selectedPhoneType.typeId
           ), Validators.required],
           phoneModel: [Number(
             this.saleOrder.orderDetails[0].selectedPhoneModel.modelId
           ), Validators.required],
-          phoneConditionControl: ['', Validators.required],
+          phoneCondition: ['', Validators.required],
           quantity: [1, Validators.required],
           subTotal: [0, Validators.required],
           lineId: [1, Validators.required]
@@ -89,7 +89,7 @@ export class SaleCalculatorComponent implements OnInit {
 
   public changeCondition (e) {
     // this.saleOrderForm.patchValue({
-    //   phoneConditionControl: e.target.value
+    //   phoneCondition: e.target.value
     //   // { onlySelf: true}
     // })
   }
@@ -139,10 +139,10 @@ export class SaleCalculatorComponent implements OnInit {
   public addOrderDetails () {
     this.orderDetails.push(this.fb.group({
       lineId: null,
-      selectedPhoneType: {},
-      selectedPhoneModel: {},
-      phoneCondition: null,
-      quantity: null,
+      selectedPhoneType: -1,
+      selectedPhoneModel: -1,
+      phoneCondition: 'Excellent',
+      quantity: 1,
       subTotal: null
     }))
   }
