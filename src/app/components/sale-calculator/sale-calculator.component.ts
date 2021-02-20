@@ -60,10 +60,10 @@ export class SaleCalculatorComponent implements OnInit {
       orderDetails: this.fb.array([
         this.fb.group({
           phoneType: [Number(
-            this.saleOrder.orderDetails[0].selectedPhoneType.typeId
+            this.saleOrder.orderDetails[0].phoneType.typeId
           ), Validators.required],
           phoneModel: [Number(
-            this.saleOrder.orderDetails[0].selectedPhoneModel.modelId
+            this.saleOrder.orderDetails[0].phoneModel.modelId
           ), Validators.required],
           phoneCondition: ['', Validators.required],
           quantity: [1, Validators.required],
@@ -133,8 +133,8 @@ export class SaleCalculatorComponent implements OnInit {
   public addOrderDetails (index) {
     this.orderDetails.push(this.fb.group({
       lineId: index + 1,
-      selectedPhoneType: -1,
-      selectedPhoneModel: -1,
+      phoneType: -1,
+      phoneModel: -1,
       phoneCondition: 'Excellent',
       quantity: null,
       subTotal: null

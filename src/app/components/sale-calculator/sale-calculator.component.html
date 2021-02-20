@@ -34,21 +34,21 @@
             </select>
           </div>
 
-          <div id="modelFormGroup" class="form-group">
-            <label>Phone Model: </label>
-            <select formControlName="phoneModel"
-              id="phoneModel"
-              (change)="onSelectedPhoneModelChange($event)"
-              class="form-control">
-              Model
-              <ng-container *ngFor="let formModelArray of (phoneModelList)">
-                <option selected disabled hidden>-- Select Your Model --</option>
-                <option id="{{formModelArray[0].phoneModel.modelId}}"
-                  [ngValue]="formModelArray[0].phoneModel.modelId"
-                  >{{formModelArray[0].phoneModel.modelId}}</option>
-              </ng-container>
-            </select>
-          </div>
+<div id="modelFormGroup" class="form-group">
+  <label>Phone Model: </label>
+  <select formControlName="phoneModel"
+    id="phoneModel"
+    (change)="onSelectedPhoneModelChange($event)"
+    class="form-control">
+    Model
+    <ng-container *ngFor="let formModelArray of phoneModelList">
+      <option selected disabled hidden>-- Select Your Model --</option>
+      <option id="{{formModelArray[0].modelId}}"
+        [ngValue]="formModelArray[0].modelId"
+        >{{formModelArray[0].modelId}}</option>
+    </ng-container>
+  </select>
+</div>
 
         <div id="conditionFormGroup" class="form-group">
           <label>Condition: </label>

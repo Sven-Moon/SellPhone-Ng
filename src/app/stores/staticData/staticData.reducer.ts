@@ -40,6 +40,7 @@ export const staticDataReducer = createReducer(
   ),
 
   on(updatePhoneModelsList, (state, action) => {
+    debugger;
     return {
       ...state,
       phoneModelsList: {

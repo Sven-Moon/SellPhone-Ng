@@ -3,8 +3,8 @@ import { PhoneType } from './PhoneType'
 
 export interface SaleOrderDetail {
   lineId: number,
-  selectedPhoneType: PhoneType,
-  selectedPhoneModel: PhoneModel,
+  phoneType: PhoneType,
+  phoneModel: PhoneModel,
   phoneCondition: number,
   quantity: number,
   subTotal: number
