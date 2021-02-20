@@ -1,7 +1,7 @@
-import { Condition } from './Condition';
-import { PhoneModels } from './PhoneModels';
-import { PhoneType } from './PhoneType';
-import { USA_State } from './USA_State';
+import { Condition } from './Condition'
+import { PhoneModels } from './PhoneModels'
+import { PhoneType } from './PhoneType'
+import { USA_State } from './USA_State'
 
 export class StaticData {
   usaStates: Array<USA_State>;

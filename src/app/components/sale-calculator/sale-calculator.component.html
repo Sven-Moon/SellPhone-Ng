@@ -14,46 +14,46 @@
         class="perk-box rounded-lg py-2 px-3 bg-secondary text-white my-2"
         (change)="onOrderDetailsChange()">
 
-        <div *ngFor="let od of orderDetails.controls;
-          let detailsIndex=index"
-          [formGroupName]="detailsIndex">
+<div *ngFor="let od of orderDetails.controls;
+  let detailsIndex=index"
+  [formGroupName]="detailsIndex">
 
-        <div id="typeFormGroup" class="form-group">
-          <label>Phone Type: </label>
-          <select formControlName="phoneType"
-            placeholder="Phone Type"
-            id="phoneType"
-            (change)="onSelectedPhoneTypeChange($event)"
-            class="form-control">
-            Type
-            <option selected disabled hidden>--Select Your Phone Type --</option>
-            <option [ngValue]="phoneType.typeId"
-            *ngFor="let phoneType of phoneTypesList"
-            id="{{phoneType.typeId}}"
-            >{{phoneType.name}}</option>
-          </select>
-        </div>
+          <div id="typeFormGroup" class="form-group">
+            <label>Phone Type: </label>
+            <select formControlName="phoneType"
+              placeholder="Phone Type"
+              id="phoneType"
+              (change)="onSelectedPhoneTypeChange($event)"
+              class="form-control">
+              Type
+              <option selected disabled hidden>--Select Your Phone Type --</option>
+              <option [ngValue]="phoneType.typeId"
+              *ngFor="let phoneType of phoneTypesList"
+              id="{{phoneType.typeId}}"
+              >{{phoneType.name}}</option>
+            </select>
+          </div>
 
-        <div id="modelFormGroup" class="form-group">
-          <label>Phone Model: </label>
-          <select formControlName="phoneModel"
-            id="phoneModel"
-            (change)="onSelectedPhoneModelChange($event)"
-            class="form-control">
-            Model
-            <ng-container *ngFor="let phoneModel of (phoneModelList$)">
-              <option selected disabled hidden>-- Select Your Model --</option>
-              <option id="{{phoneModel.modelId}}"
-                [ngValue]="phoneModel.modelId"
-                >{{phoneModel.name}}</option>
-            </ng-container>
-          </select>
-        </div>
+          <div id="modelFormGroup" class="form-group">
+            <label>Phone Model: </label>
+            <select formControlName="phoneModel"
+              id="phoneModel"
+              (change)="onSelectedPhoneModelChange($event)"
+              class="form-control">
+              Model
+              <ng-container *ngFor="let formModelArray of (phoneModelList)">
+                <option selected disabled hidden>-- Select Your Model --</option>
+                <option id="{{formModelArray[0].phoneModel.modelId}}"
+                  [ngValue]="formModelArray[0].phoneModel.modelId"
+                  >{{formModelArray[0].phoneModel.modelId}}</option>
+              </ng-container>
+            </select>
+          </div>
 
         <div id="conditionFormGroup" class="form-group">
           <label>Condition: </label>
           <select formControlName="phoneCondition"
-            (change)="changeCondition($event)"
+            (change)="changeCondition(detailsIndex, $event.target.value)"
             class="form-control">
             <option value="" disabled hidden>
               Condition
@@ -67,11 +67,16 @@
         <div id="quantityFormGroup" class="form-group">
           <label>Quantity: </label>
           <input formControlName="quantity"
-            id="quantity" type="text" class="form-control">
+            id="quantity" type="text" class="form-control"
+            (change)="onQuantityChange(detailsIndex,$event.target.value)">
         </div>
 
         <div id="orderDetailActionsArea"
           class="row-col-2 d-flex justify-content-md-between align-content-center">
+          <button  (click)="addOrderDetails(detailsIndex)"
+            class="btn-dark button-narrow rounded m-1 h6">
+            Add Phones
+          </button>
           <button (click)="deleteOrderDetails(detailsIndex)"
             class="btn-danger button-narrow rounded m-1 h6">
             Remove
@@ -88,10 +93,10 @@
 
       <div id="repeatButtons"
       class="btn-group-sm d-flex justify-content-center row-cols-2">
-      <button  (click)="addOrderDetails()"
+      <!-- <button  (click)="addOrderDetails(detailsIndex)"
         class="btn-dark button-narrow rounded m-1 h6">
         Add Phones
-      </button>
+      </button> -->
     </div>
 
     </form>  <!-- saleOrderForm -->

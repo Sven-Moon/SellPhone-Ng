@@ -18,7 +18,16 @@ export const updateSelectedPhoneModel = createAction(
   }>()
 )
 
-export const updateSelectedPhoneConditionId = createAction(
-  '[Sale Calculator Component] Update Selected Phone Condition ID',
-  props<{ selectedPhoneConditionId: number }>()
+export const addFormSection = createAction(
+  '[Sale Calculator Component] Add Form Section'
+)
+
+export const updateCondition = createAction(
+  '[Sale Calculator Component] Update Condition',
+  props<{ formIndex: number, id: string }>()
+)
+
+export const updateQuantity = createAction(
+  '[Sale Calculator Component] Update Quantity',
+  props<{ formIndex: number, quantity: number }>()
 )

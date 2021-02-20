@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store'
-import produce from 'immer'
+// import produce from 'immer'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import * as fromSaleCalculatorActions from './sale-calculator.actions'
 
@@ -18,8 +18,9 @@ export const initialState: SaleOrderState = {
   total: null,
   orderDate: '',
   orderStatus: '',
+  orderItems: 1,
   orderDetails: [{
-    lineId: null,
+    lineId: 1,
     selectedPhoneType: { typeId: null, name: null },
     selectedPhoneModel: { modelId: null, name: null, maxValue: null },
     phoneCondition: null,
@@ -58,8 +59,46 @@ export const saleCalculatorReducer = createReducer(
     })
   ),
 
-  on(fromSaleCalculatorActions.updateSelectedPhoneConditionId,
-    (state, action) => (
-      { ...state, phoneConditionId: action.selectedPhoneConditionId })
+  on(fromSaleCalculatorActions.addFormSection,
+    (state) => (
+      {
+        ...state,
+        orderItems: state.orderItems + 1,
+        orderDetails: {
+          ...state.orderDetails,
+          [state.orderItems]: {
+            ...state.orderDetails[state.orderItems],
+            lineId: state.orderItems + 1
+          }
+        }
+      }
+    )
+  ),
+
+  on(fromSaleCalculatorActions.updateCondition,
+    (state, action) => ({
+      ...state,
+      orderDetails: {
+        ...state.orderDetails,
+        [action.formIndex]: {
+          ...state.orderDetails[action.formIndex],
+          phoneCondition: action.id
+        }
+      }
+    })
+  ),
+
+  on(fromSaleCalculatorActions.updateQuantity,
+    (state, action) => ({
+      ...state,
+      orderDetails: {
+        ...state.orderDetails,
+        [action.formIndex]: {
+          ...state.orderDetails[action.formIndex],
+          quantity: action.quantity
+        }
+      }
+    })
   )
+
 )

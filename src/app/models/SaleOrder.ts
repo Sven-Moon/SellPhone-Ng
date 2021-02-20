@@ -5,5 +5,6 @@ export interface SaleOrder {
   total: number,
   orderDate: string,
   orderStatus: string,
+  orderItems: number,
   orderDetails: Array<SaleOrderDetail>
 }

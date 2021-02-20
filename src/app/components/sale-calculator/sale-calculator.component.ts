@@ -6,9 +6,10 @@ import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
 import { StaticData } from 'src/app/models/StaticData'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
-import { updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions'
+import { addFormSection, updateCondition, updateQuantity, updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions'
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
+import { Helpers } from 'src/app/helpers/helpers'
 
 @Component({
   selector: 'app-sale-calculator',
@@ -18,7 +19,7 @@ import { SaleOrder } from 'src/app/models/SaleOrder'
 export class SaleCalculatorComponent implements OnInit {
   saleOrder: SaleOrder;
   conditionsList: Array<Condition>;
-  phoneModelList$: Array<PhoneModel>;
+  phoneModelList: Array<PhoneModel[]>;;
   phoneTypesList: Array<PhoneType>;
   saleOrderForm: FormGroup;
 
@@ -30,11 +31,11 @@ export class SaleCalculatorComponent implements OnInit {
   constructor (
     private _store: Store<SaleOrder>,
     private _storeSD: Store<StaticData>,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private _helper: Helpers
   ) { }
 
   ngOnInit () {
-  // subscribe to OrderDetail
     this._store.pipe(select(selectSaleOrder))
       // eslint-disable-next-line no-return-assign
       .subscribe(sO => this.saleOrder = sO)
@@ -44,10 +45,10 @@ export class SaleCalculatorComponent implements OnInit {
         this.conditionsList = sD.conditions
         this.phoneTypesList = sD.phoneTypes
       })
-    // subscribe to store
+      // subscribe to store
     this._storeSD.pipe(select(selectPhoneModelsList))
       // eslint-disable-next-line no-return-assign
-      .subscribe(formArray => this.phoneModelList$ = formArray[0])
+      .subscribe(formArray => this.phoneModelList = formArray)
     // update dropdown values
     // this.updateValues();
 
@@ -73,35 +74,28 @@ export class SaleCalculatorComponent implements OnInit {
     })
   } // ngOnInit
 
-  private updateValues () {
-    // this.saleOrderForm.get('orderDetails')
-    //   .setValue(
-    //     {phoneType: Number(this.orderDetail.selectedPhoneType.typeId)}
-    // );
-
-    // this.saleOrderForm.controls.orderDetails.controls.phoneModel
-    //   .setValue(
-    //     Number(this.orderDetail.selectedPhoneModel.modelId)
-    // );
-
-    console.log(this.saleOrderForm.value)
+  public changeCondition (formIndex, id:string) {
+    this._store.dispatch(updateCondition({ formIndex, id })
+    )
   }
 
-  public changeCondition (e) {
-    // this.saleOrderForm.patchValue({
-    //   phoneCondition: e.target.value
-    //   // { onlySelf: true}
-    // })
+  public onQuantityChange (formIndex: number, quantity: number) {
+    this._store.dispatch(updateQuantity({ formIndex, quantity }))
   }
 
   public onSelectedPhoneTypeChange (e: any): void {
-    // const selectedPhoneType: PhoneType = {
-    //   typeId: Number(e.target.selectedOptions[0].id),
-    //   name: e.target.selectedOptions[0].innerText.trim()
-    // }
-    // const formIndex = Number(e.path[2].attributes[1].nodeValue)
+    const selectedPhoneType: PhoneType = {
+      typeId: Number(e.target.selectedOptions[0].id),
+      name: e.target.selectedOptions[0].innerText.trim()
+    }
+    this.saleOrderForm.get('orderDetails').valueChanges.subscribe(out => {
+      console.log(out)
+    })
+    // TODO find a better way of getting line value populated
+    const formIndex = Number(e.path[2].attributes[1].nodeValue)
 
-    // this._helper.storeUpdateOnTypeChange(formIndex, selectedPhoneType);
+    // update store
+    this._helper.storeUpdateOnTypeChange(formIndex, selectedPhoneType)
   }
 
   public onSelectedPhoneModelChange (e): void {
@@ -136,15 +130,17 @@ export class SaleCalculatorComponent implements OnInit {
     // TODO: add subtotals
   }
 
-  public addOrderDetails () {
+  public addOrderDetails (index) {
     this.orderDetails.push(this.fb.group({
-      lineId: null,
+      lineId: index + 1,
       selectedPhoneType: -1,
       selectedPhoneModel: -1,
       phoneCondition: 'Excellent',
-      quantity: 1,
+      quantity: null,
       subTotal: null
     }))
+
+    this._store.dispatch(addFormSection())
   }
 
   public deleteOrderDetails (index) {
