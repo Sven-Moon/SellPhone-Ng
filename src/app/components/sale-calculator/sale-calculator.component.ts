@@ -68,8 +68,12 @@ export class SaleCalculatorComponent implements OnInit {
           phoneCondition: ['', Validators.required],
           quantity: [1, Validators.required],
           subTotal: [0, Validators.required],
-          lineId: [1, Validators.required]
+          lineId: [1, Validators.required],
+          modelList: []
+          // modelsData: [ PhoneModel]
         })
+        // add phone types/models list into the formgroup
+        // onSelect reconstruct the entire group
       ])
     })
   } // ngOnInit
@@ -86,16 +90,26 @@ export class SaleCalculatorComponent implements OnInit {
   public onSelectedPhoneTypeChange (e: any): void {
     const selectedPhoneType: PhoneType = {
       typeId: Number(e.target.selectedOptions[0].id),
-      name: e.target.selectedOptions[0].innerText.trim()
+      name: e.target.selectedOptions[0].label
     }
-    this.saleOrderForm.get('orderDetails').valueChanges.subscribe(out => {
-      console.log(out)
-    })
+
     // TODO find a better way of getting line value populated
     const formIndex = Number(e.path[2].attributes[1].nodeValue)
 
     // update store
     this._helper.storeUpdateOnTypeChange(formIndex, selectedPhoneType)
+
+    // update form modelList value
+    // TODO Move to helper
+    let list: Array<PhoneModel>
+    this._store.pipe(select(selectPhoneModelsList))
+      .subscribe((mL) => list = mL[formIndex])
+
+    this.saleOrderForm.get('orderDetails.'+formIndex+'.modelList')
+      .patchValue(list, { onlySelf: false, emitEvent: true})
+    console.log('myList: ')
+    console.log(list)
+    console.log(this.saleOrderForm.get('orderDetails.'+formIndex).get('modelList').value)
   }
 
   public onSelectedPhoneModelChange (e): void {
@@ -137,7 +151,8 @@ export class SaleCalculatorComponent implements OnInit {
       phoneModel: -1,
       phoneCondition: 'Excellent',
       quantity: null,
-      subTotal: null
+      subTotal: null,
+      modelList: []
     }))
 
     this._store.dispatch(addFormSection())

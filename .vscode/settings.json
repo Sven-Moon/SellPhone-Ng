@@ -3,5 +3,6 @@
     "Uport",
     "sellmyphone",
     "sellphone"
-  ]
+  ],
+  "editor.formatOnSave": true
 }
