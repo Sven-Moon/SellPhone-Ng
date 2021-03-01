@@ -11,8 +11,7 @@
 
 
       <div formArrayName="orderDetails"
-        class="perk-box rounded-lg py-2 px-3 bg-secondary text-white my-2"
-        (change)="onOrderDetailsChange()">
+        class="perk-box rounded-lg py-2 px-3 bg-secondary text-white my-2">
 
         <div *ngFor="let od of orderDetails.controls;
           let detailsIndex=index"
@@ -26,7 +25,7 @@
               (change)="onSelectedPhoneTypeChange($event)"
               class="form-control">
               Type
-              <option selected disabled hidden>--Select Your Phone Type --</option>
+              <option selected disabled hidden value="">--Select Your Phone Type --</option>
               <option [ngValue]="phoneType.typeId"
               *ngFor="let phoneType of phoneTypesList"
               id="{{phoneType.typeId}}"
@@ -34,19 +33,14 @@
             </select>
           </div>
 
-          <div>
-
-        {{od.controls.modelList.value | json}}
-            </div>
-
           <div id="modelFormGroup" class="form-group">
             <label>Phone Model: </label>
             <select formControlName="phoneModel"
               id="phoneModelSelect"
-              (change)="onSelectedPhoneModelChange($event)"
+              (change)="onSelectedPhoneModelChange($event,detailsIndex)"
               class="form-control">
               Model
-              <option selected disabled hidden>-- Select Your Model --</option>
+              <option selected disabled hidden value="">-- Select Your Model --</option>
                 <option id="{{phoneModel.modelId}}"
                   *ngFor="let phoneModel of od.controls.modelList.value"
                   [ngValue]="phoneModel.modelId"
@@ -60,7 +54,7 @@
               (change)="changeCondition(detailsIndex, $event.target.value)"
               class="form-control">
               <option value="" disabled hidden>
-                Condition
+                -- Condition --
               </option>
               <option *ngFor="let condition of conditionsList">
                 {{condition.id}}
@@ -70,7 +64,7 @@
 
           <div id="quantityFormGroup" class="form-group">
             <label>Quantity: </label>
-            <input formControlName="quantity"
+            <input formControlName="quantity" placeholder="-- Quantity --"
               id="quantityInput" type="text" class="form-control"
               (change)="onQuantityChange(detailsIndex,$event.target.value)">
           </div>
@@ -78,30 +72,23 @@
           <div id="orderDetailActionsArea"
             class="row-col-2 d-flex justify-content-md-between align-content-center">
             <button  (click)="addOrderDetails(detailsIndex)"
+              type="button"
               class="btn-dark button-narrow rounded m-1 h6">
               Add Phones
             </button>
             <button (click)="deleteOrderDetails(detailsIndex)"
+            type="button"
               class="btn-danger button-narrow rounded m-1 h6">
               Remove
             </button>
             <label class="rounded-0">
-              Subtotal: <!--${{orderSubtotal}}-->
+              Subtotal: ${{od.controls.subTotal.value}}
             </label>
           </div>
 
         </div> <!-- ngFor -->
 
       </div> <!--orderDetails formArray -->
-
-
-      <div id="repeatButtons"
-      class="btn-group-sm d-flex justify-content-center row-cols-2">
-      <!-- <button  (click)="addOrderDetails(detailsIndex)"
-        class="btn-dark button-narrow rounded m-1 h6">
-        Add Phones
-      </button> -->
-    </div>
 
     </form>  <!-- saleOrderForm -->
   </div> <!-- form column -->

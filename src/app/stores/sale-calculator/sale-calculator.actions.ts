@@ -1,4 +1,5 @@
 import { createAction, props } from '@ngrx/store'
+import { Condition } from 'src/app/models/Condition'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
 
@@ -24,10 +25,15 @@ export const addFormSection = createAction(
 
 export const updateCondition = createAction(
   '[Sale Calculator Component] Update Condition',
-  props<{ formIndex: number, id: string }>()
+  props<{ formIndex: number, condition: Condition }>()
 )
 
 export const updateQuantity = createAction(
   '[Sale Calculator Component] Update Quantity',
   props<{ formIndex: number, quantity: number }>()
+)
+
+export const updateSubtotal = createAction(
+  '[Sale Calculator Component] Update Subtotal',
+  props<{ formIndex: number, subTotal: number }>()
 )

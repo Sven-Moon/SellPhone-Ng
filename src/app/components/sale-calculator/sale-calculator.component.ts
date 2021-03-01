@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
+import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
 import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors'
 import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
 import { StaticData } from 'src/app/models/StaticData'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
-import { addFormSection, updateCondition, updateQuantity, updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions'
+import { addFormSection, updateCondition, updateQuantity, updateSelectedPhoneModel, updateSubtotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
@@ -19,9 +19,9 @@ import { Helpers } from 'src/app/helpers/helpers'
 export class SaleCalculatorComponent implements OnInit {
   saleOrder: SaleOrder;
   conditionsList: Array<Condition>;
-  phoneModelList: Array<PhoneModel[]>;;
   phoneTypesList: Array<PhoneType>;
   saleOrderForm: FormGroup;
+  phoneModelList: Array<PhoneModel[]>
 
   get orderDetails () {
     return this.saleOrderForm.get('orderDetails') as FormArray
@@ -44,13 +44,8 @@ export class SaleCalculatorComponent implements OnInit {
       .subscribe(sD => {
         this.conditionsList = sD.conditions
         this.phoneTypesList = sD.phoneTypes
+        this.phoneModelList = sD.phoneModelsList
       })
-      // subscribe to store
-    this._storeSD.pipe(select(selectPhoneModelsList))
-      // eslint-disable-next-line no-return-assign
-      .subscribe(formArray => this.phoneModelList = formArray)
-    // update dropdown values
-    // this.updateValues();
 
     this.saleOrderForm = this.fb.group({
       orderId: [{ value: '001', disabled: true }, Validators.required],
@@ -66,21 +61,32 @@ export class SaleCalculatorComponent implements OnInit {
             this.saleOrder.orderDetails[0].phoneModel.modelId
           ), Validators.required],
           phoneCondition: ['', Validators.required],
-          quantity: [1, Validators.required],
-          subTotal: [0, Validators.required],
+          quantity: [null, Validators.required],
+          subTotal: [0],
           lineId: [1, Validators.required],
-          modelList: []
+          modelList: [this.phoneModelList[0]]
           // modelsData: [ PhoneModel]
         })
-        // add phone types/models list into the formgroup
-        // onSelect reconstruct the entire group
+
       ])
     })
   } // ngOnInit
 
   public changeCondition (formIndex, id:string) {
-    this._store.dispatch(updateCondition({ formIndex, id })
+    const condition:Condition = this.conditionsList.find((condition) =>
+      condition.id == id)
+
+    this._store.dispatch(updateCondition({ formIndex, condition })
     )
+
+    // if formGroup is valid, calc subtotal
+
+
+    if (this.orderDetails.valid) {
+      // call calculate subtotal
+
+      this.calcSubtotal(formIndex, this.orderDetails)
+    }
   }
 
   public onQuantityChange (formIndex: number, quantity: number) {
@@ -106,38 +112,40 @@ export class SaleCalculatorComponent implements OnInit {
       .subscribe((mL) => list = mL[formIndex])
 
     this.saleOrderForm.get('orderDetails.'+formIndex+'.modelList')
-      .patchValue(list, { onlySelf: false, emitEvent: true})
-    console.log('myList: ')
-    console.log(list)
-    console.log(this.saleOrderForm.get('orderDetails.'+formIndex).get('modelList').value)
+      .patchValue(list)
   }
 
-  public onSelectedPhoneModelChange (e): void {
+  public onSelectedPhoneModelChange (e, formIndex:number): void {
     const modelId: number = e.target.selectedOptions[0].id
-    // const maxVal = this._helper.getMaxValue(modelId);
-    const selectedPhoneModel: PhoneModel = {
-      modelId,
-      name: e.target.selectedOptions[0].label,
-      maxValue: null// maxVal
-    }
 
-    const formIndex = Number(e.path[2].attributes[1].nodeValue)
+        const selectedPhoneModel = this.phoneModelList[formIndex].find( (model) => model.modelId == modelId)
 
-    // this.phoneMaxValue = this.onPhoneModelSelect(
-    //   selectedPhoneModel.modelId
-    // );
+
     this._store.dispatch(updateSelectedPhoneModel(
       { formIndex, selectedPhoneModel }))
   }
 
-  public calcSale (formIndex: number): number {
-    const subTotal = 0
-    // let maxValue; let conditionMod; let quantity: number = null
-    // maxValue = this.orderDetails[formIndex].selectedPhoneModel.maxValue
-    // conditionMod = this.orderDetails[formIndex].selectedPhoneModel.maxValue
-    // quantity = this.orderDetails[formIndex].selectedPhoneModel.maxValue
+  public calcSubtotal (formIndex: number, oD): void {
+    // should this be done as part of a subscription instead?
 
-    return subTotal
+    let subTotal = 0
+    let maxValue; let conditionMod; let quantity: number = null
+
+    // load values from the store
+    maxValue = this.saleOrder.orderDetails[formIndex].phoneModel.maxValue
+    conditionMod = this.saleOrder.orderDetails[formIndex].phoneCondition
+    quantity = this.saleOrder.orderDetails[formIndex].quantity
+
+    subTotal = maxValue * conditionMod.priceMod * quantity
+
+    // update store
+
+    this._store.dispatch(updateSubtotal(
+      { formIndex, subTotal } )
+    )
+    debugger
+    // update form from store
+    this.saleOrderForm.get('orderDetails.'+formIndex+'.subTotal').patchValue(this.saleOrder.orderDetails[formIndex].subTotal)
   }
 
   calcTotalSale () {
@@ -145,15 +153,19 @@ export class SaleCalculatorComponent implements OnInit {
   }
 
   public addOrderDetails (index) {
-    this.orderDetails.push(this.fb.group({
+    let orderDetailArray = this.saleOrderForm.controls.orderDetails as FormArray
+    let arrayLen = orderDetailArray.length
+    let orderDetailGroup: FormGroup = this.fb.group({
       lineId: index + 1,
-      phoneType: -1,
-      phoneModel: -1,
-      phoneCondition: 'Excellent',
+      phoneType: '',
+      phoneModel: '',
+      phoneCondition: '',
       quantity: null,
       subTotal: null,
       modelList: []
-    }))
+    })
+
+    orderDetailArray.insert(index + 1, orderDetailGroup)
 
     this._store.dispatch(addFormSection())
   }
@@ -165,11 +177,5 @@ export class SaleCalculatorComponent implements OnInit {
   public onSubmit () {
     // TODO: use event emitter with form value
     console.warn(this.saleOrderForm.value)
-  }
-
-  public onOrderDetailsChange () {
-    if (this.saleOrderForm.get('orderDetails').valid) {
-      console.log(this.saleOrderForm.get('orderDetails').value)
-    }
   }
 }

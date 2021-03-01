@@ -82,7 +82,7 @@ export const saleCalculatorReducer = createReducer(
         ...state.orderDetails,
         [action.formIndex]: {
           ...state.orderDetails[action.formIndex],
-          phoneCondition: action.id
+          phoneCondition: action.condition
         }
       }
     })
@@ -96,6 +96,19 @@ export const saleCalculatorReducer = createReducer(
         [action.formIndex]: {
           ...state.orderDetails[action.formIndex],
           quantity: action.quantity
+        }
+      }
+    })
+  ),
+
+  on(fromSaleCalculatorActions.updateSubtotal,
+    (state, action) => ({
+      ...state,
+      orderDetails: {
+        ...state.orderDetails,
+        [action.formIndex]: {
+          ...state.orderDetails[action.formIndex],
+          subTotal: action.subTotal
         }
       }
     })

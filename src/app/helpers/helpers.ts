@@ -45,12 +45,6 @@ export class Helpers {
     }
   }
 
-  private onPhoneModelSelect (id: number): boolean {
-    if (id > 0) {
-      return true
-    } else { return false }
-  }
-
   public getMaxValue (formIndex: number, modelId: number): number {
     let maxValue: number = null
     let modelListByFormIndex: Array<PhoneModel[]> = []
@@ -66,4 +60,5 @@ export class Helpers {
 
     return maxValue
   }
+
 }
