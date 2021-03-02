@@ -88,7 +88,7 @@ export class SaleCalculatorComponent implements OnInit {
 
   public onOrderDetailsChange (formIndex: number) {
     // if formGroup is valid, calc subtotal
-    debugger
+
     if (this.orderDetails.controls[formIndex].valid) {
       // call calculate subtotal
       this.calcSubtotal(formIndex)
@@ -127,7 +127,7 @@ export class SaleCalculatorComponent implements OnInit {
   public calcSubtotal (formIndex: number): void {
     // should this be done as part of a subscription instead?
 
-    debugger
+
     // load values from the store
     const maxValue = this.saleOrder.orderDetails[formIndex].phoneModel.maxValue
     const conditionMod = this.saleOrder.orderDetails[formIndex].phoneCondition.priceMod

@@ -94,14 +94,10 @@
     </form>  <!-- saleOrderForm -->
   </div> <!-- form column -->
 
-  <div id="sideBarRunningTotal" class="col-5">
-    <div id="floatingTotal"
-      class=" sidebar-item mt-5">
-      <div class="perk-box rounded-lg bg-info make-me-sticky jumbotron">I will give you da money!
-
-        Total: ${{saleOrderForm.controls.total.value}}
-
-      </div>
+  <div class="rounded-lg make-me-sticky d-flex p-2 justify-content-center">
+    <div  class="h5"  style="margin:auto; text-align: center">
+      <p>You can have this money!</p>
+      ${{saleOrderForm.controls.total.value}}
     </div>
   </div>
 
