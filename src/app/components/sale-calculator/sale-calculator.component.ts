@@ -30,7 +30,6 @@ export class SaleCalculatorComponent implements OnInit {
   // eslint-disable-next-line no-useless-constructor
   constructor (
     private _store: Store<SaleOrder>,
-    private _storeSD: Store<StaticData>,
     private fb: FormBuilder,
     private _helper: Helpers
   ) { }
@@ -76,31 +75,31 @@ export class SaleCalculatorComponent implements OnInit {
     const condition:Condition = this.conditionsList.find((condition) =>
       condition.id == id)
 
+    // update the store
     this._store.dispatch(updateCondition({ formIndex, condition })
     )
 
-    // if formGroup is valid, calc subtotal
-
-
-    if (this.orderDetails.valid) {
-      // call calculate subtotal
-
-      this.calcSubtotal(formIndex, this.orderDetails)
-    }
   }
 
   public onQuantityChange (formIndex: number, quantity: number) {
+    // update the store
     this._store.dispatch(updateQuantity({ formIndex, quantity }))
   }
 
-  public onSelectedPhoneTypeChange (e: any): void {
+  public onOrderDetailsChange (formIndex: number) {
+    // if formGroup is valid, calc subtotal
+    debugger
+    if (this.orderDetails.controls[formIndex].valid) {
+      // call calculate subtotal
+      this.calcSubtotal(formIndex)
+    }
+  }
+
+  public onSelectedPhoneTypeChange (e: any, formIndex): void {
     const selectedPhoneType: PhoneType = {
       typeId: Number(e.target.selectedOptions[0].id),
       name: e.target.selectedOptions[0].label
     }
-
-    // TODO find a better way of getting line value populated
-    const formIndex = Number(e.path[2].attributes[1].nodeValue)
 
     // update store
     this._helper.storeUpdateOnTypeChange(formIndex, selectedPhoneType)
@@ -118,38 +117,44 @@ export class SaleCalculatorComponent implements OnInit {
   public onSelectedPhoneModelChange (e, formIndex:number): void {
     const modelId: number = e.target.selectedOptions[0].id
 
-        const selectedPhoneModel = this.phoneModelList[formIndex].find( (model) => model.modelId == modelId)
+    const selectedPhoneModel = this.phoneModelList[formIndex].find( (model) => model.modelId == modelId)
 
 
     this._store.dispatch(updateSelectedPhoneModel(
       { formIndex, selectedPhoneModel }))
   }
 
-  public calcSubtotal (formIndex: number, oD): void {
+  public calcSubtotal (formIndex: number): void {
     // should this be done as part of a subscription instead?
 
-    let subTotal = 0
-    let maxValue; let conditionMod; let quantity: number = null
-
     // load values from the store
-    maxValue = this.saleOrder.orderDetails[formIndex].phoneModel.maxValue
-    conditionMod = this.saleOrder.orderDetails[formIndex].phoneCondition
-    quantity = this.saleOrder.orderDetails[formIndex].quantity
+    const maxValue = this.saleOrder.orderDetails[formIndex].phoneModel.maxValue
+    const conditionMod = this.saleOrder.orderDetails[formIndex].phoneCondition
+    const quantity = this.saleOrder.orderDetails[formIndex].quantity
 
-    subTotal = maxValue * conditionMod.priceMod * quantity
+    const subTotal = maxValue * conditionMod.priceMod * quantity
 
     // update store
-
     this._store.dispatch(updateSubtotal(
       { formIndex, subTotal } )
     )
-    debugger
+
     // update form from store
     this.saleOrderForm.get('orderDetails.'+formIndex+'.subTotal').patchValue(this.saleOrder.orderDetails[formIndex].subTotal)
+
+    this.calcTotalSale()
   }
 
   calcTotalSale () {
     // TODO: add subtotals
+    let total: number = 0;
+    this.saleOrderForm.get('orderDetails').value
+    .forEach(orderDetail => orderDetail.subTotal != null
+      ? total += orderDetail.subTotal : null
+    );
+
+    this.saleOrderForm.get('total').setValue(total)
+
   }
 
   public addOrderDetails (index) {

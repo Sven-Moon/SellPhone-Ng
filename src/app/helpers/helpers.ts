@@ -4,9 +4,11 @@ import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { PhoneModel } from '../models/PhoneModel'
 import { PhoneType } from '../models/PhoneType'
-import { updateSelectedPhoneType } from '../stores/sale-calculator/sale-calculator.actions'
+import { updateSelectedPhoneType, updateSubtotal } from '../stores/sale-calculator/sale-calculator.actions'
+import { selectOrderDetail, selectSaleOrder } from '../stores/sale-calculator/sale-calculator.selectors'
 import { updatePhoneModelsList } from '../stores/staticData/staticData.actions'
 import { selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
+import { SaleOrder } from 'src/app/models/SaleOrder'
 
 @Injectable()
 export class Helpers {

@@ -15,14 +15,15 @@
 
         <div *ngFor="let od of orderDetails.controls;
           let detailsIndex=index"
-          [formGroupName]="detailsIndex">
+          [formGroupName]="detailsIndex"
+          (change)="onOrderDetailsChange(detailsIndex)">
 
           <div id="typeFormGroup" class="form-group">
             <label>Phone Type: </label>
             <select formControlName="phoneType"
               placeholder="Phone Type"
               id="phoneTypeSelect"
-              (change)="onSelectedPhoneTypeChange($event)"
+              (change)="onSelectedPhoneTypeChange($event, detailsIndex)"
               class="form-control">
               Type
               <option selected disabled hidden value="">--Select Your Phone Type --</option>
@@ -96,8 +97,9 @@
   <div id="sideBarRunningTotal" class="col-5">
     <div id="floatingTotal"
       class=" sidebar-item mt-5">
-      <div class="perk-box rounded-lg bg-green make-me-sticky">I will give you da money!
-        {{saleOrderForm.value | json}}
+      <div class="perk-box rounded-lg bg-info make-me-sticky jumbotron">I will give you da money!
+
+        Total: ${{saleOrderForm.controls.total.value}}
 
       </div>
     </div>
