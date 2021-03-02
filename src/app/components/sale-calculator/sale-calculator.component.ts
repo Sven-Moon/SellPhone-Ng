@@ -127,12 +127,13 @@ export class SaleCalculatorComponent implements OnInit {
   public calcSubtotal (formIndex: number): void {
     // should this be done as part of a subscription instead?
 
+    debugger
     // load values from the store
     const maxValue = this.saleOrder.orderDetails[formIndex].phoneModel.maxValue
-    const conditionMod = this.saleOrder.orderDetails[formIndex].phoneCondition
+    const conditionMod = this.saleOrder.orderDetails[formIndex].phoneCondition.priceMod
     const quantity = this.saleOrder.orderDetails[formIndex].quantity
 
-    const subTotal = maxValue * conditionMod.priceMod * quantity
+    const subTotal = maxValue * conditionMod * quantity
 
     // update store
     this._store.dispatch(updateSubtotal(
