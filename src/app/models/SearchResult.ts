@@ -1,4 +1,4 @@
 export class SearchResult {
   id: number;
-  name: string
+  name: string;
 }

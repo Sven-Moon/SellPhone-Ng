@@ -1,4 +1,4 @@
 export class USA_State {
-  "name":string;
-  "id":string;
+  'name': string;
+  'id': string;
 }

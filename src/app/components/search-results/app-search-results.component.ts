@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { SearchResults } from 'src/app/models/SearchResults';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import { siteSearchResults } from 'src/app/stores/search/search.selectors';
+import { SearchResult } from 'src/app/models/SearchResult';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -9,21 +13,22 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./app-search-results.component.scss']
 })
 export class SearchResultsComponent implements OnInit {
-  searchResults:SearchResults;
-  private searchResultsSubscription;
-  searchText:string='';
+  searchResults: SearchResult[] = [];
+  searchResults$: Observable<SearchResult[]>;
 
-  constructor(private _store: Store<any>) { }
+  constructor(
+    private _store: Store<any>,
+    private _router: Router
+  ) { }
 
   public ngOnInit(): void {
-    //.select('searchResults') matches the name of the function in the store
-    this.searchResultsSubscription = this._store.select('searchResults').subscribe((sr: SearchResults) => {
-      this.searchResults = sr;
-    })
+
+    this.loadSearchResults();
   }
 
-  ngOnDestory() {
-    this.searchResultsSubscription.unsubscribe();
+  loadSearchResults() {
+    this.searchResults$ = this._store.pipe(select(siteSearchResults));
+    this.searchResults$.subscribe(data => this.searchResults = data);
   }
 
 }

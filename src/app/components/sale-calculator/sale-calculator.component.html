@@ -1,0 +1,115 @@
+
+<div id="pageContainer"
+  class="row">
+  <div id="mainFormColumn"
+    class="col-7 d-flex justify-content-center">
+    <form [formGroup]='saleOrderForm' class="py-1" (change)="calcTotalSale()">
+
+      <label>
+        Order Id: <input  formControlName="orderId" />
+      </label>
+
+
+      <div formArrayName="orderDetails"
+        class="perk-box rounded-lg py-2 px-3 bg-secondary text-white my-2">
+
+        <div *ngFor="let od of orderDetails.controls;
+          let detailsIndex=index"
+          [formGroupName]="detailsIndex"
+          (change)="onOrderDetailsChange(detailsIndex)">
+
+          <div id="typeFormGroup" class="form-group">
+            <label>Phone Type: </label>
+            <select formControlName="phoneType"
+              placeholder="Phone Type"
+              id="phoneTypeSelect"
+              (change)="onSelectedPhoneTypeChange($event, detailsIndex)"
+              class="form-control">
+              Type
+              <option selected disabled hidden value="">--Select Your Phone Type --</option>
+              <option [ngValue]="phoneType.typeId"
+              *ngFor="let phoneType of phoneTypesList"
+              id="{{phoneType.typeId}}"
+              >{{phoneType.name}}</option>
+            </select>
+          </div>
+
+          <div id="modelFormGroup" class="form-group">
+            <label>Phone Model: </label>
+            <select formControlName="phoneModel"
+              id="phoneModelSelect"
+              (change)="onSelectedPhoneModelChange($event,detailsIndex)"
+              class="form-control">
+              Model
+              <option selected disabled hidden value="">-- Select Your Model --</option>
+                <option id="{{phoneModel.modelId}}"
+                  *ngFor="let phoneModel of od.controls.modelList.value"
+                  [ngValue]="phoneModel.modelId"
+                  >{{phoneModel.name}}</option>
+            </select>
+          </div>
+
+          <div id="conditionFormGroup" class="form-group">
+            <label>Condition: </label>
+            <select formControlName="phoneCondition"
+              (change)="changeCondition(detailsIndex, $event.target.value)"
+              class="form-control">
+              <option value="" disabled hidden>
+                -- Condition --
+              </option>
+              <option *ngFor="let condition of conditionsList">
+                {{condition.id}}
+              </option>
+            </select>
+          </div>
+
+          <div id="quantityFormGroup" class="form-group">
+            <label>Quantity: </label>
+            <input formControlName="quantity" placeholder="-- Quantity --"
+              id="quantityInput" type="text" class="form-control"
+              (change)="onQuantityChange(detailsIndex,$event.target.value)">
+          </div>
+
+          <div id="orderDetailActionsArea"
+            class="row-col-2 d-flex justify-content-md-between align-content-center">
+            <button  (click)="addOrderDetails(detailsIndex)"
+              type="button"
+              class="btn-dark button-narrow rounded m-1 h6">
+              Add Phones
+            </button>
+            <button (click)="deleteOrderDetails(detailsIndex)"
+            type="button"
+              class="btn-danger button-narrow rounded m-1 h6">
+              Remove
+            </button>
+            <label class="rounded-0">
+              Subtotal: ${{od.controls.subTotal.value}}
+            </label>
+          </div>
+
+        </div> <!-- ngFor -->
+
+      </div> <!--orderDetails formArray -->
+
+    </form>  <!-- saleOrderForm -->
+  </div> <!-- form column -->
+
+  <div id="sideBarRunningTotal" class="col-5">
+    <div id="floatingTotal"
+      class=" sidebar-item mt-5">
+      <div class="perk-box rounded-lg bg-info make-me-sticky jumbotron">I will give you da money!
+
+        Total: ${{saleOrderForm.controls.total.value}}
+
+      </div>
+    </div>
+  </div>
+
+</div>  <!--  pageContainer  -->
+
+<div id="page-centeredButtonGroup-bot"
+  class="d-flex justify-content-center">
+  <button id="submitButton"
+    type="button" class="btn-lg btn-primary m-1"
+    >Get to the Money!</button>
+</div>

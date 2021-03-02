@@ -1,0 +1,43 @@
+<div role="main" class="container">
+<form [formGroup]='estimatorForm' class="form-group">
+
+  <div class="starter-template">
+    <h1>Select the phone you want to sell:</h1>
+    <div class="picker-box rounded-lg p-3">
+
+      <span>-- Select Phone Type & Model --</span>
+
+      <select formControlName="phoneType"
+        id="estimatorTypeSelector"
+        class="form-control" (change)="onSelectedPhoneTypeChange($event)">
+        <option selected disabled hidden [value]="-1">-- Phone Type --</option>
+        <option *ngFor="let phoneType of phoneTypes$ | async"
+          id="{{phoneType.typeId}}">{{ phoneType.name }}</option>
+      </select>
+
+
+      <select formControlName="phoneModel"
+        id="estimatorModelSeletor"
+        class="form-control"
+        (change)="onSelectedPhoneModelChange($event)">
+        <option selected disabled hidden [value]="-1">-- Model --</option>
+        <option *ngFor="let phoneModel of phoneModelsList$"
+          id="{{phoneModel.modelId}}"
+          [ngValue]="phoneModel.modelId"
+          >{{ phoneModel.name }}</option>
+      </select>
+
+      <div class="result-box" *ngIf="isValueBoxVisible">
+        Your phone could be worth<br> $$
+        <span>{{phoneMaxValue}}</span><br>
+        <button id="estimator-saleCalcBtn"
+          [routerLink]="['/sellmyphone']"
+          class="btn"
+          >Get Your Money!</button>
+      </div>
+    </div>
+    <!-- /.container -->
+  </div>
+</form>
+
+</div>

@@ -1,5 +1,11 @@
-<div *ngIf="searchResults && searchResults.results.length>0">
+<!-- <div *ngIf="searchResults && searchResults.results.length>0">
   Search results:
   <div class="dropdown-item" *ngFor="let searchResult of searchResults.results">{{searchResult.name}}
+  </div>
+</div> -->
+
+<div *ngIf="searchResults.length>0">
+  <div *ngFor="let result of searchResults$ | async">
+    Results v2: {{result.name}}
   </div>
 </div>

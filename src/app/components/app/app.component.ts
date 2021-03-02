@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
-import { StaticDataActions } from 'src/app/actions/staticData.actions';
+import { Store } from '@ngrx/store';
+import { StaticData } from 'src/app/models/StaticData';
+import * as fromStaticDataActions from 'src/app/stores/staticData/staticData.actions';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +10,11 @@ import { StaticDataActions } from 'src/app/actions/staticData.actions';
 })
 export class AppComponent {
   constructor(
-    private _staticDataActions: StaticDataActions,
+    private _store: Store<StaticData>
   ) { }
 
   public ngOnInit(): void {
-    this._staticDataActions.getUsaStates();
-    this._staticDataActions.getPhoneTypes();
-    this._staticDataActions.getPhoneModelsByType();
+    this._store.dispatch(fromStaticDataActions.loadStaticData());
   }
 
 }

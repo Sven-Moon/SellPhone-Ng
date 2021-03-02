@@ -1,0 +1,31 @@
+{
+  "results": [{
+      "id": 1,
+      "name": "iphone 7v2"
+    },
+    {
+      "id": 2,
+      "name": "iphone Xv2"
+    },
+    {
+      "id": 3,
+      "name": "windowsv2"
+    },
+    {
+      "id": 4,
+      "name": "pixel 2v2"
+    },
+    {
+      "id": 5,
+      "name": "pixel 3v2"
+    },
+    {
+      "id": 6,
+      "name": "pixel 32v2"
+    },
+    {
+      "id": 7,
+      "name": "pixel 82v2"
+    }
+  ]
+}
