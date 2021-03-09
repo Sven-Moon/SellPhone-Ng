@@ -10,6 +10,8 @@ import { addFormSection, updateCondition, updateQuantity, updateSelectedPhoneMod
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
+import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+
 
 @Component({
   selector: 'app-sale-calculator',
@@ -31,7 +33,9 @@ export class SaleCalculatorComponent implements OnInit {
   constructor (
     private _store: Store<SaleOrder>,
     private fb: FormBuilder,
-    private _helper: Helpers
+    private _helper: Helpers,
+    private router: Router,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit () {
@@ -184,4 +188,11 @@ export class SaleCalculatorComponent implements OnInit {
     // TODO: use event emitter with form value
     console.warn(this.saleOrderForm.value)
   }
+
+  public goToOrderSummary() {
+    this.router.navigate(['order-summary'], { relativeTo: this.route })
+  }
+
+
 }
+

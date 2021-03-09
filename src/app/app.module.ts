@@ -17,12 +17,14 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 import { SearchEffects } from './stores/search/search.effects'
 import { StaticDataEffects } from './stores/staticData/staticData.effects'
-import { Helpers } from './helpers/helpers'
+import { Helpers } from './helpers/helpers';
+import { OrderSummaryComponent } from './components/order-summary/order-summary.component'
 
 @NgModule({
   declarations: [
     ...AppComponents,
-    FilterPipe
+    FilterPipe,
+    OrderSummaryComponent
   ],
   imports: [
     BrowserModule,

@@ -3,6 +3,10 @@ body {
   background-color: #484a52;
 }
 
+footer {
+  margin-top: -100px;
+}
+
 .lead {
   display: inline-block;
 }
@@ -34,7 +38,7 @@ option {
 }
 
 select {
-  margin: .5rem 0 .5rem;
+  margin: 0.5rem 0 0.5rem;
 }
 
 .h1 {
@@ -55,18 +59,18 @@ select {
 }
 
 footer .navbar-nav {
-  padding: .1rem .1rem;
+  padding: 0.1rem 0.1rem;
   flex-direction: row;
-  margin-right: .5rem;
+  margin-right: 0.5rem;
 }
 
 footer .navbar-nav .nav-link {
-  padding: .1rem .5rem;
+  padding: 0.1rem 0.5rem;
   flex-direction: row;
 }
 
 footer .nav-item {
-  margin: 0 .25rem;
+  margin: 0 0.25rem;
 }
 
 footer a {
