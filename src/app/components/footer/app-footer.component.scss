@@ -32,6 +32,7 @@ select {
   flex-basis: auto;
   align-items: center;
   justify-content: center;
+  visibility: hidden;
 }
 
 footer .navbar-nav {
@@ -67,4 +68,10 @@ footer a {
 
 .image-container {
   position: relative;
+}
+
+@media only screen and (max-width: 576px) {
+  .footer-nav {
+    visibility: visible;
+  }
 }
