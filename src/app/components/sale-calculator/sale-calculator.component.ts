@@ -3,7 +3,6 @@ import { select, Store } from '@ngrx/store'
 import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
 import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors'
 import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
-import { StaticData } from 'src/app/models/StaticData'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
 import { addFormSection, updateCondition, updateQuantity, updateSelectedPhoneModel, updateSubtotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
@@ -11,6 +10,9 @@ import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
 import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { Observable } from 'rxjs'
+import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
+import { map, switchMap, tap } from 'rxjs/operators'
 
 
 @Component({
@@ -24,6 +26,10 @@ export class SaleCalculatorComponent implements OnInit {
   phoneTypesList: Array<PhoneType>;
   saleOrderForm: FormGroup;
   phoneModelList: Array<PhoneModel[]>
+  saleOrderDetail$: Observable<SaleOrderDetail>
+  phoneType: number;
+  phoneModel: number;
+
 
   get orderDetails () {
     return this.saleOrderForm.get('orderDetails') as FormArray
@@ -39,16 +45,21 @@ export class SaleCalculatorComponent implements OnInit {
   ) { }
 
   ngOnInit () {
-    this._store.pipe(select(selectSaleOrder))
-      // eslint-disable-next-line no-return-assign
-      .subscribe(sO => this.saleOrder = sO)
+    this.route.paramMap.subscribe(params => {
+      this.phoneType = +params.get('type'),
+      this.phoneModel = +params.get('model')
+    })
+
+    // this._store.pipe(select(selectSaleOrder))
+    //   // eslint-disable-next-line no-return-assign
+    //   .subscribe(sO => this.saleOrder = sO)
     // get conditions list
     this._store.pipe(select(selectStaticData))
-      .subscribe(sD => {
-        this.conditionsList = sD.conditions
-        this.phoneTypesList = sD.phoneTypes
-        this.phoneModelList = sD.phoneModelsList
-      })
+    .subscribe(sD => {
+      this.conditionsList = sD.conditions
+      this.phoneTypesList = sD.phoneTypes
+      this.phoneModelList = sD.phoneModelsList
+    })
 
     this.saleOrderForm = this.fb.group({
       orderId: [{ value: '001', disabled: true }, Validators.required],
@@ -57,12 +68,8 @@ export class SaleCalculatorComponent implements OnInit {
       orderStatus: ['incomplete'],
       orderDetails: this.fb.array([
         this.fb.group({
-          phoneType: [Number(
-            this.saleOrder.orderDetails[0].phoneType.typeId
-          ), Validators.required],
-          phoneModel: [Number(
-            this.saleOrder.orderDetails[0].phoneModel.modelId
-          ), Validators.required],
+          phoneType: [this.phoneType, Validators.required],
+          phoneModel: [this.phoneModel, Validators.required],
           phoneCondition: ['', Validators.required],
           quantity: [null, Validators.required],
           subTotal: [0],
@@ -112,8 +119,9 @@ export class SaleCalculatorComponent implements OnInit {
     // TODO Move to helper
     let list: Array<PhoneModel>
     this._store.pipe(select(selectPhoneModelsList))
-      .subscribe((mL) => list = mL[formIndex])
+    .subscribe((mL) => list = mL[formIndex])
 
+    // // update the store
     this.saleOrderForm.get('orderDetails.'+formIndex+'.modelList')
       .patchValue(list)
   }
@@ -124,28 +132,25 @@ export class SaleCalculatorComponent implements OnInit {
     const selectedPhoneModel = this.phoneModelList[formIndex].find( (model) => model.modelId == modelId)
 
 
-    this._store.dispatch(updateSelectedPhoneModel(
-      { formIndex, selectedPhoneModel }))
+    // this._store.dispatch(updateSelectedPhoneModel(
+      // { formIndex, selectedPhoneModel }))
   }
 
-  public calcSubtotal (formIndex: number): void {
-    // should this be done as part of a subscription instead?
+  public calcSubtotal (formIndex): void {
 
+    const typeId: Number =
+      this.saleOrderForm.get('orderDetails.' + formIndex + '.phoneType').value
+    const modelId: Number =
+      this.saleOrderForm.get('orderDetails.' + formIndex + '.phoneModel').value
+    const conditionMod: string =
+      this.saleOrderForm.get('orderDetails.' + formIndex + '.phoneCondition').value
+    const quantity: Number =
+      this.saleOrderForm.get('orderDetails.' + formIndex + '.quantity').value
 
-    // load values from the store
-    const maxValue = this.saleOrder.orderDetails[formIndex].phoneModel.maxValue
-    const conditionMod = this.saleOrder.orderDetails[formIndex].phoneCondition.priceMod
-    const quantity = this.saleOrder.orderDetails[formIndex].quantity
-
-    const subTotal = maxValue * conditionMod * quantity
-
-    // update store
-    this._store.dispatch(updateSubtotal(
-      { formIndex, subTotal } )
-    )
+    const subTotal = this._helper.calcSubTotal(typeId, modelId, conditionMod, quantity)
 
     // update form from store
-    this.saleOrderForm.get('orderDetails.'+formIndex+'.subTotal').patchValue(this.saleOrder.orderDetails[formIndex].subTotal)
+    this.saleOrderForm.get('orderDetails.'+formIndex+'.subTotal').patchValue(subTotal)
 
     this.calcTotalSale()
   }
@@ -182,6 +187,7 @@ export class SaleCalculatorComponent implements OnInit {
 
   public deleteOrderDetails (index) {
     this.orderDetails.removeAt(index)
+    this.calcTotalSale()
   }
 
   public onSubmit () {
@@ -193,6 +199,4 @@ export class SaleCalculatorComponent implements OnInit {
     this.router.navigate(['order-summary'], { relativeTo: this.route })
   }
 
-
 }
-

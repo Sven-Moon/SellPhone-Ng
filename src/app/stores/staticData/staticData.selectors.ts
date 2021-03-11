@@ -34,3 +34,9 @@ createSelector(
   selectStaticDataState,
   (state: StaticDataState) => state.phoneModelsList
 )
+
+export const selectConditions =
+createSelector(
+  selectStaticDataState,
+  (state: StaticDataState) => state.conditions
+)

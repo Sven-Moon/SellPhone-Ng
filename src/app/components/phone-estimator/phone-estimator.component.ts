@@ -9,6 +9,7 @@ import { selectPhoneModelsList, selectPhoneTypes } from 'src/app/stores/staticDa
 import { updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions'
 import { Helpers } from 'src/app/helpers/helpers'
 import { FormBuilder } from '@angular/forms'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-phone-estimator',
@@ -18,6 +19,8 @@ import { FormBuilder } from '@angular/forms'
 export class PhoneEstimatorComponent implements OnInit {
   phoneTypes$: Observable<Array<PhoneType>>;
   phoneModelsList$: Array<PhoneModel>;
+  selectedPhoneType: PhoneType;
+  selectedPhoneModel: PhoneModel;
   phoneMaxValue: number = null;
   isValueBoxVisible = false;
   estimatorForm = this._fb.group({
@@ -29,7 +32,8 @@ export class PhoneEstimatorComponent implements OnInit {
     private _title: Title,
     private _store: Store<any>,
     private _helper: Helpers,
-    private _fb: FormBuilder
+    private _fb: FormBuilder,
+    private _router: Router
   ) {}
 
   ngOnInit () {
@@ -41,13 +45,13 @@ export class PhoneEstimatorComponent implements OnInit {
   }
 
   public onSelectedPhoneTypeChange (e: any): void {
-    const selectedPhoneType: PhoneType = {
+    this.selectedPhoneType = {
       typeId: e.target.selectedOptions[0].id,
       name: e.target.selectedOptions[0].innerText
     }
 
     // 0 is always the form index when coming from estimator
-    this._helper.storeUpdateOnTypeChange(0, selectedPhoneType)
+    this._helper.storeUpdateOnTypeChange(0, this.selectedPhoneType)
 
     this.estimatorForm.controls.phoneModel
       .patchValue(-1)
@@ -60,7 +64,7 @@ export class PhoneEstimatorComponent implements OnInit {
       // 0 is always the form index when coming from estimator
       this.phoneMaxValue = this._helper.getMaxValue(0, modelId)
 
-      const selectedPhoneModel: PhoneModel = {
+      this.selectedPhoneModel = {
         modelId,
         name: e.target.selectedOptions[0].label,
         maxValue: this.phoneMaxValue
@@ -70,11 +74,15 @@ export class PhoneEstimatorComponent implements OnInit {
       // initial form index = 0
       const formIndex = 0
       this._store.dispatch(updateSelectedPhoneModel(
-        { formIndex, selectedPhoneModel }))
+        { formIndex, selectedPhoneModel: this.selectedPhoneModel }))
 
       // show the max value box
       this.isValueBoxVisible = true
     } else { this.isValueBoxVisible = false }
+  }
+
+  public goToSaleCalc (): void {
+    this._router.navigate(['/sellmyphone', {type: this.selectedPhoneType.typeId, model: this.selectedPhoneModel.modelId }])
   }
 
   // private onPhoneModelSelect(id:number):number {

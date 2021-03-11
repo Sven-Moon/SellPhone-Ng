@@ -4,20 +4,19 @@ import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { PhoneModel } from '../models/PhoneModel'
 import { PhoneType } from '../models/PhoneType'
-import { updateSelectedPhoneType, updateSubtotal } from '../stores/sale-calculator/sale-calculator.actions'
-import { selectOrderDetail, selectSaleOrder } from '../stores/sale-calculator/sale-calculator.selectors'
 import { updatePhoneModelsList } from '../stores/staticData/staticData.actions'
-import { selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
-import { SaleOrder } from 'src/app/models/SaleOrder'
+import { selectConditions, selectPhoneModelsByType, selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
+import { PhoneModels } from '../models/PhoneModels'
+import { Observer } from 'rxjs'
 
 @Injectable()
 export class Helpers {
   constructor (private _store: Store<any>) {}
 
   public storeUpdateOnTypeChange (formIndex: number, selectedPhoneType: PhoneType): void {
-    // send phone type to sale-calculator
-    this._store.dispatch(updateSelectedPhoneType(
-      { formIndex, selectedPhoneType }))
+    // // send phone type to sale-calculator
+    // this._store.dispatch(updateSelectedPhoneType(
+    //   { formIndex, selectedPhoneType }))
 
     // find the list by typeId
     const phoneModelList: Array<PhoneModel[]> =
@@ -61,6 +60,45 @@ export class Helpers {
     })
 
     return maxValue
+  }
+
+  public getMaxValue2 (typeId: number, modelId: number): number {
+    let maxValue: number = null
+    let phoneModelsByType$: Observer<PhoneModels[]>
+
+    this._store.pipe(select(selectPhoneModelsByType))
+    .subscribe((type) => {
+      type.forEach((obj) => {
+      if (obj.typeId === typeId) {
+        obj.phoneModels.forEach((models) => {
+          if (models.modelId === modelId) {
+            maxValue = models.maxValue
+          }
+        })
+      }})
+    })
+    return maxValue
+  }
+
+  public getConditionMod(id:string): number {
+    const conditions$ = this._store.pipe(select(selectConditions))
+    let priceMod: number;
+    conditions$.subscribe(condition => {
+      condition.forEach((x) => {
+        if (x.id === id)
+          priceMod = x.priceMod
+      })
+    })
+    return priceMod
+  }
+
+  public calcSubTotal (type, model, condition, quantity): number {
+
+    const maxVal = this.getMaxValue2(type, model)
+    const conditionMod = this.getConditionMod(condition)
+
+    return maxVal * conditionMod * quantity
+
   }
 
 }
