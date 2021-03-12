@@ -12,11 +12,6 @@
       <form name="sale-calc-form" class="col-sm-6"
       [formGroup]='saleOrderForm' (change)="calcTotalSale()" role="form" >
 
-        <label name="orderId">
-          Order Id: <input  formControlName="orderId" />
-        </label>
-
-
         <div formArrayName="orderDetails" class="corner-repeat">
           <div *ngFor="let od of orderDetails.controls;
           let detailsIndex=index"
@@ -99,7 +94,8 @@
 
   <div id="page-centeredButtonGroup-bot"
     class="d-flex justify-content-center">
-    <button id="submitButton" routerLink="../order-summary"
+    <button id="submitButton"
+    (click)="onSubmit()"routerLink="../order-review"
       type="button" class="btn-lg btn-primary m-1"
       >Get to Your Money!</button>
   </div>

@@ -1,18 +1,16 @@
 import { Component, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
-import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
 import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors'
 import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
-import { addFormSection, updateCondition, updateQuantity, updateSelectedPhoneModel, updateSubtotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
+import { addFormSection, updateCondition, updateQuantity } from 'src/app/stores/sale-calculator/sale-calculator.actions'
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
-import { ActivatedRoute, NavigationExtras, Router } from '@angular/router'
+import { ActivatedRoute,  Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
-import { map, switchMap, tap } from 'rxjs/operators'
 
 
 @Component({
@@ -193,6 +191,7 @@ export class SaleCalculatorComponent implements OnInit {
   public onSubmit () {
     // TODO: use event emitter with form value
     console.warn(this.saleOrderForm.value)
+
   }
 
   public goToOrderSummary() {

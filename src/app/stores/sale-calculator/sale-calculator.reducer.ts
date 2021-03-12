@@ -16,11 +16,11 @@ export interface SaleOrderState extends SaleOrder {
 export const initialState: SaleOrderState = {
   orderId: null,
   total: null,
-  orderDate: '',
-  orderStatus: '',
-  orderItems: 1,
+  orderDate: null,
+  orderStatus: null,
+  orderItems: null,
   orderDetails: [{
-    lineId: 1,
+    lineId: null,
     phoneType: { typeId: null, name: null },
     phoneModel: { modelId: null, name: null, maxValue: null },
     phoneCondition: null,
@@ -112,6 +112,11 @@ export const saleCalculatorReducer = createReducer(
         }
       }
     })
-  )
+  ),
+
+  on(fromSaleCalculatorActions.updateOrder,
+    (state,action) => ({
+      ...state,
+    }))
 
 )

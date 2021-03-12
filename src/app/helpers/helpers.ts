@@ -7,7 +7,11 @@ import { PhoneType } from '../models/PhoneType'
 import { updatePhoneModelsList } from '../stores/staticData/staticData.actions'
 import { selectConditions, selectPhoneModelsByType, selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
 import { PhoneModels } from '../models/PhoneModels'
-import { Observer } from 'rxjs'
+import { Observer, Subscription } from 'rxjs'
+import { stringify } from '@angular/compiler/src/util'
+import { Form, FormGroup } from '@angular/forms'
+import { SaleOrder } from '../models/SaleOrder'
+import { DatePipe } from '@angular/common'
 
 @Injectable()
 export class Helpers {
@@ -82,13 +86,19 @@ export class Helpers {
 
   public getConditionMod(id:string): number {
     const conditions$ = this._store.pipe(select(selectConditions))
+    interface ConditionI  {
+      id: string,
+      priceMod: number
+    }
     let priceMod: number;
-    conditions$.subscribe(condition => {
-      condition.forEach((x) => {
-        if (x.id === id)
-          priceMod = x.priceMod
+
+    conditions$.subscribe(conditions => {
+      conditions.forEach((condition) => {
+        if (condition.id === id)
+          priceMod = condition.priceMod
       })
     })
+
     return priceMod
   }
 
@@ -99,6 +109,23 @@ export class Helpers {
 
     return maxVal * conditionMod * quantity
 
+  }
+
+  // public createOrderObj (f:FormGroup) {
+  //   let myFormObj: SaleOrder;
+
+  //   myFormObj = {
+  //     orderId: null,
+  //     total: f.get('total').value,
+  //     orderDate: null,
+  //     orderStatus: 'incomplete',
+  //     orderItems: null,
+  //     orderDetails: []
+  //   }
+  // }
+
+  public getNextOrderNumber():number {
+    return 0
   }
 
 }

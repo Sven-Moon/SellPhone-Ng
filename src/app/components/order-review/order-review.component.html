@@ -1,0 +1,83 @@
+<div class="container-fluid justify-content-center col-12 col-md-11 col-lg-10 col-xl-6">
+
+  <!-- order summary -->
+  <div id="forms-wrap"
+  class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
+
+    <form name="order-review-form"  role="form">
+      <table id="order-review-table" class="table table-striped">
+        <thead>
+            <tr>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Condition</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <!-- <ng-component *ngFor="let od of orderDetails.controls"></ng-component> -->
+        <tbody>
+          <tr>
+            <th>Motorola</th>
+            <td>Lamborguini XL</td>
+            <td>Very Good</td>
+            <td>205</td>
+            <td>$16,000.50</td>
+          </tr>
+          <!-- <ng-component *ngFor="let od of orderDetails.controls"></ng-component> -->
+          <tr>
+            <th>Motorola</th>
+            <td>Lamborguini XL</td>
+            <td>Very Good</td>
+            <td>205</td>
+            <td>$16,000.50</td>
+          </tr>
+          <!-- <ng-component *ngFor="let od of orderDetails.controls"></ng-component> -->
+          <tr>
+            <th>Motorola</th>
+            <td>Lamborguini XL</td>
+            <td>Very Good</td>
+            <td>205</td>
+            <td>$16,000.50</td>
+          </tr>
+        </tbody>
+      </table>
+
+    </form>
+
+  </div>
+
+  <!-- address form -->
+  <form formGroup="contact-form" class="form-group mt-3">
+
+    <div name="name-group" class="form-group row">
+
+      <div class="col-md-6">
+          <label for="firstName" class="form-label">First Name</label>
+          <input type="text" name="firstName" id="firstName" class="form-control mb-3">
+      </div>
+
+
+      <div class="col-md-6">
+          <label for="lastName" class="form-label">Last Name</label>
+          <input type="text" name="lastName" id="lastName" class="form-control">
+      </div>
+    </div>
+
+    <div class="form-group row">
+
+      <div class="col-md-6">
+          <label for="email" class="form-label">Email</label>
+          <input type="text" name="email" id="email" class="form-control mb-3">
+      </div>
+
+
+      <div class="col-md-6">
+          <label for="phoneNumber" class="form-label">Phone</label>
+          <input type="text" name="phoneNumber" id="phoneNumber" class="form-control">
+      </div>
+    </div>
+
+  </form>
+
+</div>

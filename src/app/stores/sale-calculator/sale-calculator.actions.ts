@@ -1,3 +1,4 @@
+import { FormGroup } from '@angular/forms'
 import { createAction, props } from '@ngrx/store'
 import { Condition } from 'src/app/models/Condition'
 import { PhoneModel } from 'src/app/models/PhoneModel'
@@ -36,4 +37,9 @@ export const updateQuantity = createAction(
 export const updateSubtotal = createAction(
   '[Sale Calculator Component] Update Subtotal',
   props<{ formIndex: number, subTotal: number }>()
+)
+
+export const updateOrder = createAction(
+  '[Sale Calculator Component] Input Order',
+  props<{ form: FormGroup }>()
 )
