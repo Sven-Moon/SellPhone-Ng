@@ -85,10 +85,4 @@ export class PhoneEstimatorComponent implements OnInit {
     this._router.navigate(['/sellmyphone', {type: this.selectedPhoneType.typeId, model: this.selectedPhoneModel.modelId }])
   }
 
-  // private onPhoneModelSelect(id:number):number {
-  //   if (id > 0 ) {
-  //     this.isValueBoxVisible = true;}
-  //   else { this.isValueBoxVisible = false;}
-  //   return this._helper.getMaxValue();
-  // }
 }

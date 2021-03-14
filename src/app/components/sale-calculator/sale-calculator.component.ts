@@ -194,8 +194,8 @@ export class SaleCalculatorComponent implements OnInit {
 
   }
 
-  public goToOrderSummary() {
-    this.router.navigate(['order-summary'], { relativeTo: this.route })
+  public goToOrderReview() {
+    this.router.navigate(['../order-review'])
   }
 
 }
