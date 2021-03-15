@@ -39,7 +39,7 @@ export const updateSubtotal = createAction(
   props<{ formIndex: number, subTotal: number }>()
 )
 
-export const updateOrder = createAction(
-  '[Sale Calculator Component] Input Order',
-  props<{ form: FormGroup }>()
+export const updateTotal = createAction(
+  '[Sale Calculator Component] UPdate Total',
+  props<{ total: number }>()
 )

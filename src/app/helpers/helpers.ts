@@ -1,26 +1,20 @@
-/* eslint-disable eqeqeq */
-/* eslint-disable no-useless-constructor */
 import { Injectable } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { PhoneModel } from '../models/PhoneModel'
 import { PhoneType } from '../models/PhoneType'
 import { updatePhoneModelsList } from '../stores/staticData/staticData.actions'
 import { selectConditions, selectPhoneModelsByType, selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
-import { PhoneModels } from '../models/PhoneModels'
-import { Observer, Subscription } from 'rxjs'
-import { stringify } from '@angular/compiler/src/util'
-import { Form, FormGroup } from '@angular/forms'
-import { SaleOrder } from '../models/SaleOrder'
-import { DatePipe } from '@angular/common'
+import { updateSelectedPhoneType, updateSubtotal, updateTotal } from '../stores/sale-calculator/sale-calculator.actions'
+import { selectOrderDetail } from '../stores/sale-calculator/sale-calculator.selectors'
 
 @Injectable()
 export class Helpers {
   constructor (private _store: Store<any>) {}
 
   public storeUpdateOnTypeChange (formIndex: number, selectedPhoneType: PhoneType): void {
-    // // send phone type to sale-calculator
-    // this._store.dispatch(updateSelectedPhoneType(
-    //   { formIndex, selectedPhoneType }))
+    // send phone type to store
+    this._store.dispatch(updateSelectedPhoneType(
+      { formIndex, selectedPhoneType }))
 
     // find the list by typeId
     const phoneModelList: Array<PhoneModel[]> =
@@ -38,9 +32,7 @@ export class Helpers {
     let state = null
 
     this._store.pipe(select(selectStaticData))
-      .subscribe(sD => {
-        state = sD
-      })
+    .subscribe(sD => {state = sD})
 
     // return the model list matching the formIndex#
     for (const i in state.phoneModelsByType) {
@@ -66,66 +58,24 @@ export class Helpers {
     return maxValue
   }
 
-  public getMaxValue2 (typeId: number, modelId: number): number {
-    let maxValue: number = null
-    let phoneModelsByType$: Observer<PhoneModels[]>
+  public calcSubTotal (formIndex): number {
 
-    this._store.pipe(select(selectPhoneModelsByType))
-    .subscribe((type) => {
-      type.forEach((obj) => {
-      if (obj.typeId === typeId) {
-        obj.phoneModels.forEach((models) => {
-          if (models.modelId === modelId) {
-            maxValue = models.maxValue
-          }
-        })
-      }})
-    })
-    return maxValue
-  }
+    let maxValue, conditionMod, quantity: number
 
-  public getConditionMod(id:string): number {
-    const conditions$ = this._store.pipe(select(selectConditions))
-    interface ConditionI  {
-      id: string,
-      priceMod: number
-    }
-    let priceMod: number;
-
-    conditions$.subscribe(conditions => {
-      conditions.forEach((condition) => {
-        if (condition.id === id)
-          priceMod = condition.priceMod
-      })
+    const saleOrder$ = this._store.pipe(select(selectOrderDetail))
+    saleOrder$.subscribe(sO => {
+      maxValue = sO[formIndex].phoneModel.maxValue,
+      conditionMod = sO[formIndex].phoneCondition.priceMod,
+      quantity = sO[formIndex].quantity
     })
 
-    return priceMod
-  }
+    let subTotal: number = maxValue * conditionMod * quantity
 
-  public calcSubTotal (type, model, condition, quantity): number {
+    this._store.dispatch(updateSubtotal(
+      { formIndex, subTotal }))
 
-    const maxVal = this.getMaxValue2(type, model)
-    const conditionMod = this.getConditionMod(condition)
+    return  maxValue * conditionMod * quantity
 
-    return maxVal * conditionMod * quantity
-
-  }
-
-  // public createOrderObj (f:FormGroup) {
-  //   let myFormObj: SaleOrder;
-
-  //   myFormObj = {
-  //     orderId: null,
-  //     total: f.get('total').value,
-  //     orderDate: null,
-  //     orderStatus: 'incomplete',
-  //     orderItems: null,
-  //     orderDetails: []
-  //   }
-  // }
-
-  public getNextOrderNumber():number {
-    return 0
   }
 
 }

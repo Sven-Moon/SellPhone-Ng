@@ -20,7 +20,6 @@ export const initialState: SaleOrderState = {
   orderStatus: null,
   orderItems: null,
   orderDetails: [{
-    lineId: null,
     phoneType: { typeId: null, name: null },
     phoneModel: { modelId: null, name: null, maxValue: null },
     phoneCondition: null,
@@ -64,13 +63,13 @@ export const saleCalculatorReducer = createReducer(
       {
         ...state,
         orderItems: state.orderItems + 1,
-        orderDetails: {
-          ...state.orderDetails,
-          [state.orderItems]: {
-            ...state.orderDetails[state.orderItems],
-            lineId: state.orderItems + 1
-          }
-        }
+        // orderDetails: {
+        //   ...state.orderDetails,
+        //   [state.orderItems]: {
+        //     ...state.orderDetails[state.orderItems],
+        //     lineId: state.orderItems + 1
+        //   }
+        // }
       }
     )
   ),
@@ -114,9 +113,9 @@ export const saleCalculatorReducer = createReducer(
     })
   ),
 
-  on(fromSaleCalculatorActions.updateOrder,
+  on(fromSaleCalculatorActions.updateTotal,
     (state,action) => ({
-      ...state,
+      ...state, total: action.total
     }))
 
 )

@@ -14,5 +14,6 @@ createSelector(
 export const selectOrderDetail =
 createSelector(
   selectSaleOrderState,
-  (state:SaleOrder) => state.orderDetails
+  (state) => Object.keys(state.orderDetails)
+  .map(key => state.orderDetails[key])
 )

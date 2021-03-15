@@ -82,7 +82,9 @@ export class PhoneEstimatorComponent implements OnInit {
   }
 
   public goToSaleCalc (): void {
-    this._router.navigate(['/sellmyphone', {type: this.selectedPhoneType.typeId, model: this.selectedPhoneModel.modelId }])
+    this._router.navigate(['/sellmyphone'
+    // , {type: this.selectedPhoneType.typeId, model: this.selectedPhoneModel.modelId }
+  ])
   }
 
 }
