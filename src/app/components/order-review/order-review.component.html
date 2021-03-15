@@ -4,7 +4,7 @@
   <div id="forms-wrap"
   class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
 
-    <form name="order-review-form"  role="form">
+    <div name="order-review-form"  role="form">
       <table id="order-review-table" class="table table-striped">
         <thead>
             <tr>
@@ -15,35 +15,29 @@
             <th>Subtotal</th>
           </tr>
         </thead>
-        <!-- <ng-component *ngFor="let od of orderDetails.controls"></ng-component> -->
         <tbody>
+          <ng-container  *ngFor="let od of orderDetails$ | async">
           <tr>
-            <th>Motorola</th>
-            <td>Lamborguini XL</td>
-            <td>Very Good</td>
-            <td>205</td>
-            <td>$16,000.50</td>
+            <td>{{ od.phoneType.name }}</td>
+            <td>{{ od.phoneModel.name }}</td>
+            <td>{{ od.phoneCondition.id }}</td>
+            <td>{{ od.quantity }}</td>
+            <td>{{ od.subTotal }}</td>
           </tr>
-          <!-- <ng-component *ngFor="let od of orderDetails.controls"></ng-component> -->
-          <tr>
-            <th>Motorola</th>
-            <td>Lamborguini XL</td>
-            <td>Very Good</td>
-            <td>205</td>
-            <td>$16,000.50</td>
-          </tr>
-          <!-- <ng-component *ngFor="let od of orderDetails.controls"></ng-component> -->
-          <tr>
-            <th>Motorola</th>
-            <td>Lamborguini XL</td>
-            <td>Very Good</td>
-            <td>205</td>
-            <td>$16,000.50</td>
-          </tr>
+        </ng-container>
         </tbody>
+          <tfoot>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="float-right">Total</th>
+              <th>{{total}}</th>
+            </tr>
+          </tfoot>
       </table>
 
-    </form>
+    </div>
 
   </div>
 
