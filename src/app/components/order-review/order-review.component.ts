@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { SaleOrder } from 'src/app/models/SaleOrder';
@@ -28,10 +28,10 @@ export class OrderReviewComponent implements OnInit {
     this.saleOrder$.subscribe(so => this.total = so.total)
 
     this.contactForm = this.fb.group({
-      name: [null],
-      lastName: [null],
-      email: [null],
-      phone: [null]
+      name: [null, Validators.required],
+      lastName: [null, Validators.required],
+      email: [null, Validators.required],
+      phone: [null, Validators.required]
     })
   }
 
