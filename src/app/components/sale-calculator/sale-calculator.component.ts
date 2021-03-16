@@ -32,11 +32,6 @@ export class SaleCalculatorComponent implements OnInit {
   saleOrder$: Observable<SaleOrder>
   staticData$: Observable<StaticData>
 
-
-  get orderDetails () {
-    return this.saleOrderForm.get('orderDetails') as FormArray
-  }
-
   // eslint-disable-next-line no-useless-constructor
   constructor (
     private _store: Store<SaleOrder>,
@@ -84,12 +79,15 @@ export class SaleCalculatorComponent implements OnInit {
     })
   } // ngOnInit
 
+  get orderDetails (): FormArray {
+    return this.saleOrderForm.get('orderDetails') as FormArray
+  }
+
   public onSelectedPhoneTypeChange (e: any, formIndex): void {
     const selectedPhoneType: PhoneType = {
       typeId: Number(e.target.selectedOptions[0].id),
       name: e.target.selectedOptions[0].label
     }
-
     // update store
     this._helper.storeUpdateOnTypeChange(formIndex, selectedPhoneType)
 
@@ -99,13 +97,12 @@ export class SaleCalculatorComponent implements OnInit {
     this._store.pipe(select(selectPhoneModelsList))
     .subscribe((mL) => list = mL[formIndex])
 
-    // // update the store
+    //  update the store
     this.saleOrderForm.get('orderDetails.'+formIndex+'.modelList')
     .patchValue(list)
-
-
-    if (this.orderDetails.valid) { this.calcSubtotal(formIndex) }
-
+    if (this.orderDetails.valid) {
+      this.calcSubtotal(formIndex)
+    }
   }
 
   public onSelectedPhoneModelChange (e:any, formIndex:number): void {
@@ -151,7 +148,6 @@ export class SaleCalculatorComponent implements OnInit {
 
   public calcSubtotal (formIndex): void {
     if (
-
       this.saleOrderForm
       .get('orderDetails.'+formIndex+'.phoneType').value != '' &&
       this.saleOrderForm
@@ -168,24 +164,16 @@ export class SaleCalculatorComponent implements OnInit {
 
       this.calcTotalSale()
     }
-
   }
 
-  calcTotalSale () {
-
+  private calcTotalSale () {
     let total: number = 0
-    this._store.pipe(select(selectOrderDetail)).subscribe(x =>
-      x.forEach(line => total += line.subTotal)
+    this._store.pipe(select(selectOrderDetail)).subscribe(od =>
+      od.forEach(line => total += line.subTotal)
     )
-
-    // this.saleOrderForm.get('orderDetails').value
-    // .forEach(orderDetail => orderDetail.subTotal != null
-    //   ? total += orderDetail.subTotal : null
-    // );
-
     this._store.dispatch(updateTotal({ total }))
 
-    this.saleOrderForm.get('total').setValue((total).toLocaleString())
+    this.saleOrderForm.get('total').setValue((total))
 
   }
 

@@ -74,7 +74,7 @@ export class Helpers {
     this._store.dispatch(updateSubtotal(
       { formIndex, subTotal }))
 
-    return  maxValue * conditionMod * quantity
+    return subTotal
 
   }
 
