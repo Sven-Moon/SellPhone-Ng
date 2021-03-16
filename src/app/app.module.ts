@@ -18,15 +18,11 @@ import { EffectsModule } from '@ngrx/effects'
 import { SearchEffects } from './stores/search/search.effects'
 import { StaticDataEffects } from './stores/staticData/staticData.effects'
 import { Helpers } from './helpers/helpers';
-import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
-import { OrderReviewComponent } from './components/order-review/order-review.component'
 
 @NgModule({
   declarations: [
     ...AppComponents,
-    FilterPipe,
-    OrderSummaryComponent,
-    OrderReviewComponent
+    FilterPipe
   ],
   imports: [
     BrowserModule,

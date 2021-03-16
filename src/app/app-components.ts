@@ -7,6 +7,9 @@ import { AppSearchComponent } from './components/search/app-search.component';
 import { AppMainPanelComponent } from './components/main-panel/app-main-panel.component';
 import { SearchResultsComponent } from './components/search-results/app-search-results.component';
 import { SaleCalculatorComponent } from './components/sale-calculator/sale-calculator.component';
+import { OrderReviewComponent } from './components/order-review/order-review.component';
+import { ContactInfoComponent } from './components/contact-info/contact-info.component';
+import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 
 
 export const AppComponents = [
@@ -17,5 +20,8 @@ export const AppComponents = [
   AppSearchComponent,
   AppMainPanelComponent,
   SearchResultsComponent,
-  SaleCalculatorComponent
+  SaleCalculatorComponent,
+  OrderReviewComponent,
+  ContactInfoComponent,
+  OrderSummaryComponent
 ];
