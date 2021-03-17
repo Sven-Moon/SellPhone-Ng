@@ -17,7 +17,8 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
 import { SearchEffects } from './stores/search/search.effects'
 import { StaticDataEffects } from './stores/staticData/staticData.effects'
-import { Helpers } from './helpers/helpers';
+import { Helpers } from './helpers/helpers'
+import { NgrxFormsModule } from 'ngrx-forms'
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { Helpers } from './helpers/helpers';
     BrowserModule,
     AppRoutingModule,
     NgbModule,
+    NgrxFormsModule,
     FormsModule,
     HttpClientModule,
     StoreModule.forRoot(AppStores),

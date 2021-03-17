@@ -39,6 +39,7 @@
     "immer": "^8.0.1",
     "jquery": "^3.5.1",
     "json-server": "^0.16.3",
+    "ngrx-forms": "^6.3.5",
     "popper.js": "^1.16.1",
     "redux-devtools-extension": "^2.13.8",
     "rxjs": "~6.5.4",

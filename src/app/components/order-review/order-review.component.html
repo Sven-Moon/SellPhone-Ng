@@ -1,46 +1,45 @@
-<div class="container-fluid justify-content-center col-12 col-md-11 col-lg-10 col-xl-6">
 
-  <!-- order summary -->
-  <div id="forms-wrap"
-  class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
 
-    <div name="order-review-form"  role="form">
-      <table id="order-review-table" class="table table-striped">
-        <thead>
-            <tr>
-            <th>Type</th>
-            <th>Model</th>
-            <th>Condition</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container  *ngFor="let od of orderDetails$ | async">
+<!-- order summary -->
+<div id="forms-wrap"
+class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
+
+  <div name="order-review-form"  role="form">
+    <table id="order-review-table" class="table table-striped">
+      <thead>
           <tr>
-            <td>{{ od.phoneType.name }}</td>
-            <td>{{ od.phoneModel.name }}</td>
-            <td>{{ od.phoneCondition.id }}</td>
-            <td>{{ od.quantity }}</td>
-            <td>{{ od.subTotal }}</td>
-          </tr>
-        </ng-container>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th class="float-right">Total</th>
-            <th>{{total}}</th>
-          </tr>
-        </tfoot>
-      </table>
-    </div>
-    <button type="submit" disabled
-    class="btn btn-success mt-n5 mx-5">
-      Submit Sale Order
-    </button>
-
+          <th>Type</th>
+          <th>Model</th>
+          <th>Condition</th>
+          <th>Quantity</th>
+          <th>Subtotal</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container  *ngFor="let od of orderDetails$ | async">
+        <tr>
+          <td>{{ od.phoneType.name }}</td>
+          <td>{{ od.phoneModel.name }}</td>
+          <td>{{ od.phoneCondition.id }}</td>
+          <td>{{ od.quantity }}</td>
+          <td>{{ od.subTotal }}</td>
+        </tr>
+      </ng-container>
+      </tbody>
+      <tfoot>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th class="float-right">Total</th>
+          <th>{{total}}</th>
+        </tr>
+      </tfoot>
+    </table>
   </div>
+  <button type="submit" disabled
+  class="btn btn-success mt-n5 mx-5">
+    Submit Sale Order
+  </button>
+
 </div>
