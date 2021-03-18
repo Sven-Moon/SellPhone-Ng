@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { SaleOrder } from 'src/app/models/SaleOrder';
 import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail';
 import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
+import { faEdit } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-order-review',
@@ -14,6 +15,7 @@ export class OrderReviewComponent implements OnInit {
   orderDetails$: Observable<SaleOrderDetail[]>
   saleOrder$: Observable<SaleOrder>
   total: number
+  faEdit = faEdit
 
   constructor(
     private _store: Store<any>,

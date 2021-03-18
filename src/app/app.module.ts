@@ -20,6 +20,7 @@ import { StaticDataEffects } from './stores/staticData/staticData.effects'
 import { Helpers } from './helpers/helpers'
 import { NgrxFormsModule } from 'ngrx-forms'
 import { CommonModule } from '@angular/common';
+import { FontAwesomeModule  } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { CommonModule } from '@angular/common';
     BrowserModule,
     CommonModule,
     NgbModule,
+    FontAwesomeModule,
     FormsModule,
     NgrxFormsModule,
     HttpClientModule,

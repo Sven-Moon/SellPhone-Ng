@@ -37,8 +37,10 @@ class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
       </tfoot>
     </table>
   </div>
-  <button [routerLink]="[{ outlets: { orderEditModal: ['order-edit-modal'] } }]">
-    Edit Sale Order
+  <button [routerLink]="[{ outlets:
+  { orderEditModal: ['order-edit-modal'] } }]"
+  class="btn btn-primary">
+    <span><i class="fas fa-edit"></i>Edit Sale Order</span>
   </button>
   <button type="submit" disabled
   class="btn btn-success mt-n5 mx-5">

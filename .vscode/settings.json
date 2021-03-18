@@ -1,8 +1,12 @@
 {
   "cSpell.words": [
     "Uport",
+    "fontawesome",
     "sellmyphone",
     "sellphone"
   ],
-  "editor.formatOnSave": true
+  "editor.formatOnSave": true,
+  "cSpell.ignoreWords": [
+    "fortawesome"
+  ]
 }
