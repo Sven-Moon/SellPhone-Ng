@@ -24,7 +24,7 @@ select {
   background-color: rgb(81, 89, 95);
   flex-direction: column;
   justify-content: center;
-  height: 15vh;
+  height: 16vh;
 }
 
 .footer-nav {
@@ -32,7 +32,7 @@ select {
   flex-basis: auto;
   align-items: center;
   justify-content: center;
-  visibility: hidden;
+  visibility: visible;
 }
 
 footer .navbar-nav {
@@ -53,6 +53,7 @@ footer .nav-item {
 footer a {
   background-color: #484a52;
   border-radius: 3px;
+  color: whitesmoke;
 }
 
 .logo {
@@ -72,6 +73,6 @@ footer a {
 
 @media only screen and (max-width: 576px) {
   .footer-nav {
-    visibility: visible;
+    visibility: hidden;
   }
 }

@@ -22,7 +22,7 @@ class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
           <td>{{ od.phoneModel.name }}</td>
           <td>{{ od.phoneCondition.id }}</td>
           <td>{{ od.quantity }}</td>
-          <td>{{ od.subTotal }}</td>
+          <td>${{ od.subTotal }}</td>
         </tr>
       </ng-container>
       </tbody>
@@ -32,11 +32,14 @@ class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
           <th></th>
           <th></th>
           <th class="float-right">Total</th>
-          <th>{{total}}</th>
+          <th>${{total}}</th>
         </tr>
       </tfoot>
     </table>
   </div>
+  <button [routerLink]="[{ outlets: { orderEditModal: ['order-edit-modal'] } }]">
+    Edit Sale Order
+  </button>
   <button type="submit" disabled
   class="btn btn-success mt-n5 mx-5">
     Submit Sale Order

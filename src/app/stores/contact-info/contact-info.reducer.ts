@@ -1,23 +1,41 @@
-import { Action, createReducer, on } from '@ngrx/store';
+import { Action, combineReducers, createReducer, on } from '@ngrx/store';
+import { createFormGroupState, formGroupReducer, FormGroupState, onNgrxForms } from 'ngrx-forms';
 import * as ContactInfoActions from './contact-info.actions';
 
 export const contactInfoFeatureKey = 'contactInfo';
 
-export interface State {
-
+export interface ContactFormValue {
+  firstName: string;
+  lastName: string;
+  phone: string;
+  email: string
 }
 
-export const initialState: State = {
+export interface State {
+  contactForm: {
+    formState: FormGroupState<ContactFormValue>;
+    submittedValue: ContactFormValue | undefined;
+  }
+}
 
-};
+export const formId = 'contactForm'
 
+export const initialState = createFormGroupState<ContactFormValue>(formId, {
+  firstName: '',
+  lastName: '',
+  phone: '',
+  email: ''
+})
 
-export const reducer = createReducer(
-  initialState,
+const combinedReducer = createReducer<State['contactForm']>(
+  { formState: initialState, submittedValue: undefined },
+  onNgrxForms(),
+  on(ContactInfoActions.setSubmittedValue, (state, { submittedValue }) => ({
+    ...state, submittedValue
+  }))
+)
 
-  on(ContactInfoActions.loadContactInfos, state => state),
-  on(ContactInfoActions.loadContactInfosSuccess, (state, action) => state),
-  on(ContactInfoActions.loadContactInfosFailure, (state, action) => state),
-
-);
+export function reducer(s: State['contactForm'], a: Action) {
+  return combinedReducer(s, a)
+}
 

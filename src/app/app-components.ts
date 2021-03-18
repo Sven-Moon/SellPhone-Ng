@@ -10,18 +10,22 @@ import { SaleCalculatorComponent } from './components/sale-calculator/sale-calcu
 import { OrderReviewComponent } from './components/order-review/order-review.component';
 import { ContactInfoComponent } from './components/contact-info/contact-info.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
+import { OrderEditModalComponent } from './components/order-edit-modal/order-edit-modal.component';
+import { ContactInfoReviewComponent } from './components/contact-info-review/contact-info-review.component';
 
 
 export const AppComponents = [
   AppComponent,
   AppHeaderComponent,
   AppFooterComponent,
-  PhoneEstimatorComponent,
   AppSearchComponent,
   AppMainPanelComponent,
-  SearchResultsComponent,
-  SaleCalculatorComponent,
-  OrderReviewComponent,
   ContactInfoComponent,
-  OrderSummaryComponent
+  ContactInfoReviewComponent,
+  OrderReviewComponent,
+  OrderSummaryComponent,
+  OrderEditModalComponent,
+  PhoneEstimatorComponent,
+  SaleCalculatorComponent,
+  SearchResultsComponent,
 ];

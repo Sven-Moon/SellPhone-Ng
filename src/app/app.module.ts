@@ -19,6 +19,8 @@ import { SearchEffects } from './stores/search/search.effects'
 import { StaticDataEffects } from './stores/staticData/staticData.effects'
 import { Helpers } from './helpers/helpers'
 import { NgrxFormsModule } from 'ngrx-forms'
+import { CommonModule } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -26,12 +28,14 @@ import { NgrxFormsModule } from 'ngrx-forms'
     FilterPipe
   ],
   imports: [
-    BrowserModule,
     AppRoutingModule,
+    BrowserModule,
+    CommonModule,
     NgbModule,
-    NgrxFormsModule,
     FormsModule,
+    NgrxFormsModule,
     HttpClientModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(AppStores),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -40,8 +44,7 @@ import { NgrxFormsModule } from 'ngrx-forms'
     EffectsModule.forRoot([
       SearchEffects,
       StaticDataEffects
-    ]),
-    ReactiveFormsModule
+    ])
   ],
   providers: [
     ...AppServices,

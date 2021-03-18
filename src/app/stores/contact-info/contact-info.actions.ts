@@ -1,15 +1,8 @@
 import { createAction, props } from '@ngrx/store';
+import { ContactFormValue } from './contact-info.reducer';
 
-export const loadContactInfos = createAction(
-  '[ContactInfo] Load ContactInfos'
-);
 
-export const loadContactInfosSuccess = createAction(
-  '[ContactInfo] Load ContactInfos Success',
-  props<{ data: any }>()
-);
-
-export const loadContactInfosFailure = createAction(
-  '[ContactInfo] Load ContactInfos Failure',
-  props<{ error: any }>()
-);
+export const setSubmittedValue = createAction(
+  '[Order Summary] Submit Form',
+  props<{ submittedValue: ContactFormValue }>()
+)
