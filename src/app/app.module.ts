@@ -18,9 +18,10 @@ import { EffectsModule } from '@ngrx/effects'
 import { SearchEffects } from './stores/search/search.effects'
 import { StaticDataEffects } from './stores/staticData/staticData.effects'
 import { Helpers } from './helpers/helpers'
-import { NgrxFormsModule } from 'ngrx-forms'
+// import { NgrxFormsModule } from 'ngrx-forms'
 import { CommonModule } from '@angular/common';
-import { FontAwesomeModule  } from '@fortawesome/angular-fontawesome';
+import { NgrxFormsModule } from 'ngrx-forms'
+// import { FontAwesomeModule  } from '@fortawesome/angular-fontawesome';
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { FontAwesomeModule  } from '@fortawesome/angular-fontawesome';
     BrowserModule,
     CommonModule,
     NgbModule,
-    FontAwesomeModule,
+    // FontAwesomeModule,
     FormsModule,
     NgrxFormsModule,
     HttpClientModule,

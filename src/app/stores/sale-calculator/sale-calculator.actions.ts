@@ -40,6 +40,6 @@ export const updateSubtotal = createAction(
 )
 
 export const updateTotal = createAction(
-  '[Sale Calculator Component] UPdate Total',
+  '[Sale Calculator Component] Update Total',
   props<{ total: number }>()
 )

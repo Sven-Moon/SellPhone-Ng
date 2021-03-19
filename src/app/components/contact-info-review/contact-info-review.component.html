@@ -1,1 +1,19 @@
-<p>contact-info-review works!</p>
+<div
+class="form-group mt-3" *ngIf="formState$ | async as formState">
+  <div name="name-group" class="form-group row">
+    <div class="col-md-6">
+        <label for="firstName" class="form-label">Name: <b>{{formState.value.firstName}} {{formState.value.lastName}}</b></label><br>
+        <label for="email" class="form-label">Email: <b>{{formState.value.email}}</b></label><br>
+        <label for="phoneNumber" class="form-label">Phone: <b>{{formState.value.phone}}</b></label>
+    </div>
+  </div>
+</div> <!--info display-->
+<div>Please review all information before submitting order.</div>
+<button routerLink="../contact-info"class="btn btn-primary mx-2">
+  <i class="fas fa-edit"></i>
+  Edit Contact Info
+</button>
+<button routerLink="../order-print"
+class="btn btn-success mx-2">
+  Print My Sales Order! <i class="fas fa-money-bill"></i>
+</button>

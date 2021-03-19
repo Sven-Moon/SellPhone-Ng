@@ -1,26 +1,20 @@
 import { Action, combineReducers, createReducer, on } from '@ngrx/store';
 import { createFormGroupState, formGroupReducer, FormGroupState, onNgrxForms } from 'ngrx-forms';
+import { User } from 'src/app/models/User';
 import * as ContactInfoActions from './contact-info.actions';
 
 export const contactInfoFeatureKey = 'contactInfo';
 
-export interface ContactFormValue {
-  firstName: string;
-  lastName: string;
-  phone: string;
-  email: string
-}
-
 export interface State {
   contactForm: {
-    formState: FormGroupState<ContactFormValue>;
-    submittedValue: ContactFormValue | undefined;
+    formState: FormGroupState<User>;
+    submittedValue: User | undefined;
   }
 }
 
 export const formId = 'contactForm'
 
-export const initialState = createFormGroupState<ContactFormValue>(formId, {
+export const initialState = createFormGroupState<User>(formId, {
   firstName: '',
   lastName: '',
   phone: '',
@@ -30,7 +24,7 @@ export const initialState = createFormGroupState<ContactFormValue>(formId, {
 const combinedReducer = createReducer<State['contactForm']>(
   { formState: initialState, submittedValue: undefined },
   onNgrxForms(),
-  on(ContactInfoActions.setSubmittedValue, (state, { submittedValue }) => ({
+  on(ContactInfoActions.updateContactInfo, (state, { submittedValue }) => ({
     ...state, submittedValue
   }))
 )

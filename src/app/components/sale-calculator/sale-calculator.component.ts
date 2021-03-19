@@ -8,7 +8,7 @@ import { addFormSection, updateCondition, updateQuantity, updateSelectedPhoneMod
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
-import { ActivatedRoute,  Router } from '@angular/router'
+import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
 import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
@@ -37,8 +37,7 @@ export class SaleCalculatorComponent implements OnInit {
     private _store: Store<SaleOrder>,
     private fb: FormBuilder,
     private _helper: Helpers,
-    private router: Router,
-    private route: ActivatedRoute
+    private router: Router
   ) { }
 
   ngOnInit () {
@@ -74,7 +73,6 @@ export class SaleCalculatorComponent implements OnInit {
           subTotal: [0],
           modelList: [this.phoneModelList[0]]
         })
-
       ])
     })
   } // ngOnInit

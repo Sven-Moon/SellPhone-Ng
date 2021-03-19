@@ -1,8 +1,8 @@
 import { createAction, props } from '@ngrx/store';
-import { ContactFormValue } from './contact-info.reducer';
+import { User } from 'src/app/models/User';
 
 
-export const setSubmittedValue = createAction(
+export const updateContactInfo = createAction(
   '[Order Summary] Submit Form',
-  props<{ submittedValue: ContactFormValue }>()
+  props<{ submittedValue: User }>()
 )
