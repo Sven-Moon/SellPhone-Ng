@@ -1,4 +1,7 @@
+import { state } from '@angular/animations'
+import { Injectable } from '@angular/core'
 import { createReducer, on } from '@ngrx/store'
+import { findIndex } from 'rxjs/operators'
 // import produce from 'immer'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import * as fromSaleCalculatorActions from './sale-calculator.actions'
@@ -35,13 +38,12 @@ export const saleCalculatorReducer = createReducer(
   on(fromSaleCalculatorActions.updateSelectedPhoneType,
     (state, action) => ({
       ...state,
-      orderDetails: {
-        ...state.orderDetails,
-        [action.formIndex]: {
+      orderDetails: [
+        ...state.orderDetails, {
           ...state.orderDetails[action.formIndex],
           phoneType: action.selectedPhoneType
         }
-      }
+      ]
     })
   ),
 
@@ -116,6 +118,18 @@ export const saleCalculatorReducer = createReducer(
   on(fromSaleCalculatorActions.updateTotal,
     (state,action) => ({
       ...state, total: action.total
-    }))
+  })),
+
+  on(fromSaleCalculatorActions.removeLine,
+    (state,action) => ( {
+      ...state,
+      orderDetails: {
+        ...state => Object.keys(state.orderDetails)
+        .map(key => {
+          state.orderDetails[key]
+        })
+      }
+    })
+  )
 
 )

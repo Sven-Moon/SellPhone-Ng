@@ -62,11 +62,11 @@ export class Helpers {
 
     let maxValue, conditionMod, quantity: number
 
-    const saleOrder$ = this._store.pipe(select(selectOrderDetail))
-    saleOrder$.subscribe(sO => {
-      maxValue = sO[formIndex].phoneModel.maxValue,
-      conditionMod = sO[formIndex].phoneCondition.priceMod,
-      quantity = sO[formIndex].quantity
+    const orderDetails$ = this._store.pipe(select(selectOrderDetail))
+    orderDetails$.subscribe(oD => {
+      maxValue = oD[formIndex].phoneModel.maxValue,
+      conditionMod = oD[formIndex].phoneCondition.priceMod,
+      quantity = oD[formIndex].quantity
     })
 
     let subTotal: number = maxValue * conditionMod * quantity

@@ -12,6 +12,7 @@ import { ContactInfoComponent } from './components/contact-info/contact-info.com
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
 import { OrderEditModalComponent } from './components/order-edit-modal/order-edit-modal.component';
 import { ContactInfoReviewComponent } from './components/contact-info-review/contact-info-review.component';
+import { OrderPrintComponent } from './components/order-print/order-print.component';
 
 
 export const AppComponents = [
@@ -24,6 +25,7 @@ export const AppComponents = [
   ContactInfoReviewComponent,
   OrderReviewComponent,
   OrderSummaryComponent,
+  OrderPrintComponent,
   OrderEditModalComponent,
   PhoneEstimatorComponent,
   SaleCalculatorComponent,

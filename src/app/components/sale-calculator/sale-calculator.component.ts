@@ -4,7 +4,7 @@ import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticDa
 import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
-import { addFormSection, updateCondition, updateQuantity, updateSelectedPhoneModel, updateTotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
+import { addFormSection, removeLine, updateCondition, updateQuantity, updateSelectedPhoneModel, updateSelectedPhoneType, updateTotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
@@ -194,7 +194,25 @@ export class SaleCalculatorComponent implements OnInit {
   }
 
   public deleteOrderDetails (index) {
+    // remove the orderDetails item from the form
     this.orderDetails.removeAt(index)
+    // // update the store values
+    // this.saleOrder.orderDetails.forEach(e => {
+    //   this._store.dispatch(updateSelectedPhoneType({
+    //     formIndex: index, selectedPhoneType: e.phoneType
+    //   }))
+    //   this._store.dispatch(updateSelectedPhoneModel({
+    //     formIndex: index, selectedPhoneModel: e.phoneModel
+    //   }))
+    //   this._store.dispatch(updateCondition({
+    //     formIndex: index, condition: e.phoneCondition
+    //   }))
+    //   this._store.dispatch(updateQuantity({
+    //     formIndex: index, quantity: e.quantity
+    //   }))
+    // });
+    this._store.dispatch(removeLine({ LineId: index }))
+
     this.calcTotalSale()
   }
 

@@ -43,3 +43,8 @@ export const updateTotal = createAction(
   '[Sale Calculator Component] Update Total',
   props<{ total: number }>()
 )
+
+export const removeLine = createAction(
+  '[Sale Calculator Component] Remove Order Line',
+  props<{ LineId: number }>()
+)

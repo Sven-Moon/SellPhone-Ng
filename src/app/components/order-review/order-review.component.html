@@ -1,10 +1,7 @@
-
-
-<!-- order summary -->
 <div id="forms-wrap"
-class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
-
+class="border border-gray rounded-lg bg-light-gray mt-4">
   <div name="order-review-form"  role="form">
+    <ng-container *ngIf="total!=null">
     <table id="order-review-table" class="table table-striped">
       <thead>
           <tr>
@@ -16,7 +13,7 @@ class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
         </tr>
       </thead>
       <tbody>
-        <ng-container  *ngFor="let od of orderDetails$ | async">
+        <ng-container *ngFor="let od of orderDetails$ | async">
         <tr>
           <td>{{ od.phoneType.name }}</td>
           <td>{{ od.phoneModel.name }}</td>
@@ -36,15 +33,16 @@ class="border border-gray rounded-lgcol-min-vh-70 bg-dark-gray mt-4">
         </tr>
       </tfoot>
     </table>
+    </ng-container>
+    <div *ngIf="total==null" class="container alert-warning d-flex justify-content-center align-content-center min-vh-12">
+      <h3>No Order Data!</h3>
+    </div>
   </div>
+
   <button [routerLink]="[{ outlets:
   { orderEditModal: ['order-edit-modal'] } }]"
-  class="btn btn-primary">
+  class="btn btn-primary mt-n5 mx-5">
     <span><i class="fas fa-edit"></i>Edit Sale Order</span>
-  </button>
-  <button type="submit" disabled
-  class="btn btn-success mt-n5 mx-5">
-    Submit Sale Order
   </button>
 
 </div>

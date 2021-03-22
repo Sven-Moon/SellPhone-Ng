@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { FormGroupState, SetValueAction } from 'ngrx-forms'
+import { FormGroupState, SetValueAction, updateGroup, validate } from 'ngrx-forms'
 import { select, Store } from '@ngrx/store';
 import { updateContactInfo } from 'src/app/stores/contact-info/contact-info.actions';
 import { User } from 'src/app/models/User';
@@ -24,15 +24,16 @@ export class ContactInfoComponent implements OnInit {
     this.submittedValue$ = this.store.pipe(select(s => s.contactInfo.submittedValue))
   }
 
+
   ngOnInit(): void {
     this.formState$.subscribe(x =>
       console.log(x.controls))
     // instantiate form
     // this.contactInfo = this.fb.group({
-    //   firstName: [null, Validators.required],
-    //   lastName: [null, Validators.required],
-    //   email: [null, Validators.required],
-    //   phone: [null, Validators.required]
+    //   firstName: (required),
+    //   lastName: (required),
+    //   email: (required),
+    //   phone: (required)
     // })
   }
 

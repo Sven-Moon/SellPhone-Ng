@@ -1,7 +1,16 @@
 import { Action, combineReducers, createReducer, on } from '@ngrx/store';
-import { createFormGroupState, formGroupReducer, FormGroupState, onNgrxForms } from 'ngrx-forms';
+import { createFormGroupState, formGroupReducer, FormGroupState, onNgrxForms, updateGroup, validate, wrapReducerWithFormStateUpdate } from 'ngrx-forms';
 import { User } from 'src/app/models/User';
 import * as ContactInfoActions from './contact-info.actions';
+import { email, required, minLength, maxLength } from 'ngrx-forms/validation'
+
+
+const validateMyForm = updateGroup<User>({
+  firstName: validate(required),
+  lastName: validate(required),
+  email: validate(required, email),
+  phone: validate(required, minLength(10), maxLength(10))
+})
 
 export const contactInfoFeatureKey = 'contactInfo';
 
@@ -30,6 +39,11 @@ const combinedReducer = createReducer<State['contactForm']>(
 )
 
 export function reducer(s: State['contactForm'], a: Action) {
-  return combinedReducer(s, a)
+  return reducerValidated(s, a)
 }
 
+export const reducerValidated = wrapReducerWithFormStateUpdate(
+  combinedReducer,
+  s => s.formState,
+  validateMyForm
+)

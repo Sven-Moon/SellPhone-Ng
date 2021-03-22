@@ -13,7 +13,7 @@ import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculat
 export class OrderReviewComponent implements OnInit {
   orderDetails$: Observable<SaleOrderDetail[]>
   saleOrder$: Observable<SaleOrder>
-  total: number
+  total: number = null
 
   constructor(
     private _store: Store<any>,
