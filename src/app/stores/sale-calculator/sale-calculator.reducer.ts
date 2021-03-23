@@ -1,9 +1,8 @@
-import { state } from '@angular/animations'
-import { Injectable } from '@angular/core'
+
+import { EntityState } from '@ngrx/entity'
 import { createReducer, on } from '@ngrx/store'
-import { findIndex } from 'rxjs/operators'
-// import produce from 'immer'
 import { SaleOrder } from 'src/app/models/SaleOrder'
+import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
 import * as fromSaleCalculatorActions from './sale-calculator.actions'
 
 export const saleOrderFeatureKey = 'saleOrder'
@@ -12,9 +11,9 @@ export interface SaleOrderState extends SaleOrder {
 
 }
 
-// export interface SaleOrderDetailState extends EntityState<SaleOrderDetails> {
+export interface SaleOrderDetailState extends EntityState<SaleOrderDetail> {
 
-// }
+}
 
 export const initialState: SaleOrderState = {
   orderId: null,
