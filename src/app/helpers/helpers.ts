@@ -6,12 +6,15 @@ import { updatePhoneModelsList } from '../stores/staticData/staticData.actions'
 import { selectConditions, selectPhoneModelsByType, selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
 import { updateSelectedPhoneType, updateSubtotal, updateTotal } from '../stores/sale-calculator/sale-calculator.actions'
 import { selectOrderDetail } from '../stores/sale-calculator/sale-calculator.selectors'
+import { SaleOrderDetail } from '../models/SaleOrderDetail'
+import { keyframes } from '@angular/animations'
 
 @Injectable()
 export class Helpers {
-  constructor (private _store: Store<any>) {}
+  details: SaleOrderDetail[]
+  constructor(private _store: Store<any>) { }
 
-  public storeUpdateOnTypeChange (formIndex: number, selectedPhoneType: PhoneType): void {
+  public storeUpdateOnTypeChange(formIndex: number, selectedPhoneType: PhoneType): void {
     // send phone type to store
     this._store.dispatch(updateSelectedPhoneType(
       { formIndex, selectedPhoneType }))
@@ -26,13 +29,13 @@ export class Helpers {
     ))
   }
 
-  public getPhoneModelsByPhoneType (selectedPhoneTypeId: number): Array<PhoneModel[]> {
+  public getPhoneModelsByPhoneType(selectedPhoneTypeId: number): Array<PhoneModel[]> {
     // const phoneModelsList: Array<PhoneModel> = []
     // get current state of selectedPhoneTypes
     let state = null
 
     this._store.pipe(select(selectStaticData))
-    .subscribe(sD => {state = sD})
+      .subscribe(sD => { state = sD })
 
     // return the model list matching the formIndex#
     for (const i in state.phoneModelsByType) {
@@ -42,7 +45,7 @@ export class Helpers {
     }
   }
 
-  public getMaxValue (formIndex: number, modelId: number): number {
+  public getMaxValue(formIndex: number, modelId: number): number {
     let maxValue: number = null
     let modelListByFormIndex: Array<PhoneModel[]> = []
 
@@ -58,15 +61,15 @@ export class Helpers {
     return maxValue
   }
 
-  public calcSubTotal (formIndex): number {
+  public calcSubTotal(formIndex): number {
 
     let maxValue, conditionMod, quantity: number
 
     const orderDetails$ = this._store.pipe(select(selectOrderDetail))
     orderDetails$.subscribe(oD => {
       maxValue = oD[formIndex].phoneModel.maxValue,
-      conditionMod = oD[formIndex].phoneCondition.priceMod,
-      quantity = oD[formIndex].quantity
+        conditionMod = oD[formIndex].phoneCondition.priceMod,
+        quantity = oD[formIndex].quantity
     })
 
     let subTotal: number = maxValue * conditionMod * quantity
@@ -77,5 +80,14 @@ export class Helpers {
     return subTotal
 
   }
+
+  // public deleteOrderDetail(index: number): SaleOrderDetail[] {
+  //   this._store.select(selectOrderDetail).subscribe((od: SaleOrderDetail[]) =>
+  //     this.details = od)
+  //   const { [index]: removedDetail, ...keepers } = this.details
+  //   const myDetails =  Object.keys(keepers).map(key => keepers[key])
+
+  //   return myDetails
+  // }
 
 }

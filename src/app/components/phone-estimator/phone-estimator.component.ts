@@ -28,15 +28,15 @@ export class PhoneEstimatorComponent implements OnInit {
     phoneModel: [-1]
   });
 
-  constructor (
+  constructor(
     private _title: Title,
     private _store: Store<any>,
     private _helper: Helpers,
     private _fb: FormBuilder,
     private _router: Router
-  ) {}
+  ) { }
 
-  ngOnInit () {
+  ngOnInit() {
     this._title.setTitle('sellphone-ng')
     this.phoneTypes$ = this._store.pipe(select(selectPhoneTypes))
     this._store.pipe(select(selectPhoneModelsList))
@@ -44,7 +44,7 @@ export class PhoneEstimatorComponent implements OnInit {
       .subscribe(formArray => this.phoneModelsList$ = formArray[0])
   }
 
-  public onSelectedPhoneTypeChange (e: any): void {
+  public onSelectedPhoneTypeChange(e: any): void {
     this.selectedPhoneType = {
       typeId: e.target.selectedOptions[0].id,
       name: e.target.selectedOptions[0].innerText
@@ -57,7 +57,7 @@ export class PhoneEstimatorComponent implements OnInit {
       .patchValue(-1)
   }
 
-  public onSelectedPhoneModelChange (e): void {
+  public onSelectedPhoneModelChange(e): void {
     const modelId: number = e.target.selectedOptions[0].id
     // update selected store if model selected
     if (modelId > 0) {
@@ -81,10 +81,10 @@ export class PhoneEstimatorComponent implements OnInit {
     } else { this.isValueBoxVisible = false }
   }
 
-  public goToSaleCalc (): void {
+  public goToSaleCalc(): void {
     this._router.navigate(['/sellmyphone'
-    // , {type: this.selectedPhoneType.typeId, model: this.selectedPhoneModel.modelId }
-  ])
+      // , {type: this.selectedPhoneType.typeId, model: this.selectedPhoneModel.modelId }
+    ])
   }
 
 }

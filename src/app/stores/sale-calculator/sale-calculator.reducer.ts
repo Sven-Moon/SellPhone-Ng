@@ -1,17 +1,15 @@
 
-import { EntityState } from '@ngrx/entity'
+import { state } from '@angular/animations'
 import { createReducer, on } from '@ngrx/store'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
 import * as fromSaleCalculatorActions from './sale-calculator.actions'
+// import { selectOrderDetail } from './sale-calculator.selectors'
+// import { deleteOrderDetail } from '../../helpers/helpers'
 
 export const saleOrderFeatureKey = 'saleOrder'
 
 export interface SaleOrderState extends SaleOrder {
-
-}
-
-export interface SaleOrderDetailState extends EntityState<SaleOrderDetail> {
 
 }
 
@@ -37,12 +35,13 @@ export const saleCalculatorReducer = createReducer(
   on(fromSaleCalculatorActions.updateSelectedPhoneType,
     (state, action) => ({
       ...state,
-      orderDetails: [
-        ...state.orderDetails, {
+      orderDetails: {
+        ...state.orderDetails,
+        [action.formIndex]: {
           ...state.orderDetails[action.formIndex],
           phoneType: action.selectedPhoneType
         }
-      ]
+      }
     })
   ),
 
@@ -60,19 +59,30 @@ export const saleCalculatorReducer = createReducer(
   ),
 
   on(fromSaleCalculatorActions.addFormSection,
-    (state) => (
-      {
+    (state, action) => {
+
+
+      return ({
         ...state,
         orderItems: state.orderItems + 1,
-        // orderDetails: {
-        //   ...state.orderDetails,
-        //   [state.orderItems]: {
-        //     ...state.orderDetails[state.orderItems],
-        //     lineId: state.orderItems + 1
-        //   }
-        // }
-      }
-    )
+        orderDetails: {
+          ...state.orderDetails,
+          [action.index + 1]: initialState.orderDetails[0]
+        }
+      })
+    }
+  ),
+
+  on(fromSaleCalculatorActions.shiftDetailUp,
+    (state, action) => {
+      return ({
+        ...state,
+        orderDetails: {
+          ...state.orderDetails,
+          [action.index]: state.orderDetails[action.index - 1]
+        }
+      })
+    }
   ),
 
   on(fromSaleCalculatorActions.updateCondition,
@@ -115,20 +125,32 @@ export const saleCalculatorReducer = createReducer(
   ),
 
   on(fromSaleCalculatorActions.updateTotal,
-    (state,action) => ({
-      ...state, total: action.total
-  })),
+    (state, action) => ({ ...state, total: action.total })
+  ),
 
   on(fromSaleCalculatorActions.removeLine,
-    (state,action) => ( {
-      ...state,
-      orderDetails: {
-        ...state => Object.keys(state.orderDetails)
-        .map(key => {
-          state.orderDetails[key]
-        })
+    (state, action) => {
+      let i = 0
+      let newArray: SaleOrderDetail[]
+      state.orderDetails.forEach(x => {
+        if (i !== action.index) {
+          newArray.push(x)
+        }
+        i++
+      })
+      newArray = [
+        ...state.orderDetails.slice(0, action.index),
+        ...state.orderDetails.slice(action.index + 1)
+      ]
+
+      return {
+        ...state,
+        orderDetails: newArray
+        // .slice(0, action.index),
+        // ...state.orderDetails.values.prototype.slice(action.index + 1)
       }
-    })
+    }
+
   )
 
 )

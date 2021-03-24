@@ -4,7 +4,7 @@ import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticDa
 import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
-import { addFormSection, removeLine, updateCondition, updateQuantity, updateSelectedPhoneModel, updateSelectedPhoneType, updateTotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
+import { addFormSection, removeLine, shiftDetailUp, updateCondition, updateQuantity, updateSelectedPhoneModel, updateSelectedPhoneType, updateTotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
@@ -33,14 +33,14 @@ export class SaleCalculatorComponent implements OnInit {
   staticData$: Observable<StaticData>
 
   // eslint-disable-next-line no-useless-constructor
-  constructor (
+  constructor(
     private _store: Store<SaleOrder>,
     private fb: FormBuilder,
     private _helper: Helpers,
     private router: Router
   ) { }
 
-  ngOnInit () {
+  ngOnInit() {
 
     // get sale order
     this.saleOrder$ = this._store.pipe(select(selectSaleOrder))
@@ -77,11 +77,11 @@ export class SaleCalculatorComponent implements OnInit {
     })
   } // ngOnInit
 
-  get orderDetails (): FormArray {
+  get orderDetails(): FormArray {
     return this.saleOrderForm.get('orderDetails') as FormArray
   }
 
-  public onSelectedPhoneTypeChange (e: any, formIndex): void {
+  public onSelectedPhoneTypeChange(e: any, formIndex): void {
     const selectedPhoneType: PhoneType = {
       typeId: Number(e.target.selectedOptions[0].id),
       name: e.target.selectedOptions[0].label
@@ -93,21 +93,21 @@ export class SaleCalculatorComponent implements OnInit {
     // TODO Move to helper
     let list: Array<PhoneModel>
     this._store.pipe(select(selectPhoneModelsList))
-    .subscribe((mL) => list = mL[formIndex])
+      .subscribe((mL) => list = mL[formIndex])
 
     //  update the store
-    this.saleOrderForm.get('orderDetails.'+formIndex+'.modelList')
-    .patchValue(list)
+    this.saleOrderForm.get('orderDetails.' + formIndex + '.modelList')
+      .patchValue(list)
     if (this.orderDetails.valid) {
       this.calcSubtotal(formIndex)
     }
   }
 
-  public onSelectedPhoneModelChange (e:any, formIndex:number): void {
+  public onSelectedPhoneModelChange(e: any, formIndex: number): void {
     const modelId: number = e.target.selectedOptions[0].id
 
-    const selectedPhoneModel:PhoneModel = this.phoneModelList[formIndex]
-    .find( (model: PhoneModel) => model.modelId == modelId)
+    const selectedPhoneModel: PhoneModel = this.phoneModelList[formIndex]
+      .find((model: PhoneModel) => model.modelId == modelId)
 
 
     this._store.dispatch(updateSelectedPhoneModel(
@@ -117,9 +117,9 @@ export class SaleCalculatorComponent implements OnInit {
     if (this.saleOrderForm.valid) { this.calcSubtotal(formIndex) }
   }
 
-  public changeCondition (formIndex, id:string) {
-    const condition:Condition = this.conditionsList
-    .find((condition:Condition) => condition.id == id)
+  public changeCondition(formIndex, id: string) {
+    const condition: Condition = this.conditionsList
+      .find((condition: Condition) => condition.id == id)
 
     // update the store
     this._store.dispatch(updateCondition({ formIndex, condition })
@@ -128,7 +128,7 @@ export class SaleCalculatorComponent implements OnInit {
     if (this.saleOrderForm.valid) { this.calcSubtotal(formIndex) }
   }
 
-  public onQuantityChange (formIndex: number, quantity: number) {
+  public onQuantityChange(formIndex: number, quantity: number) {
     // update the store
     this._store.dispatch(updateQuantity({ formIndex, quantity }))
 
@@ -144,27 +144,27 @@ export class SaleCalculatorComponent implements OnInit {
   //   }
   // }
 
-  public calcSubtotal (formIndex): void {
+  public calcSubtotal(formIndex): void {
     if (
       this.saleOrderForm
-      .get('orderDetails.'+formIndex+'.phoneType').value != '' &&
+        .get('orderDetails.' + formIndex + '.phoneType').value != '' &&
       this.saleOrderForm
-      .get('orderDetails.'+formIndex+'.phoneModel').value != '' &&
+        .get('orderDetails.' + formIndex + '.phoneModel').value != '' &&
       this.saleOrderForm
-      .get('orderDetails.'+formIndex+'.phoneCondition').value != null &&
+        .get('orderDetails.' + formIndex + '.phoneCondition').value != null &&
       this.saleOrderForm
-      .get('orderDetails.'+formIndex+'.quantity').value != null
+        .get('orderDetails.' + formIndex + '.quantity').value != null
     ) {
       const subTotal = this._helper.calcSubTotal(formIndex)
       // update form from store
-      this.saleOrderForm.get('orderDetails.'+formIndex+'.subTotal')
-      .patchValue((subTotal).toLocaleString())
+      this.saleOrderForm.get('orderDetails.' + formIndex + '.subTotal')
+        .patchValue((subTotal).toLocaleString())
 
       this.calcTotalSale()
     }
   }
 
-  private calcTotalSale () {
+  private calcTotalSale() {
     let total: number = 0
     this._store.pipe(select(selectOrderDetail)).subscribe(od =>
       od.forEach(line => total += line.subTotal)
@@ -175,7 +175,7 @@ export class SaleCalculatorComponent implements OnInit {
 
   }
 
-  public addOrderDetails (index) {
+  public addOrderDetails(index: number) {
     let orderDetailArray = this.saleOrderForm.controls.orderDetails as FormArray
     let orderDetailGroup: FormGroup = this.fb.group({
       phoneType: '',
@@ -188,35 +188,27 @@ export class SaleCalculatorComponent implements OnInit {
 
     orderDetailArray.insert(index + 1, orderDetailGroup)
 
-    this.saleOrderForm.updateValueAndValidity
+    debugger
+    console.log(typeof (this.saleOrder.orderDetails))
+    // if (index + 1 !== this.saleOrder.orderDetails.length) {
+    //   for (let i = this.saleOrder.orderDetails.length; index + 1; i--) {
+    //     this._store.dispatch(shiftDetailUp({ index: i }))
+    //   }
+    // } else {
+    //   this._store.dispatch(addFormSection({ index }))
+    // }
 
-    this._store.dispatch(addFormSection())
   }
 
-  public deleteOrderDetails (index) {
+  public deleteOrderDetails(index) {
     // remove the orderDetails item from the form
     this.orderDetails.removeAt(index)
-    // // update the store values
-    // this.saleOrder.orderDetails.forEach(e => {
-    //   this._store.dispatch(updateSelectedPhoneType({
-    //     formIndex: index, selectedPhoneType: e.phoneType
-    //   }))
-    //   this._store.dispatch(updateSelectedPhoneModel({
-    //     formIndex: index, selectedPhoneModel: e.phoneModel
-    //   }))
-    //   this._store.dispatch(updateCondition({
-    //     formIndex: index, condition: e.phoneCondition
-    //   }))
-    //   this._store.dispatch(updateQuantity({
-    //     formIndex: index, quantity: e.quantity
-    //   }))
-    // });
-    this._store.dispatch(removeLine({ LineId: index }))
+    this._store.dispatch(removeLine({ index }))
 
     this.calcTotalSale()
   }
 
-  public onSubmit () {
+  public onSubmit() {
     // TODO: use event emitter with form value
     console.warn(this.saleOrderForm.value)
 
