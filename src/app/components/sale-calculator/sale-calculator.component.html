@@ -1,16 +1,16 @@
-<div id="pageContainer" class="container-fluid">
+<div id="pageContainer" class="container max-750">
 
-  <div id="entry-report" class="row justify-content-center justify-content-sm-start  bg-light-gray">
+  <div id="entry-report" class="row justify-content-around justify-content-sm-start  bg-light-gray">
 
     <div id="report-total"
-    class="col-md-3 make-me-sticky rounded bg-secondary d-flex p-2 border border-white">
+    class="col-md-3 sticky-total rounded bg-secondary d-flex p-2 border border-white">
       <div  class="h5"  style="margin:auto; text-align: center">
         Your Money: ${{saleOrder.total}}
       </div>
     </div> <!-- report-total -->
 
-      <form name="sale-calc-form" class="col-sm-6"
-      [formGroup]='saleOrderForm' role="form" >
+    <form name="sale-calc-form" class="col-sm-6"
+      [formGroup]='saleOrderForm' (ngSubmit)="onSubmit()" role="form" >
 
         <div formArrayName="orderDetails" class="corner-repeat">
           <div *ngFor="let od of orderDetails.controls;
@@ -20,7 +20,7 @@
 
             <div id="typeFormGroup" class="form-group">
               <label>Phone Type: </label>
-              <select formControlName="phoneType"
+              <select formControlName="phoneType" required
                 placeholder="Phone Type"
                 id="phoneTypeSelect"
                 (change)="onSelectedPhoneTypeChange($event, detailsIndex)"
@@ -32,10 +32,10 @@
                 id="{{phoneType.typeId}}"
                 >{{phoneType.name}}</option>
               </select>
-            </div>
+            </div> <!-- type -->
             <div id="modelFormGroup" class="form-group">
               <label>Phone Model: </label>
-              <select formControlName="phoneModel"
+              <select formControlName="phoneModel" required
                 id="phoneModelSelect"
                 (change)="onSelectedPhoneModelChange($event,detailsIndex)"
                 class="form-control">
@@ -46,10 +46,10 @@
                     [ngValue]="phoneModel.modelId"
                     >{{phoneModel.name}}</option>
               </select>
-            </div>
+            </div> <!-- model -->
             <div id="conditionFormGroup" class="form-group">
               <label>Condition: </label>
-              <select formControlName="phoneCondition"
+              <select formControlName="phoneCondition" required
                 (change)="changeCondition(detailsIndex, $event.target.value)"
                 class="form-control">
                 <option value="" disabled hidden>
@@ -59,13 +59,15 @@
                   {{condition.id}}
                 </option>
               </select>
-            </div>
+            </div> <!-- condition -->
             <div id="quantityFormGroup" class="form-group">
               <label>Quantity: </label>
               <input formControlName="quantity" placeholder="-- Quantity --"
-                id="quantityInput" type="text" class="form-control"
+                id="quantityInput" type="text" class="form-control" required
                 (change)="onQuantityChange(detailsIndex,$event.target.value)">
-            </div>
+            </div> <!-- quantity -->
+
+            <show-errors [control]="od.controls.quantity" class="bg-light-gray"></show-errors>
             <div id="orderDetailActionsArea"
               class="row-cols-4 justify-content-md-between align-content-center">
               <button  (click)="addOrderDetails(detailsIndex)"
@@ -86,16 +88,18 @@
 
         </div> <!--orderDetails formArray -->
 
-      </form>  <!-- saleOrderForm -->
+        <div id="page-centeredButtonGroup-bot"
+        class="d-flex justify-content-center">
+        <button id="submitButton"
+        (click)="onSubmit()"routerLink="../order-summary"
+          [disabled]="saleOrderForm.invalid || saleOrderForm.pending"
+          type="submit" class="btn-lg btn-primary m-1"
+          >Get to Your Money!</button>
+      </div> <!--submit button-->
+
+    </form>  <!-- saleOrderForm -->
 
 
   </div> <!-- entry-report -->
 
-  <div id="page-centeredButtonGroup-bot"
-    class="d-flex justify-content-center">
-    <button id="submitButton"
-    (click)="onSubmit()"routerLink="../order-summary"
-      type="button" class="btn-lg btn-primary m-1"
-      >Get to Your Money!</button>
-  </div>
 </div>  <!--  pageContainer  -->

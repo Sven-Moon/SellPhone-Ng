@@ -53,3 +53,8 @@ export const deleteOrderDetail = createAction(
   '[Sale Calculator Component] Delete Order Detail',
   props<{ index: number }>()
 )
+
+export const updateOrderItemQuantity = createAction(
+  '[Sale Calculator Component] Update Order Item Quantity',
+  props<{ items: number }>()
+)

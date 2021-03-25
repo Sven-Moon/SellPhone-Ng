@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors'
-import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
+import { Validators, FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
-import { addOrderDetail, deleteOrderDetail, updateCondition, updateQuantity, updateSelectedPhoneModel, updateTotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
+import { addOrderDetail, deleteOrderDetail, updateCondition, updateOrderItemQuantity, updateQuantity, updateSelectedPhoneModel, updateTotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
@@ -13,7 +13,7 @@ import { Observable } from 'rxjs'
 import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
 import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
 import { StaticData } from 'src/app/models/StaticData'
-
+import { validate } from 'ngrx-forms'
 
 @Component({
   selector: 'app-sale-calculator',
@@ -32,7 +32,6 @@ export class SaleCalculatorComponent implements OnInit {
   saleOrder$: Observable<SaleOrder>
   staticData$: Observable<StaticData>
 
-  // eslint-disable-next-line no-useless-constructor
   constructor(
     private _store: Store<SaleOrder>,
     private fb: FormBuilder,
@@ -76,6 +75,12 @@ export class SaleCalculatorComponent implements OnInit {
       ])
     })
   } // ngOnInit
+
+
+  public buildOrderDetailsComponent() {
+    debugger
+    return new FormControl()
+  }
 
   get orderDetails(): FormArray {
     return this.saleOrderForm.get('orderDetails') as FormArray
@@ -147,9 +152,9 @@ export class SaleCalculatorComponent implements OnInit {
       this.saleOrderForm
         .get('orderDetails.' + formIndex + '.phoneCondition').value != null &&
       this.saleOrderForm
-        .get('orderDetails.' + formIndex + '.quantity').value != null &&
-      this.saleOrder.orderDetails[formIndex]
+        .get('orderDetails.' + formIndex + '.quantity').value != null
     ) {
+      // if (this._helper.subformIsValid(formIndex)) {
       const subTotal = this._helper.calcSubTotal(formIndex)
       // update form from store
       this.saleOrderForm.get('orderDetails.' + formIndex + '.subTotal')
@@ -197,11 +202,8 @@ export class SaleCalculatorComponent implements OnInit {
   public onSubmit() {
     // TODO: use event emitter with form value
     console.warn(this.saleOrderForm.value)
-
-  }
-
-  public goToOrderReview() {
-    this.router.navigate(['../order-review'])
+    const items = this.saleOrder.orderDetails.length
+    this._store.dispatch(updateOrderItemQuantity({ items }))
   }
 
 }

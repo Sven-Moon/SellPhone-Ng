@@ -7,7 +7,6 @@ import { selectConditions, selectPhoneModelsByType, selectStaticData, selectStat
 import { updateSelectedPhoneType, updateSubtotal, updateTotal } from '../stores/sale-calculator/sale-calculator.actions'
 import { selectOrderDetail } from '../stores/sale-calculator/sale-calculator.selectors'
 import { SaleOrderDetail } from '../models/SaleOrderDetail'
-import { keyframes } from '@angular/animations'
 
 @Injectable()
 export class Helpers {
@@ -70,14 +69,4 @@ export class Helpers {
       { formIndex, subTotal }))
     return subTotal
   }
-
-  // public deleteOrderDetail(index: number): SaleOrderDetail[] {
-  //   this._store.select(selectOrderDetail).subscribe((od: SaleOrderDetail[]) =>
-  //     this.details = od)
-  //   const { [index]: removedDetail, ...keepers } = this.details
-  //   const myDetails =  Object.keys(keepers).map(key => keepers[key])
-
-  //   return myDetails
-  // }
-
 }

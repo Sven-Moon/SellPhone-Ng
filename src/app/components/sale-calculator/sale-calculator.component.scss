@@ -7,15 +7,17 @@ div.corner-repeat > div:last-child {
   border-bottom-right-radius: 10px;
 }
 
-.tot-float {
-  display: grid;
+.max-750 {
+  max-width: 750px;
+}
+.max-350 {
+  max-width: 350px;
 }
 
-.make-me-sticky {
+.sticky-total {
   position: fixed;
   top: 8vh;
-  max-width: 66.6vw;
-  flex-flow: column nowrap;
+  max-width: 345px;
 }
 
 div#entry-report {
@@ -23,7 +25,7 @@ div#entry-report {
 }
 
 @media only screen and (min-width: 576px) {
-  .make-me-sticky {
+  .sticky-total {
     position: fixed;
     background-color: darkgrey;
     left: 60vw;

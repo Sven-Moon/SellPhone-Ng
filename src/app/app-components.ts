@@ -13,6 +13,7 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
 import { OrderEditModalComponent } from './components/order-edit-modal/order-edit-modal.component';
 import { ContactInfoReviewComponent } from './components/contact-info-review/contact-info-review.component';
 import { OrderPrintComponent } from './components/order-print/order-print.component';
+import { ShowErrorsComponent } from './components/show-errors/show-errors';
 
 
 export const AppComponents = [
@@ -30,4 +31,5 @@ export const AppComponents = [
   PhoneEstimatorComponent,
   SaleCalculatorComponent,
   SearchResultsComponent,
+  ShowErrorsComponent
 ];
