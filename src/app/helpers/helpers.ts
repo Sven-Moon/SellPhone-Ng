@@ -33,7 +33,6 @@ export class Helpers {
     // const phoneModelsList: Array<PhoneModel> = []
     // get current state of selectedPhoneTypes
     let state = null
-
     this._store.pipe(select(selectStaticData))
       .subscribe(sD => { state = sD })
 
@@ -48,37 +47,28 @@ export class Helpers {
   public getMaxValue(formIndex: number, modelId: number): number {
     let maxValue: number = null
     let modelListByFormIndex: Array<PhoneModel[]> = []
-
     this._store.pipe(select(selectStaticDataState))
-      // eslint-disable-next-line no-return-assign
       .subscribe(sD => modelListByFormIndex = sD.phoneModelsList)
-
     modelListByFormIndex[formIndex].forEach(model => {
-      // eslint-disable-next-line eqeqeq
       if (model.modelId == modelId) maxValue = model.maxValue
     })
-
     return maxValue
   }
 
   public calcSubTotal(formIndex): number {
-
-    let maxValue, conditionMod, quantity: number
-
+    let maxValue, conditionMod, quantity: number | null
     const orderDetails$ = this._store.pipe(select(selectOrderDetail))
     orderDetails$.subscribe(oD => {
-      maxValue = oD[formIndex].phoneModel.maxValue,
-        conditionMod = oD[formIndex].phoneCondition.priceMod,
-        quantity = oD[formIndex].quantity
+      if (oD[formIndex]) {
+        maxValue = oD[formIndex].phoneModel.maxValue,
+          conditionMod = oD[formIndex].phoneCondition.priceMod,
+          quantity = oD[formIndex].quantity
+      }
     })
-
     let subTotal: number = maxValue * conditionMod * quantity
-
     this._store.dispatch(updateSubtotal(
       { formIndex, subTotal }))
-
     return subTotal
-
   }
 
   // public deleteOrderDetail(index: number): SaleOrderDetail[] {

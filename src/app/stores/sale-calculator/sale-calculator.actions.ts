@@ -1,9 +1,7 @@
-import { FormGroup } from '@angular/forms'
 import { createAction, props } from '@ngrx/store'
 import { Condition } from 'src/app/models/Condition'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
-import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
 
 export const updateSelectedPhoneType = createAction(
   '[Estimator Component] Update Selected Phone Type',
@@ -19,11 +17,6 @@ export const updateSelectedPhoneModel = createAction(
     formIndex: number,
     selectedPhoneModel: PhoneModel
   }>()
-)
-
-export const addFormSection = createAction(
-  '[Sale Calculator Component] Add Form Section',
-  props<{ index: number }>()
 )
 
 export const shiftDetailUp = createAction(
@@ -51,12 +44,12 @@ export const updateTotal = createAction(
   props<{ total: number }>()
 )
 
-export const removeLine = createAction(
-  '[Sale Calculator Component] Remove Order Line',
+export const addOrderDetail = createAction(
+  '[Sale Calculator Component] Add Order Detail',
   props<{ index: number }>()
 )
 
-// export const returnKeepers = createAction(
-//   '[Sale Calculator Component] Return Keepers',
-//   props<{ orderDetails: SaleOrderDetail }>()
-// )
+export const deleteOrderDetail = createAction(
+  '[Sale Calculator Component] Delete Order Detail',
+  props<{ index: number }>()
+)
