@@ -6,15 +6,17 @@ import { selectPhoneModelsByType, selectStaticData } from "../stores/staticData/
 @Injectable()
 export class WorkingDataEffects {
   constructor(
-    private _store: Store<any>
-  ){}
+    private store: Store<any>
+  ) { }
 
   updatePhoneModelsList(modelsByType: Array<PhoneModels>, typeId: number) {
     for (var i in modelsByType) {
       if (modelsByType[i].typeId == typeId) {
         return {
           phoneModelsList: modelsByType[i].phoneModels
-        }            }        }
+        }
+      }
+    }
   }
 
 }

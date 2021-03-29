@@ -25,21 +25,5 @@ export class ContactInfoComponent implements OnInit {
   }
 
 
-  ngOnInit(): void {
-    this.formState$.subscribe(x =>
-      console.log(x.controls))
-    // instantiate form
-    // this.contactInfo = this.fb.group({
-    //   firstName: (required),
-    //   lastName: (required),
-    //   email: (required),
-    //   phone: (required)
-    // })
-  }
-
-  // public reviewContactInfo() {
-  //   this.store.dispatch(updateContactInfo(
-  //     { submittedValue: this.contactInfo.value }
-  //   ))
-  // }
+  ngOnInit(): void { }
 }

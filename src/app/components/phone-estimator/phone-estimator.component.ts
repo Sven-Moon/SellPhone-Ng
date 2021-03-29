@@ -30,16 +30,16 @@ export class PhoneEstimatorComponent implements OnInit {
 
   constructor(
     private _title: Title,
-    private _store: Store<any>,
-    private _helper: Helpers,
+    private store: Store<any>,
+    private helper: Helpers,
     private _fb: FormBuilder,
     private _router: Router
   ) { }
 
   ngOnInit() {
     this._title.setTitle('sellphone-ng')
-    this.phoneTypes$ = this._store.pipe(select(selectPhoneTypes))
-    this._store.pipe(select(selectPhoneModelsList))
+    this.phoneTypes$ = this.store.pipe(select(selectPhoneTypes))
+    this.store.pipe(select(selectPhoneModelsList))
       // eslint-disable-next-line no-return-assign
       .subscribe(formArray => this.phoneModelsList$ = formArray[0])
   }
@@ -51,7 +51,7 @@ export class PhoneEstimatorComponent implements OnInit {
     }
 
     // 0 is always the form index when coming from estimator
-    this._helper.storeUpdateOnTypeChange(0, this.selectedPhoneType)
+    this.helper.storeUpdateOnTypeChange(0, this.selectedPhoneType)
 
     this.estimatorForm.controls.phoneModel
       .patchValue(-1)
@@ -62,7 +62,7 @@ export class PhoneEstimatorComponent implements OnInit {
     // update selected store if model selected
     if (modelId > 0) {
       // 0 is always the form index when coming from estimator
-      this.phoneMaxValue = this._helper.getMaxValue(0, modelId)
+      this.phoneMaxValue = this.helper.getMaxValue(0, modelId)
 
       this.selectedPhoneModel = {
         modelId,
@@ -73,7 +73,7 @@ export class PhoneEstimatorComponent implements OnInit {
       // send selected phone model to sale-calculator
       // initial form index = 0
       const formIndex = 0
-      this._store.dispatch(updateSelectedPhoneModel(
+      this.store.dispatch(updateSelectedPhoneModel(
         { formIndex, selectedPhoneModel: this.selectedPhoneModel }))
 
       // show the max value box

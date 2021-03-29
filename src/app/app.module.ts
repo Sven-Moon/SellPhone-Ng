@@ -19,6 +19,7 @@ import { StaticDataEffects } from './stores/staticData/staticData.effects'
 import { Helpers } from './helpers/helpers'
 import { CommonModule } from '@angular/common';
 import { NgrxFormsModule } from 'ngrx-forms';
+import { ModalModule } from 'ngx-bootstrap/modal'
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { NgrxFormsModule } from 'ngrx-forms';
     ]),
     FormsModule,
     HttpClientModule,
+    ModalModule.forRoot(),
     NgbModule,
     NgrxFormsModule,
     ReactiveFormsModule,

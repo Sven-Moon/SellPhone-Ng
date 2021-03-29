@@ -11,11 +11,11 @@ import { SaleOrderDetail } from '../models/SaleOrderDetail'
 @Injectable()
 export class Helpers {
   details: SaleOrderDetail[]
-  constructor(private _store: Store<any>) { }
+  constructor(private store: Store<any>) { }
 
   public storeUpdateOnTypeChange(formIndex: number, selectedPhoneType: PhoneType): void {
     // send phone type to store
-    this._store.dispatch(updateSelectedPhoneType(
+    this.store.dispatch(updateSelectedPhoneType(
       { formIndex, selectedPhoneType }))
 
     // find the list by typeId
@@ -23,7 +23,7 @@ export class Helpers {
       this.getPhoneModelsByPhoneType(selectedPhoneType.typeId)
 
     // add that list to staticData.phoneModelList<Array<PhoneModel[]>>
-    this._store.dispatch(updatePhoneModelsList(
+    this.store.dispatch(updatePhoneModelsList(
       { formIndex, phoneModelList }
     ))
   }
@@ -32,7 +32,7 @@ export class Helpers {
     // const phoneModelsList: Array<PhoneModel> = []
     // get current state of selectedPhoneTypes
     let state = null
-    this._store.pipe(select(selectStaticData))
+    this.store.pipe(select(selectStaticData))
       .subscribe(sD => { state = sD })
 
     // return the model list matching the formIndex#
@@ -46,7 +46,7 @@ export class Helpers {
   public getMaxValue(formIndex: number, modelId: number): number {
     let maxValue: number = null
     let modelListByFormIndex: Array<PhoneModel[]> = []
-    this._store.pipe(select(selectStaticDataState))
+    this.store.pipe(select(selectStaticDataState))
       .subscribe(sD => modelListByFormIndex = sD.phoneModelsList)
     modelListByFormIndex[formIndex].forEach(model => {
       if (model.modelId == modelId) maxValue = model.maxValue
@@ -56,7 +56,7 @@ export class Helpers {
 
   public calcSubTotal(formIndex): number {
     let maxValue, conditionMod, quantity: number | null
-    const orderDetails$ = this._store.pipe(select(selectOrderDetail))
+    const orderDetails$ = this.store.pipe(select(selectOrderDetail))
     orderDetails$.subscribe(oD => {
       if (oD[formIndex]) {
         maxValue = oD[formIndex].phoneModel.maxValue,
@@ -65,7 +65,7 @@ export class Helpers {
       }
     })
     let subTotal: number = maxValue * conditionMod * quantity
-    this._store.dispatch(updateSubtotal(
+    this.store.dispatch(updateSubtotal(
       { formIndex, subTotal }))
     return subTotal
   }

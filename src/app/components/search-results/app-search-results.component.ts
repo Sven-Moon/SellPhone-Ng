@@ -17,7 +17,7 @@ export class SearchResultsComponent implements OnInit {
   searchResults$: Observable<SearchResult[]>;
 
   constructor(
-    private _store: Store<any>,
+    private store: Store<any>,
     private _router: Router
   ) { }
 
@@ -27,7 +27,7 @@ export class SearchResultsComponent implements OnInit {
   }
 
   loadSearchResults() {
-    this.searchResults$ = this._store.pipe(select(siteSearchResults));
+    this.searchResults$ = this.store.pipe(select(siteSearchResults));
     this.searchResults$.subscribe(data => this.searchResults = data);
   }
 

@@ -15,14 +15,14 @@ export class AppMainPanelComponent {
   searchResults$: Observable<SearchResult[]>;
 
 
-  constructor(private _store: Store<any>) { }
+  constructor(private store: Store<any>) { }
 
   public ngOnInit(): void {
     this.loadSearchResults();
   }
 
   loadSearchResults() {
-    this.searchResults$ = this._store.pipe(select(siteSearchResults));
+    this.searchResults$ = this.store.pipe(select(siteSearchResults));
     this.searchResults$.subscribe(data => this.searchResults = data);
   }
 }

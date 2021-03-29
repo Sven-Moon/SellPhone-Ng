@@ -33,6 +33,7 @@
                 >{{phoneType.name}}</option>
               </select>
             </div> <!-- type -->
+
             <div id="modelFormGroup" class="form-group">
               <label>Phone Model: </label>
               <select formControlName="phoneModel" required
@@ -47,6 +48,7 @@
                     >{{phoneModel.name}}</option>
               </select>
             </div> <!-- model -->
+
             <div id="conditionFormGroup" class="form-group">
               <label>Condition: </label>
               <select formControlName="phoneCondition" required
@@ -60,6 +62,7 @@
                 </option>
               </select>
             </div> <!-- condition -->
+
             <div id="quantityFormGroup" class="form-group">
               <label>Quantity: </label>
               <input formControlName="quantity" placeholder="-- Quantity --"
@@ -93,7 +96,7 @@
         <button id="submitButton"
         (click)="onSubmit()"routerLink="../order-summary"
           [disabled]="saleOrderForm.invalid || saleOrderForm.pending"
-          type="submit" class="btn-lg btn-primary m-1"
+          type="submit" class="btn-lg btn-primary m-1 form-control"
           >Get to Your Money!</button>
       </div> <!--submit button-->
 

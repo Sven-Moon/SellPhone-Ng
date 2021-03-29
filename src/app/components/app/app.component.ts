@@ -10,11 +10,11 @@ import * as fromStaticDataActions from 'src/app/stores/staticData/staticData.act
 })
 export class AppComponent {
   constructor(
-    private _store: Store<StaticData>
+    private store: Store<StaticData>
   ) { }
 
   public ngOnInit(): void {
-    this._store.dispatch(fromStaticDataActions.loadStaticData());
+    this.store.dispatch(fromStaticDataActions.loadStaticData());
   }
 
 }

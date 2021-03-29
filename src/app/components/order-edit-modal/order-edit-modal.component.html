@@ -1,1 +1,80 @@
-<p>order-edit-modal works!</p>
+<div class="modal-body text-center" style="border: 13px; border-color: black;">Here I am!
+  <div class="row" style="border: 13px; border-color: rgb(105, 229, 243);">
+    <div class="login-form">Here I am!
+      <form [formGroup]="orderEditForm" (ngSubmit)="onSubmit()" role="form" >
+
+      <table id="order-edit-modal" class="table-striped">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Condition</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+            <ng-container formArrayName="orderDetails"
+            *ngFor="let od of orderDetails.controls; let detailsIndex=index"
+            [formGroupName]="detailsIndex" class="">
+
+                <tr> <!-- data row (repeat) -->
+                  <td> <!-- TYPE select -->
+                    <select formControlName="type" id="type-edit"
+                    required placeholder="Type" class="form-control"
+                    (change)="onTypeChange($event, detailsIndex)">
+                      <option value="" selected disabled hidden>Type<option>
+                      <option [ngValue]="phoneType.typeId"
+                      *ngFor="let phoneType of phoneTypesList"
+                      id="{{phoneType.typeId}}">
+                        {{phoneType.name}}
+                      </option>
+                    </select>
+                  </td>
+
+                  <td> <!-- MODEL select -->
+                    <select formControlName="model" id="model-edit"
+                    required placeholder="Model"
+                    (change)="onModelChange($event, detailsIndex)"
+                    class="form-control">
+                    </select>
+                    <option value="" selected disabled hidden>
+                      Model
+                    </option>
+                    <option id="{{model.modelId}}"
+                    *ngFor="let model of od.controls.modelList.value"
+                    [ngValue]="model.modelId">
+                    {{model.name}}
+                    </option>
+                  </td>
+
+                  <td> <!-- CONDITION select -->
+                    <select formControlName="condition" id="condition-edit"
+                    (click)="onConditionChange($event,detailsIndex)"
+                    required class="form-control">
+                    <option value="" disabled hidden>
+                      Condition
+                    </option>
+                    <option *ngFor="let condition of conditionsList">
+                      {{condition.id}}
+                    </option>
+                    </select>
+                  </td>
+
+                  <td> <!-- QUANTITY -->
+                    <input type="number" name="quantity-edit" id=""
+                    (change)="onQuantityChange($event.target.value, detailsIndex)">
+                  </td>
+
+                  <td> <!-- SUBTOTAL -->
+                    ${{ od.controls.subTotal.value}}
+                  </td>
+                </tr>
+            </ng-container> <!-- formArray: order Details-->
+        </tbody>
+      </table>
+
+    </form>
+    </div>
+  </div>
+</div>

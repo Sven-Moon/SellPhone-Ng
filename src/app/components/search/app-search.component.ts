@@ -15,15 +15,15 @@ export interface SearchText {
 export class AppSearchComponent {
   searchText: string;
   constructor(
-    private _store: Store<SearchResults>
+    private store: Store<SearchResults>
   ) { }
 
   public onSearchRequested(): void {
 
     if (!this.searchText) {
-      this._store.dispatch(fromSearchActions.clearSearch());
+      this.store.dispatch(fromSearchActions.clearSearch());
     } else {
-      this._store.dispatch(fromSearchActions
+      this.store.dispatch(fromSearchActions
         .submitSearch({ searchText: this.searchText }));
 
     }

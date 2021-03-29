@@ -16,12 +16,12 @@ export class OrderReviewComponent implements OnInit {
   total: number = null
 
   constructor(
-    private _store: Store<any>,
+    private store: Store<any>,
   ) { }
 
   ngOnInit(): void {
-    this.orderDetails$ = this._store.pipe(select(selectOrderDetail))
-    this.saleOrder$ = this._store.pipe(select(selectSaleOrder))
+    this.orderDetails$ = this.store.pipe(select(selectOrderDetail))
+    this.saleOrder$ = this.store.pipe(select(selectSaleOrder))
     this.saleOrder$.subscribe(so => this.total = so.total)
   }
 
