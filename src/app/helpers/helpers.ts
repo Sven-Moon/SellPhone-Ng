@@ -3,10 +3,11 @@ import { select, Store } from '@ngrx/store'
 import { PhoneModel } from '../models/PhoneModel'
 import { PhoneType } from '../models/PhoneType'
 import { updatePhoneModelsList } from '../stores/staticData/staticData.actions'
-import { selectConditions, selectPhoneModelsByType, selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
+import { selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
 import { updateSelectedPhoneType, updateSubtotal, updateTotal } from '../stores/sale-calculator/sale-calculator.actions'
 import { selectOrderDetail } from '../stores/sale-calculator/sale-calculator.selectors'
 import { SaleOrderDetail } from '../models/SaleOrderDetail'
+import { FormGroup } from '@angular/forms'
 
 @Injectable()
 export class Helpers {
@@ -29,7 +30,6 @@ export class Helpers {
   }
 
   public getPhoneModelsByPhoneType(selectedPhoneTypeId: number): Array<PhoneModel[]> {
-    // const phoneModelsList: Array<PhoneModel> = []
     // get current state of selectedPhoneTypes
     let state = null
     this.store.pipe(select(selectStaticData))
@@ -54,19 +54,61 @@ export class Helpers {
     return maxValue
   }
 
-  public calcSubTotal(formIndex): number {
-    let maxValue, conditionMod, quantity: number | null
-    const orderDetails$ = this.store.pipe(select(selectOrderDetail))
-    orderDetails$.subscribe(oD => {
-      if (oD[formIndex]) {
-        maxValue = oD[formIndex].phoneModel.maxValue,
-          conditionMod = oD[formIndex].phoneCondition.priceMod,
-          quantity = oD[formIndex].quantity
-      }
-    })
-    let subTotal: number = maxValue * conditionMod * quantity
+  updateDetailsForm(saleForm: FormGroup, index: number, modelsList?: PhoneModel[]) {
+    if (modelsList) {
+      saleForm.get('orderDetails.' + index + '.phoneModel').patchValue(null)
+      saleForm.get('orderDetails.' + index + '.modelList').patchValue(modelsList)
+    }
+    console.log(saleForm)
+    saleForm.updateValueAndValidity
+
+    this.calcSubTotal(saleForm, index)
+  }
+
+  public calcSubTotal(saleForm: FormGroup, formIndex: number): void {
+
+    let subTotal: number
+    if (!saleForm.get('orderDetails.' + formIndex).valid) {
+      subTotal = 0
+    } else {
+
+      // find subform[index] subtotal from values in store
+      let maxValue, conditionMod, quantity: number | null
+      const orderDetails$ = this.store.pipe(select(selectOrderDetail))
+      orderDetails$.subscribe(oD => {
+        if (oD[formIndex]) {
+          maxValue = oD[formIndex].phoneModel.maxValue,
+            conditionMod = oD[formIndex].phoneCondition.priceMod,
+            quantity = oD[formIndex].quantity
+        }
+      })
+      subTotal = maxValue * conditionMod * quantity
+    }
+
+    // update the store subtotal
     this.store.dispatch(updateSubtotal(
       { formIndex, subTotal }))
-    return subTotal
+
+    // update the form subtotal
+    saleForm.get('orderDetails.' + formIndex + '.subTotal')
+      .patchValue(subTotal)
+
+    // update total
+    this.calcTotalSale(saleForm)
+  }
+
+  private calcTotalSale(saleForm: FormGroup): void {
+    let total: number = 0
+    // sum subtotals
+    this.store.pipe(select(selectOrderDetail)).subscribe(od =>
+      od.forEach(line => total += line.subTotal)
+    )
+
+    // update store
+    this.store.dispatch(updateTotal({ total }))
+
+    // update form
+    saleForm.get('total').setValue((total))
+
   }
 }

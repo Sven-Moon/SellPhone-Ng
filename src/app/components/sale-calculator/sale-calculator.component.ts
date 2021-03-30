@@ -83,40 +83,48 @@ export class SaleCalculatorComponent implements OnInit {
 
   public onSelectedPhoneTypeChange(e: any, formIndex): void {
 
+    // convert event to PhoneType object
     const selectedPhoneType: PhoneType = {
       typeId: Number(e.target.selectedOptions[0].id),
       name: e.target.selectedOptions[0].label
     }
-    // update store
+    // update type in store
     this.helper.storeUpdateOnTypeChange(formIndex, selectedPhoneType)
 
     // update store modelList value
-    // TODO Move to helper
     let list: Array<PhoneModel>
     this.store.pipe(select(selectPhoneModelsList))
       .subscribe((mL) => list = mL[formIndex])
 
-    //  update the form model list
-    this.saleOrderForm.get('orderDetails.' + formIndex + '.modelList')
-      .patchValue(list)
+    // update form: list, subtotal -> total
+    this.helper.updateDetailsForm(this.saleOrderForm, formIndex, list)
+
+    // //  update the form model list
+    // this.saleOrderForm.get('orderDetails.' + formIndex + '.modelList')
+    //   .patchValue(list)
     // update the subtotal
-    if (this.orderDetails.valid) {
-      this.calcSubtotal(formIndex)
-    }
+    // if (this.orderDetails.valid) {
+    //   this.calcSubTotal(formIndex)
+    // }
+    // this.saleOrderForm.updateValueAndValidity
   }
 
   public onSelectedPhoneModelChange(e: any, formIndex: number): void {
+    // set modelId from event
     const modelId: number = e.target.selectedOptions[0].id
-
+    // convert ID to model object
     const selectedPhoneModel: PhoneModel = this.phoneModelList[formIndex]
       .find((model: PhoneModel) => model.modelId == modelId)
 
-
+    //send object to the store (staticData)
     this.store.dispatch(updateSelectedPhoneModel(
-      { formIndex, selectedPhoneModel })
-    )
+      { formIndex, selectedPhoneModel }
+    ))
 
-    if (this.saleOrderForm.valid) { this.calcSubtotal(formIndex) }
+    // if (this.saleOrderForm.valid) { this.helper.calcSubtotal(formIndex) }
+
+    // update form: subtotal -> total
+    this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
   }
 
   public changeCondition(formIndex, id: string) {
@@ -127,27 +135,37 @@ export class SaleCalculatorComponent implements OnInit {
     this.store.dispatch(updateCondition({ formIndex, condition })
     )
 
-    if (this.saleOrderForm.valid) { this.calcSubtotal(formIndex) }
+    // update form: subtotal -> total
+    this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
+    // if (this.saleOrderForm.valid) { this.calcSubtotal(formIndex) }
   }
 
   public onQuantityChange(formIndex: number, quantity: number) {
     // update the store
     this.store.dispatch(updateQuantity({ formIndex, quantity }))
 
-    if (this.saleOrderForm.valid) { this.calcSubtotal(formIndex) }
+    // update form: subtotal -> total
+    this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
+    // if (this.saleOrderForm.valid) {
+    // this.calcSubtotal(formIndex)
+    // }
   }
 
-  public calcSubtotal(formIndex): void {
+  // public calcSubtotal(formIndex): void {
 
-    if (this.saleOrderForm.get('orderDetails').valid) {
-      const subTotal = this.helper.calcSubTotal(formIndex)
-      // update form from store
-      this.saleOrderForm.get('orderDetails.' + formIndex + '.subTotal')
-        .patchValue((subTotal).toLocaleString())
+  //   if (this.saleOrderForm.get('orderDetails.' + formIndex).valid) {
 
-      this.calcTotalSale()
-    }
-  }
+  //     const subTotal = this.helper.calcSubTotal(formIndex)
+  //     // update form from store
+  //     this.saleOrderForm.get('orderDetails.' + formIndex + '.subTotal')
+  //       .patchValue((subTotal).toLocaleString())
+
+  //     this.calcTotalSale()
+  //   } else {
+  //     this.saleOrderForm.get('orderDetails.' + formIndex + '.subTotal')
+  //       .setValue(0)
+  //   }
+  // }
 
   private calcTotalSale() {
     let total: number = 0

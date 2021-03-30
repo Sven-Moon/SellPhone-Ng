@@ -20,7 +20,7 @@ import { selectConditions, selectPhoneModelsByType, selectPhoneModelsList, selec
 })
 export class OrderEditModalComponent implements OnInit {
 
-  orderEditForm: FormGroup
+  saleOrderForm: FormGroup
   saleOrder$: Observable<SaleOrder>
   saleOrder: SaleOrder
   // Observable<PhoneType[]>
@@ -39,9 +39,8 @@ export class OrderEditModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.saleOrder$ = this.store.select(selectSaleOrder)
-    this.saleOrder$.subscribe(so =>
-      this.saleOrder = so
-    )
+    this.saleOrder$
+      .subscribe(so => this.saleOrder = so)
 
     this.store.pipe(select(selectStaticData)).subscribe(sD => {
       this.conditionsList = sD.conditions
@@ -49,30 +48,31 @@ export class OrderEditModalComponent implements OnInit {
       this.phoneModelList = sD.phoneModelsList
     })
 
-    this.orderEditForm = this.fb.group({
+    this.saleOrderForm = this.fb.group({
       orderId: [null],
-      total: [null],
+      total: [this.saleOrder.total],
       orderDate: [null],
-      orderStats: [null],
+      orderStats: this.saleOrder.orderStatus,
       orderDetails: this.fb.array([])
     })
-    this.addRow()
+    // load form with details data
     this.saleOrder.orderDetails.forEach((od, i) => {
-      this.orderEditForm.get('orderDetails.' + i + '.type')
+      this.addRow()
+      this.saleOrderForm.get('orderDetails.' + i + '.type')
         .patchValue(od.phoneType)
-      this.orderEditForm.get('orderDetails.' + i + '.model')
+      this.saleOrderForm.get('orderDetails.' + i + '.model')
         .patchValue(od.phoneModel)
-      this.orderEditForm.get('orderDetails.' + i + '.condition')
+      this.saleOrderForm.get('orderDetails.' + i + '.condition')
         .patchValue(od.phoneCondition)
-      this.orderEditForm.get('orderDetails.' + i + '.quantity')
+      this.saleOrderForm.get('orderDetails.' + i + '.quantity')
         .patchValue(od.quantity)
-      this.orderEditForm.get('orderDetails.' + i + '.subTotal')
+      this.saleOrderForm.get('orderDetails.' + i + '.subTotal')
         .patchValue(od.subTotal)
     })
   }
 
   addRow() {
-    const control = this.orderEditForm.get('orderDetails') as FormArray
+    const control = this.saleOrderForm.get('orderDetails') as FormArray
     control.push(this.newRow())
   }
 
@@ -86,12 +86,9 @@ export class OrderEditModalComponent implements OnInit {
     })
   }
 
-
   get orderDetails(): FormArray {
-    return this.orderEditForm.get('orderDetails') as FormArray
+    return this.saleOrderForm.get('orderDetails') as FormArray
   }
-
-
 
   public onSubmit() {
 
@@ -106,22 +103,16 @@ export class OrderEditModalComponent implements OnInit {
       typeId: Number(e.target.selectedOptions[0].id),
       name: e.target.selectedOptions[0].label
     }
-    // update store
+    // update type store
     this.helper.storeUpdateOnTypeChange(formIndex, selectedPhoneType)
 
-    // update store modelList value
-    // TODO Move to helper
+    // get store modelList value
     let list: Array<PhoneModel>
     this.store.pipe(select(selectPhoneModelsList))
       .subscribe((mL) => list = mL[formIndex])
 
-    //  update the form model list
-    this.orderEditForm.get('orderDetails.' + formIndex + '.modelList')
-      .patchValue(list)
-    // update the subtotal
-    if (this.orderDetails.valid) {
-      this.calcSubtotal(formIndex)
-    }
+    // update form: subtotal -> total & model list
+    this.helper.updateDetailsForm(this.saleOrderForm, formIndex, list)
   }
 
   public onModelChange(e: any, formIndex: number) {
@@ -135,7 +126,8 @@ export class OrderEditModalComponent implements OnInit {
       { formIndex, selectedPhoneModel })
     )
 
-    if (this.orderEditForm.valid) { this.calcSubtotal(formIndex) }
+    // update form: subtotal -> total
+    this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
   }
 
   public onConditionChange(formIndex, id: string) {
@@ -144,39 +136,17 @@ export class OrderEditModalComponent implements OnInit {
       .find((condition: Condition) => condition.id == id)
 
     // update the store
-    this.store.dispatch(updateCondition({ formIndex, condition })
-    )
+    this.store.dispatch(updateCondition({ formIndex, condition }))
 
-    if (this.orderEditForm.valid) { this.calcSubtotal(formIndex) }
+    // update form: subtotal -> total
+    this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
   }
 
   public onQuantityChange(quantity: number, formIndex: number) {
     // update the store
     this.store.dispatch(updateQuantity({ formIndex, quantity }))
 
-    if (this.orderEditForm.valid) { this.calcSubtotal(formIndex) }
-  }
-
-  public calcSubtotal(formIndex): void {
-
-    if (this.orderDetails[formIndex].valid) {
-      const subTotal = this.helper.calcSubTotal(formIndex)
-      // update form from store
-      this.orderEditForm.get('orderDetails.' + formIndex + '.subTotal')
-        .patchValue((subTotal).toLocaleString())
-
-      this.calcTotalSale()
-    }
-  }
-
-  private calcTotalSale() {
-    let total: number = 0
-    this.store.pipe(select(selectOrderDetail)).subscribe(od =>
-      od.forEach(line => total += line.subTotal)
-    )
-    this.store.dispatch(updateTotal({ total }))
-
-    this.orderEditForm.get('total').setValue((total))
-
+    // update form: subtotal -> total
+    this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
   }
 }

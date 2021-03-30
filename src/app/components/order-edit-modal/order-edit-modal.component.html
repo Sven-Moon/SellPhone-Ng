@@ -1,7 +1,7 @@
-<div class="modal-body text-center" style="border: 13px; border-color: black;">Here I am!
-  <div class="row" style="border: 13px; border-color: rgb(105, 229, 243);">
-    <div class="login-form">Here I am!
-      <form [formGroup]="orderEditForm" (ngSubmit)="onSubmit()" role="form" >
+<div class="modal-body text-center bord-1">
+  <div class="row bord-2">
+    <div class="login-form">
+      <form [formGroup]="saleOrderForm" (ngSubmit)="onSubmit()" role="form" >
 
       <table id="order-edit-modal" class="table-striped">
         <thead>
@@ -33,7 +33,7 @@
                   </td>
 
                   <td> <!-- MODEL select -->
-                    <select formControlName="model" id="model-edit"
+                    <!-- <select formControlName="model" id="model-edit"
                     required placeholder="Model"
                     (change)="onModelChange($event, detailsIndex)"
                     class="form-control">
@@ -45,7 +45,8 @@
                     *ngFor="let model of od.controls.modelList.value"
                     [ngValue]="model.modelId">
                     {{model.name}}
-                    </option>
+                    </option> -->
+                    model here!
                   </td>
 
                   <td> <!-- CONDITION select -->
@@ -62,17 +63,22 @@
                   </td>
 
                   <td> <!-- QUANTITY -->
-                    <input type="number" name="quantity-edit" id=""
+                    <input type="number" formControlName="quantity-edit" id="quantity-edit" class="form-control"
                     (change)="onQuantityChange($event.target.value, detailsIndex)">
                   </td>
 
                   <td> <!-- SUBTOTAL -->
-                    ${{ od.controls.subTotal.value}}
+                    <label formControlName="subtotal-edit"
+                    class="form-control">
+                      ${{ od.controls.subTotal.value}}
+                    </label>
                   </td>
                 </tr>
             </ng-container> <!-- formArray: order Details-->
         </tbody>
       </table>
+      {{ saleOrderForm.value | json}}
+      {{ saleOrderForm.valid | json}}
 
     </form>
     </div>
