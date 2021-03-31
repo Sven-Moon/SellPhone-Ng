@@ -13,6 +13,7 @@
       [formGroup]='saleOrderForm' (ngSubmit)="onSubmit()" role="form" >
 
         <div formArrayName="orderDetails" class="corner-repeat">
+
           <div *ngFor="let od of orderDetails.controls;
           let detailsIndex=index"
           [formGroupName]="detailsIndex"

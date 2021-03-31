@@ -62,11 +62,11 @@ export class OrderEditModalComponent implements OnInit {
     this.saleOrder.orderDetails.forEach((storeOd, i) => {
       detailArray.push(
         this.fb.group({
-          phoneType: [storeOd.phoneType.typeId, Validators.required],
-          phoneModel: [storeOd.phoneModel.modelId, Validators.required],
+          phoneType: [+storeOd.phoneType.typeId, Validators.required],
+          phoneModel: [+storeOd.phoneModel.modelId, Validators.required],
           phoneCondition: [storeOd.phoneCondition.id, Validators.required],
-          quantity: [storeOd.quantity, [Validators.required, Validators.min(1)]],
-          subTotal: [storeOd.subTotal],
+          quantity: [+storeOd.quantity, [Validators.required, Validators.min(1)]],
+          subTotal: [+storeOd.subTotal],
           modelList: [this.phoneModelList[i]]
         })
       )
@@ -75,8 +75,20 @@ export class OrderEditModalComponent implements OnInit {
   }
 
   addRow() {
-    const control = this.saleOrderForm.get('orderDetails') as FormArray
-    control.push(this.newRow())
+    let orderDetailArray
+      = this.saleOrderForm.controls.orderDetails as FormArray
+    const index = orderDetailArray.length + 1
+    let newRow: FormGroup = this.fb.group({
+      phoneType: '',
+      phoneModel: '',
+      phoneCondition: '',
+      quantity: null,
+      subTotal: null,
+      modelList: []
+    })
+    orderDetailArray.push(newRow)
+    this.saleOrderForm.updateValueAndValidity
+    this.store.dispatch(addOrderDetail({ index }))
   }
 
   public addOrderDetails(index: number) {
@@ -94,17 +106,6 @@ export class OrderEditModalComponent implements OnInit {
     this.saleOrderForm.updateValueAndValidity
     this.store.dispatch(addOrderDetail({ index }))
 
-  }
-
-  newRow(): FormGroup {
-    return this.fb.group({
-      phoneType: [-1, Validators.required],
-      phoneModel: [-1, Validators.required],
-      phoneCondition: [-1, Validators.required],
-      quantity: [null, [Validators.required, Validators.min(1)]],
-      subTotal: [null],
-      modelList: [this.phoneModelList[0]]
-    })
   }
 
   removeRow(index: number) {

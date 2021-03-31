@@ -150,22 +150,6 @@ export class SaleCalculatorComponent implements OnInit {
     // }
   }
 
-  // public calcSubtotal(formIndex): void {
-
-  //   if (this.saleOrderForm.get('orderDetails.' + formIndex).valid) {
-
-  //     const subTotal = this.helper.calcSubTotal(formIndex)
-  //     // update form from store
-  //     this.saleOrderForm.get('orderDetails.' + formIndex + '.subTotal')
-  //       .patchValue((subTotal).toLocaleString())
-
-  //     this.calcTotalSale()
-  //   } else {
-  //     this.saleOrderForm.get('orderDetails.' + formIndex + '.subTotal')
-  //       .setValue(0)
-  //   }
-  // }
-
   private calcTotalSale() {
     let total: number = 0
     this.store.pipe(select(selectOrderDetail)).subscribe(od =>
