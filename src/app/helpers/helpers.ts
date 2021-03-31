@@ -54,12 +54,15 @@ export class Helpers {
     return maxValue
   }
 
-  updateDetailsForm(saleForm: FormGroup, index: number, modelsList?: PhoneModel[]) {
+  updateDetailsForm(
+    saleForm: FormGroup, index: number, modelsList?: PhoneModel[]) {
+    // update the phone model and list at the index
     if (modelsList) {
+      // the available model list is kept on the form (not the store)
       saleForm.get('orderDetails.' + index + '.phoneModel').patchValue(null)
       saleForm.get('orderDetails.' + index + '.modelList').patchValue(modelsList)
     }
-    console.log(saleForm)
+
     saleForm.updateValueAndValidity
 
     this.calcSubTotal(saleForm, index)
@@ -97,7 +100,7 @@ export class Helpers {
     this.calcTotalSale(saleForm)
   }
 
-  private calcTotalSale(saleForm: FormGroup): void {
+  public calcTotalSale(saleForm: FormGroup): void {
     let total: number = 0
     // sum subtotals
     this.store.pipe(select(selectOrderDetail)).subscribe(od =>

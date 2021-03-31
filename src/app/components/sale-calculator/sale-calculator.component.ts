@@ -13,7 +13,6 @@ import { Observable } from 'rxjs'
 import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
 import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
 import { StaticData } from 'src/app/models/StaticData'
-import { validate } from 'ngrx-forms'
 
 @Component({
   selector: 'app-sale-calculator',
@@ -198,6 +197,7 @@ export class SaleCalculatorComponent implements OnInit {
   public deleteOrderDetails(index) {
     // remove the orderDetails item from the form
     this.orderDetails.removeAt(index)
+    // remove the row from the store
     this.store.dispatch(deleteOrderDetail({ index }))
 
     this.calcTotalSale()

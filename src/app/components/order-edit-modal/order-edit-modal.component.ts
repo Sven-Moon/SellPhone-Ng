@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/helpers/helpers';
@@ -7,11 +7,10 @@ import { Condition } from 'src/app/models/Condition';
 import { PhoneModel } from 'src/app/models/PhoneModel';
 import { PhoneType } from 'src/app/models/PhoneType';
 import { SaleOrder } from 'src/app/models/SaleOrder';
-import { StaticData } from 'src/app/models/StaticData';
 import { ModalService } from 'src/app/services/modal.service';
-import { updateCondition, updateQuantity, updateSelectedPhoneModel, updateTotal } from 'src/app/stores/sale-calculator/sale-calculator.actions';
-import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
-import { selectConditions, selectPhoneModelsByType, selectPhoneModelsList, selectPhoneTypes, selectStaticData } from 'src/app/stores/staticData/staticData.selectors';
+import { addOrderDetail, deleteOrderDetail, updateCondition, updateQuantity, updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions';
+import { selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
+import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors';
 
 @Component({
   selector: 'app-order-edit-modal',
@@ -52,23 +51,27 @@ export class OrderEditModalComponent implements OnInit {
       orderId: [null],
       total: [this.saleOrder.total],
       orderDate: [null],
-      orderStats: this.saleOrder.orderStatus,
-      orderDetails: this.fb.array([])
+      orderStatus: this.saleOrder.orderStatus,
+      orderDetails: this.fb.array(this.loadStoreData())
     })
-    // load form with details data
-    this.saleOrder.orderDetails.forEach((od, i) => {
-      this.addRow()
-      this.saleOrderForm.get('orderDetails.' + i + '.type')
-        .patchValue(od.phoneType)
-      this.saleOrderForm.get('orderDetails.' + i + '.model')
-        .patchValue(od.phoneModel)
-      this.saleOrderForm.get('orderDetails.' + i + '.condition')
-        .patchValue(od.phoneCondition)
-      this.saleOrderForm.get('orderDetails.' + i + '.quantity')
-        .patchValue(od.quantity)
-      this.saleOrderForm.get('orderDetails.' + i + '.subTotal')
-        .patchValue(od.subTotal)
+  }
+
+  loadStoreData(): Array<FormGroup> {
+    // create array
+    const detailArray: Array<FormGroup> = []
+    this.saleOrder.orderDetails.forEach((storeOd, i) => {
+      detailArray.push(
+        this.fb.group({
+          phoneType: [storeOd.phoneType.typeId, Validators.required],
+          phoneModel: [storeOd.phoneModel.modelId, Validators.required],
+          phoneCondition: [storeOd.phoneCondition.id, Validators.required],
+          quantity: [storeOd.quantity, [Validators.required, Validators.min(1)]],
+          subTotal: [storeOd.subTotal],
+          modelList: [this.phoneModelList[i]]
+        })
+      )
     })
+    return detailArray
   }
 
   addRow() {
@@ -76,17 +79,44 @@ export class OrderEditModalComponent implements OnInit {
     control.push(this.newRow())
   }
 
+  public addOrderDetails(index: number) {
+    let orderDetailArray = this.saleOrderForm.controls.orderDetails as FormArray
+    let orderDetailGroup: FormGroup = this.fb.group({
+      phoneType: '',
+      phoneModel: '',
+      phoneCondition: '',
+      quantity: null,
+      subTotal: null,
+      modelList: []
+    })
+
+    orderDetailArray.insert(index + 1, orderDetailGroup)
+    this.saleOrderForm.updateValueAndValidity
+    this.store.dispatch(addOrderDetail({ index }))
+
+  }
+
   newRow(): FormGroup {
     return this.fb.group({
-      type: [-1, Validators.required],
-      model: [-1, Validators.required],
-      condition: [-1, Validators.required],
+      phoneType: [-1, Validators.required],
+      phoneModel: [-1, Validators.required],
+      phoneCondition: [-1, Validators.required],
       quantity: [null, [Validators.required, Validators.min(1)]],
-      subTotal: [null]
+      subTotal: [null],
+      modelList: [this.phoneModelList[0]]
     })
   }
 
-  get orderDetails(): FormArray {
+  removeRow(index: number) {
+    // remove the row from the form
+    this.getOrderDetails.removeAt(index)
+    // remove the row from the store
+    this.store.dispatch(deleteOrderDetail({ index }))
+
+    this.helper.calcTotalSale(this.saleOrderForm)
+  }
+
+  get getOrderDetails(): FormArray {
     return this.saleOrderForm.get('orderDetails') as FormArray
   }
 
