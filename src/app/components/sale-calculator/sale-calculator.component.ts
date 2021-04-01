@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors'
 import { Validators, FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms'
@@ -35,7 +35,8 @@ export class SaleCalculatorComponent implements OnInit {
     private store: Store<SaleOrder>,
     private fb: FormBuilder,
     private helper: Helpers,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
@@ -97,15 +98,6 @@ export class SaleCalculatorComponent implements OnInit {
 
     // update form: list, subtotal -> total
     this.helper.updateDetailsForm(this.saleOrderForm, formIndex, list)
-
-    // //  update the form model list
-    // this.saleOrderForm.get('orderDetails.' + formIndex + '.modelList')
-    //   .patchValue(list)
-    // update the subtotal
-    // if (this.orderDetails.valid) {
-    //   this.calcSubTotal(formIndex)
-    // }
-    // this.saleOrderForm.updateValueAndValidity
   }
 
   public onSelectedPhoneModelChange(e: any, formIndex: number): void {
@@ -162,9 +154,9 @@ export class SaleCalculatorComponent implements OnInit {
     })
 
     orderDetailArray.insert(index + 1, orderDetailGroup)
-    this.saleOrderForm.updateValueAndValidity
-    this.store.dispatch(addOrderDetail({ index }))
+    this.cd.detectChanges()
 
+    this.store.dispatch(addOrderDetail({ index }))
   }
 
   public deleteOrderDetails(index) {

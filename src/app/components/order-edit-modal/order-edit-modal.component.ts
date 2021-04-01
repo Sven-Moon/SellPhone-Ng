@@ -87,7 +87,6 @@ export class OrderEditModalComponent implements OnInit {
       modelList: []
     })
     orderDetailArray.push(newRow)
-    this.saleOrderForm.updateValueAndValidity
     this.store.dispatch(addOrderDetail({ index }))
   }
 
@@ -103,7 +102,6 @@ export class OrderEditModalComponent implements OnInit {
     })
 
     orderDetailArray.insert(index + 1, orderDetailGroup)
-    this.saleOrderForm.updateValueAndValidity
     this.store.dispatch(addOrderDetail({ index }))
 
   }

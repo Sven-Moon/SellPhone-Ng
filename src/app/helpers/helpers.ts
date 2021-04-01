@@ -63,8 +63,6 @@ export class Helpers {
       saleForm.get('orderDetails.' + index + '.modelList').patchValue(modelsList)
     }
 
-    saleForm.updateValueAndValidity
-
     this.calcSubTotal(saleForm, index)
   }
 
@@ -112,6 +110,5 @@ export class Helpers {
 
     // update form
     saleForm.get('total').setValue((total))
-
   }
 }
