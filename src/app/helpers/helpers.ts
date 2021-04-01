@@ -4,15 +4,19 @@ import { PhoneModel } from '../models/PhoneModel'
 import { PhoneType } from '../models/PhoneType'
 import { updatePhoneModelsList } from '../stores/staticData/staticData.actions'
 import { selectStaticData, selectStaticDataState } from '../stores/staticData/staticData.selectors'
-import { updateSelectedPhoneType, updateSubtotal, updateTotal } from '../stores/sale-calculator/sale-calculator.actions'
+import { addOrderDetail, updateSelectedPhoneType, updateSubtotal, updateTotal } from '../stores/sale-calculator/sale-calculator.actions'
 import { selectOrderDetail } from '../stores/sale-calculator/sale-calculator.selectors'
 import { SaleOrderDetail } from '../models/SaleOrderDetail'
-import { FormGroup } from '@angular/forms'
+import { FormArray, FormBuilder, FormGroup } from '@angular/forms'
+import { formArrayReducer } from 'ngrx-forms'
 
 @Injectable()
 export class Helpers {
   details: SaleOrderDetail[]
-  constructor(private store: Store<any>) { }
+  constructor(
+    private store: Store<any>,
+    private fb: FormBuilder
+  ) { }
 
   public storeUpdateOnTypeChange(formIndex: number, selectedPhoneType: PhoneType): void {
     // send phone type to store
@@ -68,8 +72,10 @@ export class Helpers {
 
   public calcSubTotal(saleForm: FormGroup, formIndex: number): void {
 
+    const form = saleForm.get('orderDetails.' + formIndex)
     let subTotal: number
-    if (!saleForm.get('orderDetails.' + formIndex).valid) {
+    if (!form.valid || form.value.quantity < 1) {
+      form.updateValueAndValidity
       subTotal = 0
     } else {
 
@@ -110,5 +116,21 @@ export class Helpers {
 
     // update form
     saleForm.get('total').setValue((total))
+  }
+
+  public addOrderDetails(form: FormGroup, index: number) {
+    let orderDetailArray = form.controls.orderDetails as FormArray
+    let orderDetailGroup: FormGroup = this.fb.group({
+      phoneType: '',
+      phoneModel: '',
+      phoneCondition: '',
+      quantity: null,
+      subTotal: null,
+      modelList: []
+    })
+
+    orderDetailArray.insert(index + 1, orderDetailGroup)
+
+    this.store.dispatch(addOrderDetail({ index }))
   }
 }

@@ -67,7 +67,8 @@
             <div id="quantityFormGroup" class="form-group">
               <label>Quantity: </label>
               <input formControlName="quantity" placeholder="-- Quantity --"
-                id="quantityInput" type="text" class="form-control" required
+                id="quantityInput" type="text" class="form-control"
+                required min="1"
                 (change)="onQuantityChange(detailsIndex,$event.target.value)">
             </div> <!-- quantity -->
 

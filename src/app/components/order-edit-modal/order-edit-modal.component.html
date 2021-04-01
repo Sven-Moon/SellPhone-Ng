@@ -68,7 +68,7 @@
 
               <td> <!-- QUANTITY -->
                 <input type="number" formControlName="quantity"
-                required
+                required min="1"
                 id="quantity-edit" class="form-control"
                 placeholder="Quantity"
                 (change)="onQuantityChange($event.target.value, detailsIndex)">
@@ -94,6 +94,7 @@
           </ng-container> <!-- formArray: order Details-->
         </tbody>
       </table>
+      {{ saleOrderForm.valid | json}}
     </form>
   </div>
 </div>

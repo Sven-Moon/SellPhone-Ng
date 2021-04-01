@@ -1,17 +1,17 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core'
 import { select, Store } from '@ngrx/store'
 import { selectPhoneModelsList, selectStaticData } from 'src/app/stores/staticData/staticData.selectors'
-import { Validators, FormBuilder, FormArray, FormGroup, FormControl } from '@angular/forms'
+import { Validators, FormBuilder, FormArray, FormGroup } from '@angular/forms'
 import { PhoneModel } from 'src/app/models/PhoneModel'
 import { PhoneType } from 'src/app/models/PhoneType'
-import { addOrderDetail, deleteOrderDetail, updateCondition, updateOrderItemQuantity, updateQuantity, updateSelectedPhoneModel, updateTotal } from 'src/app/stores/sale-calculator/sale-calculator.actions'
+import { deleteOrderDetail, updateCondition, updateOrderItemQuantity, updateQuantity, updateSelectedPhoneModel } from 'src/app/stores/sale-calculator/sale-calculator.actions'
 import { Condition } from 'src/app/models/Condition'
 import { SaleOrder } from 'src/app/models/SaleOrder'
 import { Helpers } from 'src/app/helpers/helpers'
 import { Router } from '@angular/router'
 import { Observable } from 'rxjs'
 import { SaleOrderDetail } from 'src/app/models/SaleOrderDetail'
-import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
+import { selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors'
 import { StaticData } from 'src/app/models/StaticData'
 
 @Component({
@@ -68,7 +68,7 @@ export class SaleCalculatorComponent implements OnInit {
             Validators.required
           ],
           phoneCondition: ['', Validators.required],
-          quantity: [null, Validators.required],
+          quantity: [null, [Validators.required, Validators.min(1)]],
           subTotal: [0],
           modelList: [this.phoneModelList[0]]
         })
@@ -143,20 +143,8 @@ export class SaleCalculatorComponent implements OnInit {
   }
 
   public addOrderDetails(index: number) {
-    let orderDetailArray = this.saleOrderForm.controls.orderDetails as FormArray
-    let orderDetailGroup: FormGroup = this.fb.group({
-      phoneType: '',
-      phoneModel: '',
-      phoneCondition: '',
-      quantity: null,
-      subTotal: null,
-      modelList: []
-    })
-
-    orderDetailArray.insert(index + 1, orderDetailGroup)
+    this.helper.addOrderDetails(this.saleOrderForm, index)
     this.cd.detectChanges()
-
-    this.store.dispatch(addOrderDetail({ index }))
   }
 
   public deleteOrderDetails(index) {

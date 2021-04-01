@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
@@ -33,7 +33,8 @@ export class OrderEditModalComponent implements OnInit {
     private store: Store,
     private modalService: ModalService,
     private fb: FormBuilder,
-    private helper: Helpers
+    private helper: Helpers,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -75,34 +76,13 @@ export class OrderEditModalComponent implements OnInit {
   }
 
   addRow() {
-    let orderDetailArray
-      = this.saleOrderForm.controls.orderDetails as FormArray
-    const index = orderDetailArray.length + 1
-    let newRow: FormGroup = this.fb.group({
-      phoneType: '',
-      phoneModel: '',
-      phoneCondition: '',
-      quantity: null,
-      subTotal: null,
-      modelList: []
-    })
-    orderDetailArray.push(newRow)
-    this.store.dispatch(addOrderDetail({ index }))
+    let index: number = this.saleOrderForm.get('orderDetails').value.length
+    this.helper.addOrderDetails(this.saleOrderForm, index)
+
+    this.cd.detectChanges()
   }
 
   public addOrderDetails(index: number) {
-    let orderDetailArray = this.saleOrderForm.controls.orderDetails as FormArray
-    let orderDetailGroup: FormGroup = this.fb.group({
-      phoneType: '',
-      phoneModel: '',
-      phoneCondition: '',
-      quantity: null,
-      subTotal: null,
-      modelList: []
-    })
-
-    orderDetailArray.insert(index + 1, orderDetailGroup)
-    this.store.dispatch(addOrderDetail({ index }))
 
   }
 
