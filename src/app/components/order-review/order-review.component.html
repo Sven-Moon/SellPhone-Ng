@@ -17,7 +17,11 @@ class="border border-gray rounded-lg bg-light-gray mt-4">
         <tr>
           <td>{{ od.phoneType.name }}</td>
           <td>{{ od.phoneModel.name }}</td>
-          <td>{{ od.phoneCondition.id }}</td>
+          <td>
+            <span *ngIf="od.phoneCondition">
+              {{ od.phoneCondition.id }}
+            </span>
+          </td>
           <td>{{ od.quantity }}</td>
           <td>${{ od.subTotal }}</td>
         </tr>

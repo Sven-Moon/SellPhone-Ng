@@ -64,7 +64,7 @@ export class OrderEditModalComponent implements OnInit {
         this.fb.group({
           phoneType: [+storeOd.phoneType.typeId, Validators.required],
           phoneModel: [+storeOd.phoneModel.modelId, Validators.required],
-          phoneCondition: [storeOd.phoneCondition.id, Validators.required],
+          phoneCondition: [storeOd.phoneCondition, Validators.required],
           quantity: [+storeOd.quantity, [Validators.required, Validators.min(1)]],
           subTotal: [+storeOd.subTotal],
           modelList: [this.phoneModelList[i]]
@@ -161,7 +161,7 @@ export class OrderEditModalComponent implements OnInit {
     this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
   }
 
-  public onConditionChange(formIndex, id: string) {
+  public onConditionChange(id: string, formIndex) {
     //return matching condition object from static data
     const condition: Condition = this.conditionsList
       .find((condition: Condition) => condition.id == id)

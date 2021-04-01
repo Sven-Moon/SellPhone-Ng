@@ -54,9 +54,9 @@
               </td>
 
               <td> <!-- CONDITION select -->
-                <select formControlName="phoneCondition" id="condition-edit"
-                (click)="onConditionChange($event,detailsIndex)"
-                required class="form-control">
+                <select formControlName="phoneCondition" required
+                (change)="onConditionChange($event.target.value,detailsIndex)"
+                class="form-control">
                 <option value="" disabled hidden>
                   Condition
                 </option>
@@ -67,7 +67,10 @@
               </td>
 
               <td> <!-- QUANTITY -->
-                <input type="number" formControlName="quantity" id="quantity-edit" class="form-control"
+                <input type="number" formControlName="quantity"
+                required
+                id="quantity-edit" class="form-control"
+                placeholder="Quantity"
                 (change)="onQuantityChange($event.target.value, detailsIndex)">
               </td>
 

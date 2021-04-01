@@ -150,17 +150,6 @@ export class SaleCalculatorComponent implements OnInit {
     // }
   }
 
-  private calcTotalSale() {
-    let total: number = 0
-    this.store.pipe(select(selectOrderDetail)).subscribe(od =>
-      od.forEach(line => total += line.subTotal)
-    )
-    this.store.dispatch(updateTotal({ total }))
-
-    this.saleOrderForm.get('total').setValue((total))
-
-  }
-
   public addOrderDetails(index: number) {
     let orderDetailArray = this.saleOrderForm.controls.orderDetails as FormArray
     let orderDetailGroup: FormGroup = this.fb.group({
@@ -184,7 +173,7 @@ export class SaleCalculatorComponent implements OnInit {
     // remove the row from the store
     this.store.dispatch(deleteOrderDetail({ index }))
 
-    this.calcTotalSale()
+    this.helper.calcTotalSale(this.saleOrderForm)
   }
 
   public onSubmit() {
