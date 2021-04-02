@@ -8,6 +8,7 @@ import { User } from 'src/app/models/User';
 import { selectContactInfoForm, selectContactInfoState } from 'src/app/stores/contact-info/contact-info.selectors';
 import { selectOrderDetail, selectSaleOrder } from 'src/app/stores/sale-calculator/sale-calculator.selectors';
 import * as fromContactInfo from '../../stores/contact-info/contact-info.reducer'
+import { State } from '../../stores/contact-info/contact-info.reducer';
 
 @Component({
   selector: 'app-order-print',
@@ -25,14 +26,13 @@ export class OrderPrintComponent implements OnInit {
 
   ngOnInit(): void {
     this.contactInfo$ = this.store.pipe(select(selectContactInfoForm))
-    // this.contactInfo$.subscribe(x =>
-    //   console.log(x.formState.controls))
     this.orderDetails$ = this.store.pipe(select(selectOrderDetail))
     this.saleOrder$ = this.store.pipe(select(selectSaleOrder))
-    // this.saleOrder$.subscribe(so => this.total = so.total)
   }
 
-  onSubmit() {
+  printPage() {
+    console.warn('see me print');
 
+    window.print();
   }
 }

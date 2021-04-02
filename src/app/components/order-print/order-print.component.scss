@@ -1,0 +1,24 @@
+#print-page .container {
+  width: 768px;
+}
+.row-no-flex {
+  margin-right: -15px;
+  margin-left: -15px;
+}
+
+.bg-lt-grey {
+  background-color: lightgrey;
+}
+label > span {
+  font-weight: bold;
+}
+
+.box-top {
+  height: 2.75rem;
+  position: relative;
+}
+
+.floor {
+  position: absolute;
+  bottom: 0;
+}

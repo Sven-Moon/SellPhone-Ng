@@ -1,26 +1,28 @@
 <div class="container" id="print-page">
-
-  <div
-  class="form-group mt-3" *ngIf="contactInfo$ | async as contactInfo">
-    <div name="name-group" class="form-group row">
-      <div class="col-md-6">
-          <label for="firstName" class="form-label">
-            Name: <b>{{contactInfo.value.firstName}} {{contactInfo.value.lastName}}</b>
-          </label><br>
-          <label for="email" class="form-label">
-            Email: <b>{{contactInfo.value.email}}</b>
-          </label><br>
-          <label for="phoneNumber" class="form-label">
-            Phone: <b>{{contactInfo.value.phone}}</b>
-          </label>
-      </div>
+  <div name="name-group"
+  *ngIf="contactInfo$ | async as contactInfo"
+  class="form-group row border bg-lt-grey">
+    <div class="col-4" id="contact-print">
+      <label for="firstName" class="form-label">
+        Name: <br><span>{{contactInfo.value.firstName}} {{contactInfo.value.lastName}}</span>
+      </label>
     </div>
-  </div> <!--info display-->
+    <div class="col-4">
+      <label for="email" class="form-label">
+        Email: <br><span>{{contactInfo.value.email}}</span>
+      </label><br>
+    </div>
+    <div class="col-4">
+      <label for="phoneNumber" class="form-label">
+        Phone: <br><span>{{contactInfo.value.phone}}</span>
+      </label>
+    </div>
+  </div> <!-- contact info display-->
 
 
   <div id="form-wrap" *ngIf="saleOrder$ | async as saleOrder"
-  class="border border-gray rounded-lg bg-light-gray mt-4">
-    <div name="order-review-form"  role="form" class="p-2 border">
+  class="row-no-flex border rounded-lg bg-light-gray">
+    <div name="order-review-form"  role="form" class="border">
       <ng-container *ngIf="saleOrder.total!=null">
       <table id="order-print-table" class="table table-striped">
         <thead>
@@ -42,7 +44,7 @@
                 {{ od.phoneCondition.id }}
               </span>
             </td>
-            <td>{{ od.quantity }}</td>
+            <td class="text-center">{{ od.quantity }}</td>
             <td>${{ od.subTotal }}</td>
           </tr>
         </ng-container>
@@ -52,7 +54,7 @@
             <th></th>
             <th></th>
             <th></th>
-            <th class="float-right">Total</th>
+            <th class="text-right">Total</th>
             <th>${{saleOrder.total}}</th>
           </tr>
         </tfoot>
@@ -64,17 +66,21 @@
     </div> <!-- format as form -->
   </div> <!-- form wrap: *saleOrder$ -->
 
-  <div class="row px-2 py-4 border bg-light-gray">
-    <div class="col-md-5 border mx-3 my-1" >
-      <h3>Bring this form and all listed phones to:</h3>
-      <div class="h5">
+  <div class="row px-2 py-2 border bg-light justify-content-around">
+    <div class="col-md-5 border p-2 my-1 bg-white col">
+      <div class="box-top">
+        <h5 class="floor">Bring this form & phones to:</h5>
+      </div>
+      <div class="h6">
         123 My Place St<br>
         Townsville, ST 00000
       </div>
     </div> <!-- address -->
-    <div class="col-md-5  border mx-3  my-1">
-      <h4>Contact us at:</h4>
-      <div class="h5">
+    <div class="col-md-5 border p-2 my-1 bg-white">
+      <div class="box-top">
+          <h5 class="floor">Contact us at:</h5>
+      </div>
+      <div class="h6">
           (555)777-8888<br>
           sales@sellmyphone.com
       </div>
@@ -83,7 +89,9 @@
 
 </div> <!-- print area -->
 
-<button class="btn btn-primary mx-2">
+<button class="btn btn-primary mx-2" type="button"
+  (click)="printPage()"
+  >
   <i class="fas fa-print"></i>
   Print
 </button> <!-- print button -->
