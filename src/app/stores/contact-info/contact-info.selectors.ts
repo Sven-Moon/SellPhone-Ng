@@ -9,16 +9,16 @@ export const selectContactInfoState = createFeatureSelector<fromContactInfo.Stat
 
 export const selectContactInfoForm = createSelector(
   selectContactInfoState,
-  (state:fromContactInfo.State) => state.contactForm.formState
+  (state: fromContactInfo.State) => state['contactForm'].formState
 )
 
 export const selectContactFormSubmission = createSelector(
   selectContactInfoState,
-  (state:fromContactInfo.State) => state.contactForm.submittedValue
+  (state: fromContactInfo.State) => state['contactForm'].submittedValue
 )
 
 
 export const selectContactInfoControls = createSelector(
   selectContactInfoForm,
-  (state:FormGroupState<User>) => state.controls
+  (state: FormGroupState<User>) => state.controls
 )
