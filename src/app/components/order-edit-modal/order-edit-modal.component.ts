@@ -67,7 +67,7 @@ export class OrderEditModalComponent implements OnInit {
         this.fb.group({
           phoneType: [+storeOd.phoneType.typeId, Validators.required],
           phoneModel: [+storeOd.phoneModel.modelId, Validators.required],
-          phoneCondition: [storeOd.phoneCondition, Validators.required],
+          phoneCondition: [storeOd.phoneCondition ? storeOd.phoneCondition : "", Validators.required],
           quantity: [+storeOd.quantity, [Validators.required, Validators.min(1)]],
           subTotal: [+storeOd.subTotal],
           modelList: [this.phoneModelList[i]]

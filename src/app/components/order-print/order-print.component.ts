@@ -19,7 +19,6 @@ export class OrderPrintComponent implements OnInit {
   contactInfo$: Observable<FormGroupState<User>>
   orderDetails$: Observable<SaleOrderDetail[]>
   saleOrder$: Observable<SaleOrder>
-  // total: number = null
 
   constructor(private store: Store) {
   }
@@ -31,8 +30,6 @@ export class OrderPrintComponent implements OnInit {
   }
 
   printPage() {
-    console.warn('see me print');
-
     window.print();
   }
 }

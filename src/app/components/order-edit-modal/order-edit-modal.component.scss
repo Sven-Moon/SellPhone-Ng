@@ -19,3 +19,13 @@ table {
 form {
   width: 100%;
 }
+
+.my-modal-body {
+  display: grid;
+  margin: 15 auto;
+  padding: 10 60;
+}
+
+.custom-table {
+  table-layout: auto;
+}

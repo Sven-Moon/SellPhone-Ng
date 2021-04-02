@@ -1,10 +1,10 @@
-<div class="modal-body text-center bord-1">
-  <div class="row bord-2">
+<div class="my-modal-body text-center bord-1">
+  <div class="bord-2">
     <form [formGroup]="saleOrderForm" (ngSubmit)="onSubmit()" role="form" #form="ngForm" class="login-form bord-3" >
 
-      <table id="order-edit-modal" class="table-striped">
+      <table id="order-edit-modal" class=" custom-table table-striped">
         <thead>
-          <tr>
+          <tr scope="row">
             <th>Type</th>
             <th>Model</th>
             <th>Condition</th>
@@ -15,7 +15,7 @@
         </thead>
         <tbody>
           <ng-container formArrayName="orderDetails">
-            <tr [formGroupName]="detailsIndex" class=""
+            <tr [formGroupName]="detailsIndex" scope="row"
             *ngFor="let od of getOrderDetails.controls;
             let detailsIndex=index"> <!-- data row (repeat) -->
 
@@ -69,7 +69,7 @@
               <td> <!-- QUANTITY -->
                 <input type="number" formControlName="quantity"
                 required min="1"
-                id="quantity-edit" class="form-control"
+                id="quantity-edit" class="form-control text-center"
                 placeholder="Quantity"
                 (change)="onQuantityChange($event.target.value, detailsIndex)">
               </td>
