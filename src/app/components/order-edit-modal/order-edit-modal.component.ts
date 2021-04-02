@@ -1,5 +1,6 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { Helpers } from 'src/app/helpers/helpers';
@@ -34,7 +35,8 @@ export class OrderEditModalComponent implements OnInit {
     private modalService: ModalService,
     private fb: FormBuilder,
     private helper: Helpers,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -99,15 +101,14 @@ export class OrderEditModalComponent implements OnInit {
     return this.saleOrderForm.get('orderDetails') as FormArray
   }
 
-  public onSubmit() {
-
+  public onSubmit(): void {
   }
 
   public cancel(): void {
     this.modalService.hide()
   }
 
-  public onTypeChange(e: any, formIndex: number) {
+  public onTypeChange(e: any, formIndex: number): void {
     const selectedPhoneType: PhoneType = {
       typeId: Number(e.target.selectedOptions[0].id),
       name: e.target.selectedOptions[0].label
@@ -124,7 +125,7 @@ export class OrderEditModalComponent implements OnInit {
     this.helper.updateDetailsForm(this.saleOrderForm, formIndex, list)
   }
 
-  public onModelChange(e: any, formIndex: number) {
+  public onModelChange(e: any, formIndex: number): void {
     const modelId: number = e.target.selectedOptions[0].id
 
     // return model object from static list
@@ -139,7 +140,7 @@ export class OrderEditModalComponent implements OnInit {
     this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
   }
 
-  public onConditionChange(id: string, formIndex) {
+  public onConditionChange(id: string, formIndex): void {
     //return matching condition object from static data
     const condition: Condition = this.conditionsList
       .find((condition: Condition) => condition.id == id)
@@ -151,7 +152,7 @@ export class OrderEditModalComponent implements OnInit {
     this.helper.updateDetailsForm(this.saleOrderForm, formIndex)
   }
 
-  public onQuantityChange(quantity: number, formIndex: number) {
+  public onQuantityChange(quantity: number, formIndex: number): void {
     // update the store
     this.store.dispatch(updateQuantity({ formIndex, quantity }))
 

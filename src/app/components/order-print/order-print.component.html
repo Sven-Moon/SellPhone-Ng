@@ -1,1 +1,82 @@
-<p>order-print works!</p>
+<div class="container" id="print-page">
+
+  <div
+  class="form-group mt-3" *ngIf="formState$ | async as formState">
+    <div name="name-group" class="form-group row">
+      <div class="col-md-6">
+          <label for="firstName" class="form-label">Name: <b>{{formState.value.firstName}} {{formState.value.lastName}}</b></label><br>
+          <label for="email" class="form-label">Email: <b>{{formState.value.email}}</b></label><br>
+          <label for="phoneNumber" class="form-label">Phone: <b>{{formState.value.phone}}</b></label>
+      </div>
+    </div>
+  </div> <!--info display-->
+
+
+  <div id="forms-wrap" *ngIf="saleOrder$ | async as saleOrder"
+  class="border border-gray rounded-lg bg-light-gray mt-4">
+    <div name="order-review-form"  role="form" class="p-2 border">
+      <ng-container *ngIf="saleOrder.total!=null">
+      <table id="order-review-table" class="table table-striped">
+        <thead>
+            <tr>
+            <th>Type</th>
+            <th>Model</th>
+            <th>Condition</th>
+            <th>Quantity</th>
+            <th>Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let od of orderDetails$ | async">
+          <tr>
+            <td>{{ od.phoneType.name }}</td>
+            <td>{{ od.phoneModel.name }}</td>
+            <td>
+              <span *ngIf="od.phoneCondition">
+                {{ od.phoneCondition.id }}
+              </span>
+            </td>
+            <td>{{ od.quantity }}</td>
+            <td>${{ od.subTotal }}</td>
+          </tr>
+        </ng-container>
+        </tbody>
+        <tfoot>
+          <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th class="float-right">Total</th>
+            <th>${{saleOrder.total}}</th>
+          </tr>
+        </tfoot>
+      </table>
+      </ng-container>
+      <div *ngIf="saleOrder.total==null" class="container alert-warning d-flex justify-content-center align-content-center min-vh-12">
+        <h3>No Order Data!</h3>
+      </div>
+    </div>
+
+  </div>
+</div> <!-- print area -->
+
+<div class="row px-2 py-4 border bg-light-gray">
+  <div class="col-md-5 border mx-3 my-1" >
+    <h3>Bring this form and all listed phones to:</h3>
+    <div class="h5">
+      123 My Place St<br>
+      Townsville, ST 00000
+    </div>
+  </div> <!-- address -->
+  <div class="col-md-5  border mx-3  my-1">
+    <h4>Contact us at:</h4>
+    <div class="h5">
+        (555)777-8888<br>
+        sales@sellmyphone.com
+    </div>
+  </div> <!-- contact info -->
+</div> <!-- instructions -->
+<button class="btn btn-primary mx-2">
+  <i class="fas fa-print"></i>
+  Print
+</button>

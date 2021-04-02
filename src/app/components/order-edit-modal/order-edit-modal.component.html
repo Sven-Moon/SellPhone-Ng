@@ -1,6 +1,6 @@
 <div class="modal-body text-center bord-1">
   <div class="row bord-2">
-    <form [formGroup]="saleOrderForm" (ngSubmit)="onSubmit()" role="form" class="login-form bord-3" >
+    <form [formGroup]="saleOrderForm" (ngSubmit)="onSubmit()" role="form" #form="ngForm" class="login-form bord-3" >
 
       <table id="order-edit-modal" class="table-striped">
         <thead>
@@ -94,7 +94,11 @@
           </ng-container> <!-- formArray: order Details-->
         </tbody>
       </table>
-      {{ saleOrderForm.valid | json}}
+      <button type="submit" [disabled]="!form.form.valid"
+      routerLink="/order-summary"
+      class="btn btn-success">
+        Save & Close
+      </button>
     </form>
   </div>
 </div>
