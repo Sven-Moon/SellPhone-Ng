@@ -31,5 +31,6 @@ export class OrderPrintComponent implements OnInit {
 
   printPage() {
     window.print();
+    // TODO: add action to send to server
   }
 }

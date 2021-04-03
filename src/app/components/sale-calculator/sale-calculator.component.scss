@@ -16,12 +16,8 @@ div.corner-repeat > div:last-child {
 
 .sticky-total {
   position: fixed;
-  top: 8vh;
+  top: 8.5vh;
   max-width: 345px;
-}
-
-div#entry-report {
-  margin-top: 7vh;
 }
 
 @media only screen and (min-width: 576px) {
@@ -29,13 +25,9 @@ div#entry-report {
     position: fixed;
     background-color: darkgrey;
     left: 60vw;
-    top: 8vh;
+    top: 8.5vh;
     max-width: 30vw;
     flex-flow: column nowrap;
     padding: 2 15px;
-  }
-
-  div#entry-report {
-    margin-top: 1vh;
   }
 }

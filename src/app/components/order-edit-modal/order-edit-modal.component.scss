@@ -2,18 +2,18 @@ td > label {
   margin-bottom: 0px;
 }
 
-td {
-  border: 1px solid black;
-}
-
 tr td {
-  width: 1%;
+  width: 5px;
   padding: 2 4;
 }
 
 table {
-  width: 100%;
-  border: 1px solid blueviolet;
+  width: 96%;
+  max-width: 768px;
+  border: 1px solid lightgrey;
+  margin: auto;
+  margin-top: 2%;
+  table-layout: auto;
 }
 
 form {
@@ -21,11 +21,21 @@ form {
 }
 
 .my-modal-body {
+  background-color: #e6e6e6;
+  min-height: 50%;
+  width: 96%;
   display: grid;
   margin: 15 auto;
   padding: 10 60;
+  position: fixed;
+  left: 2%;
+  top: 8%;
 }
 
-.custom-table {
-  table-layout: auto;
+@media only screen and (max-width: 768px) {
+  select,
+  label,
+  input {
+    font-size: 0.75rem;
+  }
 }
