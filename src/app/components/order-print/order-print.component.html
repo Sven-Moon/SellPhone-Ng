@@ -2,17 +2,17 @@
   <div name="name-group"
   *ngIf="contactInfo$ | async as contactInfo"
   class="form-group row border bg-lt-grey">
-    <div class="col-4" id="contact-print">
+    <div class="col-md-4" id="contact-print">
       <label for="firstName" class="form-label">
         Name: <br><span>{{contactInfo.value.firstName}} {{contactInfo.value.lastName}}</span>
       </label>
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
       <label for="email" class="form-label">
         Email: <br><span>{{contactInfo.value.email}}</span>
       </label><br>
     </div>
-    <div class="col-4">
+    <div class="col-md-4">
       <label for="phoneNumber" class="form-label">
         Phone: <br><span>{{contactInfo.value.phone}}</span>
       </label>

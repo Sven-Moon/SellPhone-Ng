@@ -153,10 +153,13 @@ export class SaleCalculatorComponent implements OnInit {
     // remove the row from the store
     this.store.dispatch(deleteOrderDetail({ index }))
 
+    this.saleOrderForm.updateValueAndValidity
+
     this.helper.calcTotalSale(this.saleOrderForm)
   }
 
   public onSubmit() {
+    // TODO: use item count for something or axe it
     const items = this.saleOrder.orderDetails.length
     this.store.dispatch(updateOrderItemQuantity({ items }))
     this.router.navigate(['../order-summary'])

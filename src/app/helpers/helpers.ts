@@ -83,10 +83,12 @@ export class Helpers {
       let maxValue, conditionMod, quantity: number | null
       const orderDetails$ = this.store.pipe(select(selectOrderDetail))
       orderDetails$.subscribe(oD => {
-        if (oD[formIndex]) {
+        if (oD[formIndex] && oD[formIndex].phoneCondition) {
           maxValue = oD[formIndex].phoneModel.maxValue,
             conditionMod = oD[formIndex].phoneCondition.priceMod,
             quantity = oD[formIndex].quantity
+        } else {
+          return 0
         }
       })
       subTotal = maxValue * conditionMod * quantity
