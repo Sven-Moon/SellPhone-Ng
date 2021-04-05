@@ -9,11 +9,13 @@ class="form-group mt-3" *ngIf="formState$ | async as formState">
   </div>
 </div> <!--info display-->
 <div>Please review all information before submitting order.</div>
-<button routerLink="../contact-info"class="btn btn-primary mx-2">
+<button routerLink="../contact-info"class="btn btn-primary mx-2"
+type="button">
   <i class="fas fa-edit"></i>
   Edit Contact Info
 </button>
 <button routerLink="../../order-print"
-class="btn btn-success mx-2">
+class="btn btn-success mx-2"
+type="button">
   Print My Sales Order! <i class="fas fa-money-bill"></i>
 </button>

@@ -10,7 +10,7 @@
     </div> <!-- report-total -->
 
     <form name="sale-calc-form" class="col-sm-6"
-      [formGroup]='saleOrderForm' (ngSubmit)="onSubmit()" role="form" >
+      [formGroup]='saleOrderForm' role="form" (ngSubmit)="onSubmit()" >
 
         <div formArrayName="orderDetails" class="corner-repeat">
 
@@ -96,9 +96,9 @@
         <div id="page-centeredButtonGroup-bot"
         class="d-flex justify-content-center">
         <button id="submitButton"
-        (click)="onSubmit()"routerLink="../order-summary"
+        type="submit"
           [disabled]="saleOrderForm.invalid || saleOrderForm.pending"
-          type="submit" class="btn-lg btn-primary m-1 form-control"
+          class="btn-lg btn-primary m-1 form-control"
           >Get to Your Money!</button>
       </div> <!--submit button-->
 

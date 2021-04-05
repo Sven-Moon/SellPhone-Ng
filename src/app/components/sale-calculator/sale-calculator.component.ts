@@ -159,6 +159,7 @@ export class SaleCalculatorComponent implements OnInit {
   public onSubmit() {
     const items = this.saleOrder.orderDetails.length
     this.store.dispatch(updateOrderItemQuantity({ items }))
+    this.router.navigate(['../order-summary'])
   }
 
 }

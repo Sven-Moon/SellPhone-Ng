@@ -1,5 +1,5 @@
 <div class="my-modal-body text-center">
-  <form [formGroup]="saleOrderForm" (ngSubmit)="onSubmit()" role="form" #form="ngForm" class="login-form" >
+  <form [formGroup]="saleOrderForm" role="form" #form="ngForm" class="login-form" >
 
     <table id="order-edit-modal" class=" custom-table table-striped">
       <thead>
@@ -21,7 +21,6 @@
             <td> <!-- TYPE select -->
               <select formControlName="phoneType" required
               placeholder="Type"
-              id="type-edit"
               (change)="onTypeChange($event, detailsIndex)"
               class="form-control">
                 <option value="" disabled hidden>
@@ -37,7 +36,6 @@
 
             <td> <!-- MODEL select -->
               <select formControlName="phoneModel" required
-              id="model-edit"
               placeholder="Model"
               (change)="onModelChange($event, detailsIndex)"
               class="form-control">
@@ -67,8 +65,7 @@
 
             <td> <!-- QUANTITY -->
               <input type="number" formControlName="quantity"
-              required min="1"
-              id="quantity-edit" class="form-control text-center"
+              required min="1" class="form-control text-center"
               placeholder="Quantity"
               (change)="onQuantityChange($event.target.value, detailsIndex)">
             </td>
@@ -93,7 +90,7 @@
     class="btn btn-sm btn-success">
       + Row
     </button>
-    <button type="submit" [disabled]="!form.form.valid"
+    <button type="button" [disabled]="!form.form.valid"
     routerLink="/order-summary"
     class="btn btn-success mx-5 my-2">
       Save & Close
