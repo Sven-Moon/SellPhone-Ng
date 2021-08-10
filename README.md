@@ -1,27 +1,20 @@
 # SellphoneNg
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 9.1.7.
+This project was my very first Angular app. It allows the user to input the different phones they have to sell and then compiles a sales order form with the total. There's no method for changing the available phones or prices and I kept payment out of it completely. <br>I chose a white/grey/black theme since it's so hard to mess that up, though it comes out to be visually bland. I was learning a lot about how to control space with css properties, largely using vw & vh when other properties probably would have netted a better outcome in many places. <br>Mostly, this was just an introduction to how to make things work, and it did that just fine. 
 
-## Development server
+## Features
+- Selectors
+- Pre-made layouts
+- A search function
+- Basic user workflow
+- Repeating forms with validation
+- Responsive styling
+- A print form
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Things I Learned
+- What a store/reducer is and how to trundle around NGRX
+- Use of Bootstrap
+- Why normalizing data is so important
+- Why keeping components & classes simple is so important
+- How to use a pipe
+- Basic routing
