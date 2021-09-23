@@ -24,16 +24,16 @@ export class Helpers {
       { formIndex, selectedPhoneType }))
 
     // find the list by typeId
-    const phoneModelList: Array<PhoneModel[]> =
+    const phoneModelList: PhoneModel[] =
       this.getPhoneModelsByPhoneType(selectedPhoneType.typeId)
 
-    // add that list to staticData.phoneModelList<Array<PhoneModel[]>>
+    // add that list to staticData.phoneModelList<PhoneModel[]>
     this.store.dispatch(updatePhoneModelsList(
       { formIndex, phoneModelList }
     ))
   }
 
-  public getPhoneModelsByPhoneType(selectedPhoneTypeId: number): Array<PhoneModel[]> {
+  public getPhoneModelsByPhoneType(selectedPhoneTypeId: number): PhoneModel[] {
     // get current state of selectedPhoneTypes
     let state = null
     this.store.pipe(select(selectStaticData))

@@ -21,6 +21,6 @@ export const updatePhoneModelsList = createAction(
   '[Estimator Component] Update Phone Models List',
   props<{
     formIndex: number,
-    phoneModelList: Array<Array<PhoneModel>>
+    phoneModelList: PhoneModel[]
   }>()
 )
