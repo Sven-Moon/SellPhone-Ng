@@ -1,13 +1,15 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from "@angular/core";
 import { Observable, of } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { SearchResults } from '../models/SearchResults';
 
 @Injectable()
 export class MockSearchInterceptor implements HttpInterceptor {
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (req.method === 'POST' && req.url == '/api/search') {
+    let url = environment.baseUrl + 'api/search'
+    if (req.method === 'POST' && req.url === url) {
       const searchResponse = this.processSearchMock(req.body);
       const response = new HttpResponse({
         body: searchResponse
@@ -27,31 +29,31 @@ export class MockSearchInterceptor implements HttpInterceptor {
       results: [
       {
         "id": 1,
-        "name": "iphone 7"
+        "name": "iPhone 7"
       },
       {
         "id": 2,
-        "name": "iphone X"
+        "name": "iPhone X"
       },
       {
         "id": 3,
-        "name": "windows"
+        "name": "Windows"
       },
       {
         "id": 4,
-        "name": "pixel 2"
+        "name": "Pixel 2"
       },
       {
         "id": 5,
-        "name": "pixel 3"
+        "name": "Pixel 3"
       },
       {
         "id": 6,
-        "name": "pixel 32"
+        "name": "Pixel 2"
       },
       {
         "id": 7,
-        "name": "pixel 82"
+        "name": "Pixel 1"
       }
     ]
   };

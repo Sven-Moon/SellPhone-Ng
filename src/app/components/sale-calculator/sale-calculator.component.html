@@ -1,110 +1,170 @@
 <div id="pageContainer" class="container max-750">
-
-  <div id="entry-report" class="row justify-content-around justify-content-sm-start  bg-light-gray">
-
-    <div id="report-total"
-    class="col-md-3 sticky-total rounded bg-secondary d-flex p-2 border border-white">
-      <div  class="h5"  style="margin:auto; text-align: center">
-        Your Money: ${{saleOrder.total}}
+  <div
+    id="entry-report"
+    class="row justify-content-around justify-content-sm-start bg-light-gray"
+  >
+    <div
+      id="report-total"
+      class="
+        col-md-3
+        sticky-total
+        rounded
+        bg-secondary
+        d-flex
+        p-2
+        border border-white
+      "
+    >
+      <div class="h5" style="margin: auto; text-align: center">
+        Your Money: {{ saleOrder.total | currency: "USD":"symbol":"1.0-0" }}
       </div>
-    </div> <!-- report-total -->
+    </div>
+    <!-- report-total -->
 
-    <form name="sale-calc-form" class="col-sm-6"
-      [formGroup]='saleOrderForm' role="form" (ngSubmit)="onSubmit()" >
-
-        <div formArrayName="orderDetails" class="corner-repeat">
-
-          <div *ngFor="let od of orderDetails.controls;
-          let detailsIndex=index"
+    <form
+      name="sale-calc-form"
+      class="col-sm-6 sale-calc-form"
+      [formGroup]="saleOrderForm"
+      role="form"
+      (ngSubmit)="onSubmit()"
+    >
+      <div formArrayName="orderDetails" class="corner-repeat">
+        <div
+          *ngFor="let od of orderDetails.controls; let detailsIndex = index"
           [formGroupName]="detailsIndex"
-          class="py-2 px-3 bg-secondary text-white py-1 border border-white">
-
-            <div id="typeFormGroup" class="form-group">
-              <label>Phone Type: </label>
-              <select formControlName="phoneType" required
-                placeholder="Phone Type"
-                id="phoneTypeSelect"
-                (change)="onSelectedPhoneTypeChange($event, detailsIndex)"
-                class="form-control">
-                Type
-                <option selected disabled hidden value="">--Select Your Phone Type --</option>
-                <option [ngValue]="phoneType.typeId"
+          class="py-2 px-3 bg-secondary text-white py-1 border border-white"
+        >
+          <div id="typeFormGroup" class="form-group">
+            <label>Phone Type: </label>
+            <select
+              formControlName="phoneType"
+              required
+              placeholder="Phone Type"
+              id="phoneTypeSelect"
+              (change)="onSelectedPhoneTypeChange($event, detailsIndex)"
+              class="form-control"
+            >
+              Type
+              <option selected disabled hidden value="">
+                --Select Your Phone Type --
+              </option>
+              <option
+                [ngValue]="phoneType.typeId"
                 *ngFor="let phoneType of phoneTypesList"
-                id="{{phoneType.typeId}}"
-                >{{phoneType.name}}</option>
-              </select>
-            </div> <!-- type -->
+                id="{{ phoneType.typeId }}"
+              >
+                {{ phoneType.name }}
+              </option>
+            </select>
+          </div>
+          <!-- type -->
 
-            <div id="modelFormGroup" class="form-group">
-              <label>Phone Model: </label>
-              <select formControlName="phoneModel" required
-                id="phoneModelSelect"
-                (change)="onSelectedPhoneModelChange($event,detailsIndex)"
-                class="form-control">
-                Model
-                <option selected disabled hidden value="">-- Select Your Model --</option>
-                  <option id="{{phoneModel.modelId}}"
-                    *ngFor="let phoneModel of od.controls.modelList.value"
-                    [ngValue]="phoneModel.modelId"
-                    >{{phoneModel.name}}</option>
-              </select>
-            </div> <!-- model -->
+          <div id="modelFormGroup" class="form-group">
+            <label>Phone Model: </label>
+            <select
+              formControlName="phoneModel"
+              required
+              id="phoneModelSelect"
+              (change)="onSelectedPhoneModelChange($event, detailsIndex)"
+              class="form-control"
+            >
+              Model
+              <option selected disabled hidden value="">
+                -- Select Your Model --
+              </option>
+              <option
+                id="{{ phoneModel.modelId }}"
+                *ngFor="let phoneModel of od.controls.modelList.value"
+                [ngValue]="phoneModel.modelId"
+              >
+                {{ phoneModel.name }}
+              </option>
+            </select>
+          </div>
+          <!-- model -->
 
-            <div id="conditionFormGroup" class="form-group">
-              <label>Condition: </label>
-              <select formControlName="phoneCondition" required
-                (change)="changeCondition(detailsIndex, $event.target.value)"
-                class="form-control">
-                <option value="" disabled hidden>
-                  -- Condition --
-                </option>
-                <option *ngFor="let condition of conditionsList">
-                  {{condition.id}}
-                </option>
-              </select>
-            </div> <!-- condition -->
+          <div id="conditionFormGroup" class="form-group">
+            <label>Condition: </label>
+            <select
+              formControlName="phoneCondition"
+              required
+              (change)="changeCondition(detailsIndex, $event.target.value)"
+              class="form-control"
+            >
+              <option value="" disabled hidden>-- Condition --</option>
+              <option *ngFor="let condition of conditionsList">
+                {{ condition.id }}
+              </option>
+            </select>
+          </div>
+          <!-- condition -->
 
-            <div id="quantityFormGroup" class="form-group">
-              <label>Quantity: </label>
-              <input formControlName="quantity" placeholder="-- Quantity --"
-                id="quantityInput" type="text" class="form-control"
-                required min="1"
-                (change)="onQuantityChange(detailsIndex,$event.target.value)">
-            </div> <!-- quantity -->
+          <div id="quantityFormGroup" class="form-group">
+            <label>Quantity: </label>
+            <input
+              formControlName="quantity"
+              placeholder="-- Quantity --"
+              id="quantityInput"
+              type="text"
+              class="form-control"
+              required
+              min="1"
+              (change)="onQuantityChange(detailsIndex, $event.target.value)"
+            />
+          </div>
+          <!-- quantity -->
 
-            <show-errors [control]="od.controls.quantity" class="bg-light-gray"></show-errors>
-            <div id="orderDetailActionsArea"
-              class="row-cols-4 justify-content-md-between align-content-center">
-              <button  (click)="addOrderDetails(detailsIndex)"
-                type="button"
-                class="btn-dark button-narrow rounded m-1 h6">
-                Add Phones
-              </button>
-              <button (click)="deleteOrderDetails(detailsIndex)"
+          <show-errors
+            [control]="od.controls.quantity"
+            class="bg-light-gray"
+          ></show-errors>
+          <div
+            id="orderDetailActionsArea"
+            class="row-cols-4 justify-content-md-between align-content-center"
+          >
+            <button
+              (click)="addOrderDetails(detailsIndex)"
               type="button"
-                class="btn-danger button-narrow rounded m-1 h6">
-                Remove
-              </button>
-              <label class="rounded-0 float-right">
-                Subtotal: ${{od.controls.subTotal.value}}
-              </label>
-            </div>
-          </div> <!-- ngFor -->
+              class="btn-dark button-narrow rounded m-1 h6"
+            >
+              Add Phones
+            </button>
+            <button
+              (click)="deleteOrderDetails(detailsIndex)"
+              type="button"
+              class="btn-danger button-narrow rounded m-1 h6"
+            >
+              Remove
+            </button>
+            <label class="rounded-0 float-right">
+              Subtotal:
+              {{
+                od.controls.subTotal.value | currency: "USD":"symbol":"1.0-0"
+              }}
+            </label>
+          </div>
+        </div>
+        <!-- ngFor -->
+      </div>
+      <!--orderDetails formArray -->
 
-        </div> <!--orderDetails formArray -->
-
-        <div id="page-centeredButtonGroup-bot"
-        class="d-flex justify-content-center">
-        <button id="submitButton"
-        type="submit"
+      <div
+        id="page-centeredButtonGroup-bot"
+        class="d-flex justify-content-center"
+      >
+        <button
+          id="submitButton"
+          type="submit"
           [disabled]="saleOrderForm.invalid || saleOrderForm.pending"
           class="btn-lg btn-primary m-1 form-control"
-          >Get to Your Money!</button>
-      </div> <!--submit button-->
-
-    </form>  <!-- saleOrderForm -->
-
-
-  </div> <!-- entry-report -->
-
-</div>  <!--  pageContainer  -->
+        >
+          Get to Your Money!
+        </button>
+      </div>
+      <!--submit button-->
+    </form>
+    <!-- saleOrderForm -->
+  </div>
+  <!-- entry-report -->
+</div>
+<!--  pageContainer  -->

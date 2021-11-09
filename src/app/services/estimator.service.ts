@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { PhoneModels } from '../models/PhoneModels';
 
 @Injectable({
@@ -11,11 +12,11 @@ export class EstimatorService {
     private http: HttpClient
   ) {}
 
-  baseUrl = 'http://localhost:3000/';
+  url = environment.baseUrl;
   isValueBoxVisible = false;
 
   getPhoneModelsByType(): Observable<Array<PhoneModels>> {
-    const url = this.baseUrl + 'phoneModelsByType';
+    const url = this.url + 'api/phoneModelsByType';
     return this.http.get<any>(url);
   }
 

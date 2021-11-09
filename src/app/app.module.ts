@@ -20,6 +20,7 @@ import { Helpers } from './helpers/helpers'
 import { CommonModule } from '@angular/common';
 import { NgrxFormsModule } from 'ngrx-forms';
 import { ModalModule } from 'ngx-bootstrap/modal'
+import { AppMockInterceptors } from './app-mocks'
 
 
 @NgModule({
@@ -49,7 +50,7 @@ import { ModalModule } from 'ngx-bootstrap/modal'
   ],
   providers: [
     ...AppServices,
-    // ...(environment.useMocking ? AppMockInterceptors : []),
+    ...(environment.useMocking ? AppMockInterceptors : []),
     Helpers
   ],
   bootstrap: [AppComponent]

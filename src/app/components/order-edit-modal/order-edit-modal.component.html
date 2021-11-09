@@ -1,98 +1,136 @@
 <div class="my-modal-body text-center">
-  <form [formGroup]="saleOrderForm" role="form" #form="ngForm" class="login-form" >
-
-    <table id="order-edit-modal" class=" custom-table table-striped">
+  <form
+    [formGroup]="saleOrderForm"
+    role="form"
+    #form="ngForm"
+    class="login-form"
+  >
+    <table id="order-edit-modal" class="custom-table table-striped">
       <thead>
         <tr scope="row">
-          <th style="width:22%">Type</th>
-          <th style="width:22%">Model</th>
-          <th style="width:20%">Condition</th>
-          <th style="width:13%">Quantity</th>
-          <th style="width:13%">Subtotal</th>
-          <th style="width:8%"></th>
+          <th style="width: 22%">Type</th>
+          <th style="width: 22%">Model</th>
+          <th style="width: 20%">Condition</th>
+          <th style="width: 13%">Quantity</th>
+          <th style="width: 13%">Subtotal</th>
+          <th style="width: 8%"></th>
         </tr>
       </thead>
       <tbody>
         <ng-container formArrayName="orderDetails">
-          <tr [formGroupName]="detailsIndex"
-          *ngFor="let od of getOrderDetails.controls;
-          let detailsIndex=index"> <!-- data row (repeat) -->
+          <tr
+            [formGroupName]="detailsIndex"
+            *ngFor="
+              let od of getOrderDetails.controls;
+              let detailsIndex = index
+            "
+          >
+            <!-- data row (repeat) -->
 
-            <td> <!-- TYPE select -->
-              <select formControlName="phoneType" required
-              placeholder="Type"
-              (change)="onTypeChange($event, detailsIndex)"
-              class="form-control">
-                <option value="" disabled hidden>
-                  Type
-                </option>
-                <option [ngValue]="phoneType.typeId"
-                *ngFor="let phoneType of phoneTypesList"
-                id="{{phoneType.typeId}}">
-                  {{phoneType.name}}
+            <td>
+              <!-- TYPE select -->
+              <select
+                formControlName="phoneType"
+                required
+                placeholder="Type"
+                (change)="onTypeChange($event, detailsIndex)"
+                class="form-control"
+              >
+                <option value="" disabled hidden>Type</option>
+                <option
+                  [ngValue]="phoneType.typeId"
+                  *ngFor="let phoneType of phoneTypesList"
+                  id="{{ phoneType.typeId }}"
+                >
+                  {{ phoneType.name }}
                 </option>
               </select>
-            </td> <!-- type -->
+            </td>
+            <!-- type -->
 
-            <td> <!-- MODEL select -->
-              <select formControlName="phoneModel" required
-              placeholder="Model"
-              (change)="onModelChange($event, detailsIndex)"
-              class="form-control">
-                <option value="" selected disabled hidden>
-                  Model
-                </option>
-                <option id="{{model.modelId}}"
-                *ngFor="let model of od.controls.modelList.value"
-                [ngValue]="model.modelId">
-                  {{model.name}}
+            <td>
+              <!-- MODEL select -->
+              <select
+                formControlName="phoneModel"
+                required
+                placeholder="Model"
+                (change)="onModelChange($event, detailsIndex)"
+                class="form-control"
+              >
+                <option value="" selected disabled hidden>Model</option>
+                <option
+                  id="{{ model.modelId }}"
+                  *ngFor="let model of od.controls.modelList.value"
+                  [ngValue]="model.modelId"
+                >
+                  {{ model.name }}
                 </option>
               </select>
             </td>
 
-            <td> <!-- CONDITION select -->
-              <select formControlName="phoneCondition" required
-              (change)="onConditionChange($event.target.value,detailsIndex)"
-              class="form-control">
-              <option value="" disabled hidden>
-                Condition
-              </option>
-              <option *ngFor="let condition of conditionsList">
-                {{condition.id}}
-              </option>
+            <td>
+              <!-- CONDITION select -->
+              <select
+                formControlName="phoneCondition"
+                required
+                (change)="onConditionChange($event.target.value, detailsIndex)"
+                class="form-control"
+              >
+                <option value="" disabled hidden>Condition</option>
+                <option *ngFor="let condition of conditionsList">
+                  {{ condition.id }}
+                </option>
               </select>
             </td>
 
-            <td> <!-- QUANTITY -->
-              <input type="number" formControlName="quantity"
-              required min="1" class="form-control text-center"
-              placeholder="Quantity"
-              (change)="onQuantityChange($event.target.value, detailsIndex)">
+            <td>
+              <!-- QUANTITY -->
+              <input
+                type="number"
+                formControlName="quantity"
+                required
+                min="1"
+                class="form-control text-center"
+                placeholder="Quantity"
+                (change)="onQuantityChange($event.target.value, detailsIndex)"
+              />
             </td>
 
-            <td> <!-- SUBTOTAL -->
-              <label formControlName="subTotal"
-              ngDefaultControl
-              class="form-control">
-                ${{ od.controls.subTotal.value}}
+            <td>
+              <!-- SUBTOTAL -->
+              <label
+                formControlName="subTotal"
+                ngDefaultControl
+                class="form-control"
+              >
+                {{
+                  od.controls.subTotal.value | currency: "USD":"symbol":"1.0-2"
+                }}
               </label>
             </td>
-            <td style="width:1px"> <!-- REMOVE ROW BUTTON -->
-              <button (click)="removeRow(detailsIndex)"
-              [disabled]="detailsIndex==0"
-              class="fas fa-trash">-</button>
-            </td> <!-- remove row button -->
+            <td style="width: 1px">
+              <!-- REMOVE ROW BUTTON -->
+              <button
+                (click)="removeRow(detailsIndex)"
+                [disabled]="detailsIndex == 0"
+                class="fas fa-trash"
+              >
+                -
+              </button>
+            </td>
+            <!-- remove row button -->
           </tr>
-        </ng-container> <!-- formArray: order Details-->
+        </ng-container>
+        <!-- formArray: order Details-->
       </tbody>
     </table>
-    <button (click)="addRow()"
-    class="btn btn-sm btn-success">
-      + Row
-    </button>
-    <button type="button" [disabled]="!form.form.valid"
-    routerLink="/order-summary"
-    class="btn btn-success mx-5 my-2">
+    <button (click)="addRow()" class="btn btn-sm btn-success">+ Row</button>
+    <button
+      type="button"
+      [disabled]="!form.form.valid"
+      routerLink="/order-summary"
+      class="btn btn-success mx-5 my-2"
+    >
       Save & Close
     </button>
   </form>

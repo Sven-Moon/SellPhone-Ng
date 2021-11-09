@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { environment } from 'src/environments/environment';
 import { StaticData } from '../models/StaticData';
 
 @Injectable({
@@ -11,10 +12,8 @@ export class StaticDataService {
     private http: HttpClient
   ) {}
 
-  baseUrl = 'http://localhost:3000/';
-
   getStaticData(): Observable<StaticData> {
-    const url = this.baseUrl + 'staticdata/';
+    const url = environment.baseUrl + 'api/staticdata/';
     const body = '';
     let httpOptions: {};
 

@@ -28,8 +28,8 @@
       </select>
 
       <div class="result-box" *ngIf="isValueBoxVisible">
-        Your phone could be worth<br><b> $$
-        <span>{{phoneMaxValue}}</span><br></b>
+        Your phone could be worth<br><b>
+        <span>{{phoneMaxValue |currency:'USD':'symbol':'1.0-0'}}</span><br></b>
         <button id="estimator-saleCalcBtn" (click)="goToSaleCalc()"
           class="mt-3 get-the-money-btn" type="button"
           >Get Your Money!</button>

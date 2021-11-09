@@ -20,6 +20,10 @@ div.corner-repeat > div:last-child {
   max-width: 345px;
 }
 
+.sale-calc-form {
+  margin-top: 4rem;
+}
+
 @media only screen and (min-width: 576px) {
   .sticky-total {
     position: fixed;
@@ -29,5 +33,9 @@ div.corner-repeat > div:last-child {
     max-width: 30vw;
     flex-flow: column nowrap;
     padding: 2 15px;
+  }
+
+  .sale-calc-form {
+    margin-top: 0;
   }
 }

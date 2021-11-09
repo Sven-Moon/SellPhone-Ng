@@ -1,70 +1,92 @@
 <div class="container" id="print-page">
-  <div name="name-group"
-  *ngIf="contactInfo$ | async as contactInfo"
-  class="form-group row border bg-lt-grey">
+  <div
+    name="name-group"
+    *ngIf="contactInfo$ | async as contactInfo"
+    class="form-group row border bg-lt-grey"
+  >
     <div class="col-md-4" id="contact-print">
       <label for="firstName" class="form-label">
-        Name: <br><span>{{contactInfo.value.firstName}} {{contactInfo.value.lastName}}</span>
+        Name: <br /><span
+          >{{ contactInfo.value.firstName }}
+          {{ contactInfo.value.lastName }}</span
+        >
       </label>
     </div>
     <div class="col-md-4">
       <label for="email" class="form-label">
-        Email: <br><span>{{contactInfo.value.email}}</span>
-      </label><br>
+        Email: <br /><span>{{ contactInfo.value.email }}</span> </label
+      ><br />
     </div>
     <div class="col-md-4">
       <label for="phoneNumber" class="form-label">
-        Phone: <br><span>{{contactInfo.value.phone}}</span>
+        Phone: <br /><span>{{ contactInfo.value.phone }}</span>
       </label>
     </div>
-  </div> <!-- contact info display-->
+  </div>
+  <!-- contact info display-->
 
-
-  <div id="form-wrap" *ngIf="saleOrder$ | async as saleOrder"
-  class="row-no-flex border rounded-lg bg-light-gray">
-    <div name="order-review-form"  role="form" class="border">
-      <ng-container *ngIf="saleOrder.total!=null">
-      <table id="order-print-table" class="table table-striped">
-        <thead>
+  <div
+    id="form-wrap"
+    *ngIf="saleOrder$ | async as saleOrder"
+    class="row-no-flex border rounded-lg bg-light-gray"
+  >
+    <div name="order-review-form" role="form" class="border">
+      <ng-container *ngIf="saleOrder.total != null">
+        <table id="order-print-table" class="table table-striped">
+          <thead>
             <tr>
-            <th>Type</th>
-            <th>Model</th>
-            <th>Condition</th>
-            <th>Quantity</th>
-            <th>Subtotal</th>
-          </tr>
-        </thead>
-        <tbody>
-          <ng-container *ngFor="let od of orderDetails$ | async">
-          <tr>
-            <td>{{ od.phoneType.name }}</td>
-            <td>{{ od.phoneModel.name }}</td>
-            <td>
-              <span *ngIf="od.phoneCondition">
-                {{ od.phoneCondition.id }}
-              </span>
-            </td>
-            <td class="text-center">{{ od.quantity }}</td>
-            <td>${{ od.subTotal }}</td>
-          </tr>
-        </ng-container>
-        </tbody>
-        <tfoot>
-          <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th class="text-right">Total</th>
-            <th>${{saleOrder.total}}</th>
-          </tr>
-        </tfoot>
-      </table>
-      </ng-container> <!-- *If=saleOrder.total!=null -->
-      <div *ngIf="saleOrder.total==null" class="container alert-warning d-flex justify-content-center align-content-center min-vh-12">
+              <th>Type</th>
+              <th>Model</th>
+              <th>Condition</th>
+              <th>Quantity</th>
+              <th>Subtotal</th>
+            </tr>
+          </thead>
+          <tbody>
+            <ng-container *ngFor="let od of orderDetails$ | async">
+              <tr>
+                <td>{{ od.phoneType.name }}</td>
+                <td>{{ od.phoneModel.name }}</td>
+                <td>
+                  <span *ngIf="od.phoneCondition">
+                    {{ od.phoneCondition.id }}
+                  </span>
+                </td>
+                <td class="text-center">{{ od.quantity }}</td>
+                <td>{{ od.subTotal | currency: "USD":"symbol":"1.0-2" }}</td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <tfoot>
+            <tr>
+              <th></th>
+              <th></th>
+              <th></th>
+              <th class="text-right">Total</th>
+              <th>{{ saleOrder.total | currency: "USD":"symbol":"1.0-2" }}</th>
+            </tr>
+          </tfoot>
+        </table>
+      </ng-container>
+      <!-- *If=saleOrder.total!=null -->
+      <div
+        *ngIf="saleOrder.total == null"
+        class="
+          container
+          alert-warning
+          d-flex
+          justify-content-center
+          align-content-center
+          min-vh-12
+        "
+      >
         <h3>No Order Data!</h3>
-      </div> <!-- *If=saleOrder.total==null -->
-    </div> <!-- format as form -->
-  </div> <!-- form wrap: *saleOrder$ -->
+      </div>
+      <!-- *If=saleOrder.total==null -->
+    </div>
+    <!-- format as form -->
+  </div>
+  <!-- form wrap: *saleOrder$ -->
 
   <div class="row px-2 py-2 border bg-light justify-content-around">
     <div class="col-md-5 border p-2 my-1 bg-white col">
@@ -72,26 +94,28 @@
         <h5 class="floor">Bring this form & phones to:</h5>
       </div>
       <div class="h6">
-        123 My Place St<br>
+        123 My Place St<br />
         Townsville, ST 00000
       </div>
-    </div> <!-- address -->
+    </div>
+    <!-- address -->
     <div class="col-md-5 border p-2 my-1 bg-white">
       <div class="box-top">
-          <h5 class="floor">Contact us at:</h5>
+        <h5 class="floor">Contact us at:</h5>
       </div>
       <div class="h6">
-          (555)777-8888<br>
-          sales@sellmyphone.com
+        (555)777-8888<br />
+        sales@sellmyphone.com
       </div>
-    </div> <!-- contact info -->
-  </div> <!-- instructions -->
+    </div>
+    <!-- contact info -->
+  </div>
+  <!-- instructions -->
+</div>
+<!-- print area -->
 
-</div> <!-- print area -->
-
-<button class="btn btn-primary mx-2" type="button"
-  (click)="printPage()"
-  >
+<button class="btn btn-primary mx-2" type="button" (click)="printPage()">
   <i class="fas fa-print"></i>
   Print
-</button> <!-- print button -->
+</button>
+<!-- print button -->
